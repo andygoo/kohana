@@ -11,7 +11,9 @@ class Controller_Phpredmin extends Controller {
 	    parent::before();
 
 	    $this->_redis = new Redis();
-	    $this->_redis->connect('192.168.1.106', '6379');
+	    
+	    $config = Kohana::config('redis.default');
+	    $this->_redis->connect($config['host'], $config['port']);
 	    
 	    $info = $this->_redis->info();
 	    $dbs = $this->getDbs($info);

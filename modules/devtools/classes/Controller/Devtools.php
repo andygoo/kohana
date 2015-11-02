@@ -30,7 +30,7 @@ class Controller_Devtools extends Controller {
 	 */
     public function action_routetest() {
         // Check if a url was provided
-        $url = Arr::get($_POST, 'url', $this->request->uri);
+        $url = Arr::get($_GET, 'url', $this->request->uri);
         
         $this->content = View::factory('devtools/route-test', array(
             // Get all the tests

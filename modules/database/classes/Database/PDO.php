@@ -39,7 +39,7 @@ class Database_PDO extends Database {
 		} catch (Exception $e) {
 			if (isset($benchmark)) {
 				Profiler::delete($benchmark);
-			}
+			} 
 			throw new Kohana_Exception(':error [ :query ]',
 				array(
 					':error' => $e->getMessage(),

@@ -17,9 +17,7 @@ class Database_PDO extends Database {
 			//var_dump($this->_conn);
 			return $this->_conn;
 		} catch (PDOException $e) {
-			throw new Kohana_Exception(':error',
-				array(':error' => $e->getMessage()),
-				$e->getCode());
+			throw new Kohana_Exception(':error', array(':error' => $e->getMessage()), $e->getCode());
 		}
 	}
 

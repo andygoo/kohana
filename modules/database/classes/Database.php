@@ -42,8 +42,6 @@ abstract class Database {
 	}
 	
 	public function connect($type='master') {
-		//var_dump($type);
-
 		$r_type = 'default';
 		if ($type=='slave') {
 		    if (isset($this->_config_curr['slave'])) {
@@ -59,7 +57,6 @@ abstract class Database {
 		    }
 		}
 
-		//var_dump($r_type);
 		if ($r_type=='slave') {
 		   	$this->_config = $this->_config_curr['slave'];
 		    if ($this->_instance_curr != $this->_instance.'_slave') {

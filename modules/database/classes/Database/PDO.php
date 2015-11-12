@@ -34,7 +34,7 @@ class Database_PDO extends Database {
 			$benchmark = Profiler::start("Database ({$this->_instance})", $sql);
 		}
 		
-		try {
+		try { 
 			$result = $this->_conn->query($sql);
 		} catch (Exception $e) {
 			if (isset($benchmark)) {

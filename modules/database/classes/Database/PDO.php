@@ -46,7 +46,7 @@ class Database_PDO extends Database {
 					':query' => $sql
 				),
 				$e->getCode());
-		}
+		} 
 
 		if (Kohana::$profiling) {
 			Profiler::stop($benchmark);

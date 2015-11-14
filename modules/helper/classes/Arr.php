@@ -236,7 +236,7 @@ class Arr {
         return $new_array;
     }
 
-    public static function toxml($data, $root = 'data', $xml = null) {
+    public static function toxml($data, $root='data', $xml=null) {
         if ($xml == null) {
             $xml = simplexml_load_string("<?xml version='1.0' encoding='utf-8'?><$root/>");
         }
@@ -244,11 +244,10 @@ class Arr {
         foreach($data as $key => $value) {
             if (is_array($value)) {
                 if (is_int($key)) {
-                    $node = $xml->addChild('item');
-                } else {
-                    $node = $xml->addChild($key);
+                    $key = 'item';
                 }
-                self::toxml($value, $root, $node);
+                $node = $xml->addChild($key);
+                self::toxml($value, $key, $node);
             } else {
                 $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
                 $xml->addChild($key, $value);

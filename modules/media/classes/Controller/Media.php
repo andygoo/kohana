@@ -3,7 +3,7 @@
 class Controller_Media extends Controller{
 
 	public function action_index() {
-	    $file = $this->request->param('file');
+	    $filename = $this->request->param('file');
 	    $format = $this->request->param('format');
 	    switch ($format) {
 	        case 'js':
@@ -23,7 +23,10 @@ class Controller_Media extends Controller{
 		    case 'xap':
 		        header('Content-Type: application/x-silverlight-app');break;
 	    }
-		include MODPATH.'media/static/'.$file.'.'.$format;
+	    $file = MODPATH.'media/static/'.$filename.'.'.$format;
+	    if (file_exists($file)) {
+		    include $file;
+	    }
 		exit;
 	}
 }

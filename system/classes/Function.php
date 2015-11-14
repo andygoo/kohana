@@ -34,10 +34,14 @@ function array2xml($data, $root = 'data', $xml = null) {
     }
     foreach($data as $key => $value) {
         if (is_array($value)) {
-            $node = $xml->addChild($key);
+            if (is_int($key)) {
+                $node = $xml->addChild('item');
+            } else {
+                $node = $xml->addChild($key);
+            }
             array2xml($value, $root, $node);
         } else {
-            $value = htmlentities($value, ENT_COMPAT, 'UTF-8');
+            $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
             $xml->addChild($key, $value);
         }
     }

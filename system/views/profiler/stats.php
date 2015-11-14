@@ -1,11 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct script access.') ?>
 
 <style type="text/css">
-.kohana {
+.kohana-waper {
     position: fixed; bottom: 0; left: 0;
-    z-index: 1000; display: block;
-    overflow-x: hidden; overflow-y: auto;
-  	width: 100%; height: 350px;
+    z-index: 1000; 
+  	background: #fff;width: 100%; 
+}
+.kohana-waper .kohana {
+    height: 320px; overflow-x: hidden; overflow-y: auto;display: none;
 }
 <?php include Kohana::find_file('views', 'profiler/style', 'css') ?>
 </style>
@@ -16,7 +18,9 @@ $group_cols       = array('min', 'max', 'average', 'total');
 $application_cols = array('min', 'max', 'average', 'current');
 ?>
 
-<div class="kohana">
+<div class="kohana-waper">
+<div style="height:30px;background:#999" id="kohana-stats-btn"></div>
+<div class="kohana" id="kohana-stats">
 	<?php foreach (Profiler::groups() as $group => $benchmarks): ?>
 	<table class="profiler">
 		<tr class="group">
@@ -78,3 +82,14 @@ $application_cols = array('min', 'max', 'average', 'current');
 		</tr>
 	</table>
 </div>
+</div>
+<script>
+document.getElementById('kohana-stats-btn').onclick = function() {
+	var kohana_stats = document.getElementById('kohana-stats');
+	if (!kohana_stats.style.display || kohana_stats.style.display=='none') {
+		kohana_stats.style.display = 'block';
+	} else {
+		kohana_stats.style.display = 'none';
+	}
+}
+</script>>

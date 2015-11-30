@@ -20,7 +20,7 @@ class Controller_Api extends Controller {
         }
         
         if (!method_exists('Controller_' . ucfirst($controller), 'action_' . $action)) {
-            $this->request->action = '404';
+            $this->request->action = 'error';
         }
     }
 
@@ -40,7 +40,7 @@ class Controller_Api extends Controller {
         }
     }
 
-    public function action_404() {
-        $this->response = array('errno'=>404, 'errmsg'=>'This interface does not exist!');
+    public function action_error() {
+        $this->response = array('errno'=>-1, 'errmsg'=>'This method does not exist!');
     }
 } 

@@ -28,7 +28,7 @@ return array(
 	'options' => array(
 	    'hostname' => 'smtp.exmail.qq.com',
 	    'username' => 'test@jiesc.net',
-	    'password' => 'haoche51@',
+	    'password' => 'haoche51@com',
 	    'port' => '25',
 	),
 );

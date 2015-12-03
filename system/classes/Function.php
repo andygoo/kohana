@@ -138,7 +138,7 @@ function hot($Qviews, $Qanswers, $Qscore, $Ascores, $date_ask, $date_active) {
     $divisor = pow((($Qage + 1) - ($Qage - $Qupdated)/2), 1.5);
     echo $dividend/$divisor . "\n";
 }
-function ddd($result, $item) {
+function _array_unshift($result, $item) {
     array_unshift($result, $item);
     $result = array_unique($result);
     return $result;

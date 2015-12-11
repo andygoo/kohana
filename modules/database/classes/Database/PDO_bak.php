@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
-class Database_PDO extends Database {
+class Database_PDO2 extends Database {
 
 	protected function _connect() {
 		if ($this->_conn) return $this->_conn;

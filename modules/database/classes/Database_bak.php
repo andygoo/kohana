@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
-abstract class Database {
+abstract class Database2 {
 
 	const SELECT =  1;
 	const INSERT =  2;

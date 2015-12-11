@@ -2,12 +2,23 @@
 
 abstract class Database {
 
+	const SELECT =  1;
+	const INSERT =  2;
+	const UPDATE =  3;
+	const DELETE =  4;
+	
 	public $last_query;
 	public static $instances = array();
 	
 	protected $_conn;
+	protected $_conn_master;
+	protected $_conn_slave;
+
 	protected $_config;
+	protected $_config_curr;
+	
 	protected $_instance;
+	protected $_instance_curr;
 	
 	public static function instance($name = 'default', array $config = NULL) {
 		if (!isset(Database::$instances[$name])) {
@@ -25,9 +36,48 @@ abstract class Database {
 	protected function __construct($name, array $config) {
         $this->_config = $config;
         $this->_instance = $name;
+
+        $this->_config_curr = $config;
+        $this->_instance_curr = $name;
+	}
+	
+	public function connect($type='master') {
+		$r_type = 'default';
+		if ($type=='slave') {
+		    if (isset($this->_config_curr['slave'])) {
+		    	$r_type = 'slave';
+		    } elseif (isset($this->_config_curr['master'])) {
+		    	$r_type = 'master';
+		    }
+		} elseif ($type=='master') {
+		    if (isset($this->_config_curr['master'])) {
+		    	$r_type = 'master';
+		    } elseif (isset($this->_config_curr['slave'])) {
+		    	$r_type = 'slave';
+		    }
+		}
+
+		if ($r_type=='slave') {
+		   	$this->_config = $this->_config_curr['slave'];
+		    if ($this->_instance_curr != $this->_instance.'_slave') {
+		        $this->_conn = $this->_conn_slave;
+		        $this->_instance_curr = $this->_instance.'_slave';
+		    }
+		    $this->_conn OR $this->_conn_slave = $this->_connect();
+		} elseif ($r_type=='master') {
+		   	$this->_config = $this->_config_curr['master'];
+		    if ($this->_instance_curr != $this->_instance.'_master') {
+		        $this->_conn = $this->_conn_master;
+		        $this->_instance_curr = $this->_instance.'_master';
+		    }
+		    $this->_conn OR $this->_conn_master = $this->_connect();
+		} else {
+			$this->_conn OR $this->_connect();
+		}
+		return $this->_conn;
 	}
 
-	abstract public function connect(); 
+	abstract protected function _connect();
 	abstract public function escape($value);
 	abstract public function query($sql);
 
@@ -73,6 +123,8 @@ abstract class Database {
 	
 	public function disconnect() {
 		$this->_conn = NULL;
+		$this->_conn_master = NULL;
+		$this->_conn_slave = NULL;
 	    unset(Database::$instances[$this->_instance]);
 	    return TRUE;
 	}

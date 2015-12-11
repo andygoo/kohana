@@ -27,9 +27,9 @@ abstract class Database {
         $this->_instance = $name;
 	}
 
-	abstract public function connect(); 
-	abstract public function escape($value);
+	abstract public function connect();
 	abstract public function query($sql);
+	abstract public function escape($value);
 
 	public function select($table, $columns='*', $where='') {
 		$columns = is_array($columns) ? implode(', ', $columns) : $columns;

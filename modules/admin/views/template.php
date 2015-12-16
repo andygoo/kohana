@@ -75,7 +75,7 @@
 				    <a href="#menu<?= $id?>" class="collapsed" data-toggle="collapse" data-parent="#accordion"><?= $name?><i class="glyphicon glyphicon-menu-down pull-right"></i></a>
     			    <ul id="menu<?= $id?>" class="list-group collapse">
         			    <?php foreach ($items as $sub_name=>$url):?>
-        				<li class="list-group-item<?php if($uri==$url):?> active<?php endif;?>">
+        				<li class="list-group-item<?php if($uri==$url):?> __active<?php endif;?>">
         				    <a class="ajax-click" href="<?= URL::site($url)?>"><?= $sub_name?></a>
         				</li>
         			    <?php endforeach;?>

@@ -1,5 +1,25 @@
 ﻿<?php
 
+function parse_query($url) {
+    $url = parse_url($url, PHP_URL_QUERY);
+    $url = html_entity_decode($url);
+    $url = explode('&', $url);
+    $url = array_filter($url);
+    
+    $arr = array();
+    foreach($url as $val) {
+        $x = explode('=', $val);
+        $arr[$x[0]] = $x[1].'';
+    }
+    return $arr;
+}
+function parse_query2($url) {
+    $url = parse_url($url, PHP_URL_QUERY);
+    $url = html_entity_decode($url);
+    parse_str($url, $arr);
+    return $arr;
+}
+
 function create_uuid() {
     return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', 
         mt_rand(0, 0xffff), 

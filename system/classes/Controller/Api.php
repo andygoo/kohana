@@ -41,6 +41,6 @@ class Controller_Api extends Controller {
     }
 
     public function action_error() {
-        $this->response = array('errno'=>-1, 'errmsg'=>'This method does not exist!');
+        $this->response = array('errno'=>-1, 'errmsg'=>'The method does not exist!');
     }
 } 

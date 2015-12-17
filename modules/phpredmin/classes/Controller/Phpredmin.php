@@ -41,7 +41,10 @@ class Controller_Phpredmin extends Controller {
 	    $k = Arr::get($_GET, 'key', '');
 	    $k = trim($k);
         $_keys = $this->_redis->keys($k);
-
+        if (empty($_keys)) {
+            $_keys = array();
+        }
+        
         $total = count($_keys);
         $pager = new Pager($total, 10);
         $_keys = array_slice($_keys, $pager->offset, $pager->size);

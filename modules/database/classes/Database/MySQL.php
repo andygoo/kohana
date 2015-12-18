@@ -2,8 +2,8 @@
 
 class Database_MySQL extends Database {
 
-    public function _connect() {
-        if ($this->_connection) return;
+    public function connect() {
+        if ($this->_connection) return $this->_connection;
         
         extract($this->_config['connection']);
         unset($this->_config['connection']);
@@ -31,6 +31,7 @@ class Database_MySQL extends Database {
         if (!empty($this->_config['charset'])) {
             $this->set_charset($this->_config['charset']);
         }
+		return $this->_connection;
     }
 
     public function disconnect() {

@@ -38,10 +38,10 @@ EOF;
         return $this->code .= <<<EOF
         <canvas id="$id" width="$width" height="$height"></canvas>
         <script>
-        setTimeout(function() {
+        $(function() {
         	var ctx = document.getElementById("$id").getContext("2d");
         	new Chart(ctx).Line($chart_data);
-        },600);
+        });
         </script>\n
 EOF;
     } 

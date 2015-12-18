@@ -22,6 +22,10 @@ abstract class Controller_Website extends Controller {
             $menu = Kohana::config('menu');
             $allmenu = Arr::flatten($menu);
 
+            /*/
+            $this->permission = array_values($allmenu);
+            $this->user_permission = $this->permission;
+            /*/
             $m_permit = Model::factory('permit');
             $permission= $m_permit->getAll()->as_array(null,'url');
             $permission = array_merge($permission, array_values($allmenu));
@@ -40,6 +44,7 @@ abstract class Controller_Website extends Controller {
                     $this->user_permission = $m_permit->getAll(array('id'=>$permit_ids))->as_array(null,'url');
                 }
             }
+            //*/
             
             foreach ($menu as $name=>$items) {
                 foreach ($items as $sub_name=>$url) {

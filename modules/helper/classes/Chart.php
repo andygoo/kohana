@@ -41,7 +41,7 @@ EOF;
         setTimeout(function() {
         	var ctx = document.getElementById("$id").getContext("2d");
         	new Chart(ctx).Line($chart_data);
-        },200);
+        },600);
         </script>\n
 EOF;
     } 

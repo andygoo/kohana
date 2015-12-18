@@ -3,6 +3,15 @@ defined('SYSPATH') or die('No direct access allowed.');
 
 return array(
     'default' => array(
+    'type' => 'PDO',
+        'connection' => array(
+            'dsn' => 'mysql:host=localhost;dbname=kohana',
+            'username' => 'root',
+            'password' => 'root',
+            'persistent' => TRUE 
+        ) 
+    ),
+    'default' => array(
         'type' => 'MySQL',
         'connection' => array(
             'hostname' => 'localhost',

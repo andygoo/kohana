@@ -24,7 +24,7 @@ class Auth_File extends Auth {
 	 * @param   boolean  $remember  Enable autologin (not supported)
 	 * @return  boolean
 	 */
-	protected function _login($username, $password)
+	protected function _login($username, $password, $remember)
 	{
 		if (is_string($password))
 		{
@@ -35,7 +35,7 @@ class Auth_File extends Auth {
 		if (isset($this->_users[$username]) AND $this->_users[$username] === $password)
 		{
 			// Complete the login
-			return $this->complete_login($username);
+			return $this->complete_login(array('username'=>$username));
 		}
 
 		// Login failed

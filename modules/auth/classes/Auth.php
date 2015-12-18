@@ -46,7 +46,7 @@ abstract class Auth {
 		$this->_session = Session::instance();
 	}
 
-	abstract protected function _login($username, $password);
+	abstract protected function _login($username, $password, $remember);
 
 	abstract public function password($username);
 

@@ -127,6 +127,7 @@
     font-weight: bold;
     text-align: center;
 }
+.pika-table abbr[title] {border-bottom: none;}
 
 .pika-button {
     cursor: pointer;

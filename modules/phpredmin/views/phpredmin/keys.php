@@ -44,7 +44,7 @@
     <td><?= $item['type']?></td>
     <td><a href="#" class="ttl" data-type="text" data-value="<?= $item['ttl2']?>" data-pk="<?= $item['key']?>" data-url="<?= URL::site('phpredmin/expire/'.$curr_db)?>" data-title="Key Expiration"><?= $item['ttl']?></a></td>
     <td><?= $item['encode']?></td>
-    <td><?= $item['size']?></td>
+    <td><?= Text::bytes($item['size'])?></td>
     <td>
         <a href="<?= URL::site('phpredmin/view/'.$curr_db.'?key='.$item['key']);?>" class="btn btn-info btn-xs view-detail" data-key="<?= $item['key']?>">查看</a>&nbsp;&nbsp;&nbsp;
         <a href="<?= URL::site('phpredmin/del/'.$curr_db.'?key='.$item['key']);?>" class="btn btn-danger btn-xs" onclick="return confirm('确定删除吗？')">删除</a>

@@ -46,6 +46,22 @@ abstract class Database {
 		$sql = "INSERT INTO {$table}(`$fields`) VALUES($values)";
 		return $this->query($sql);
 	}
+
+	public function multi_insert($table, $datas, $size=500) {
+	    $chunks = array_chunk($datas, $size);
+	    foreach ($chunks as $chunk) {
+            $fields = implode('`,`', array_keys($chunk[0]));
+    	    $values = array();
+    	    foreach($chunk as $data) {
+    		    $data = array_map(array($this, 'escape'), $data);
+    	        $values[] = implode(',', array_values($data));
+    	    }
+    	    $values = implode('),(', $values);
+
+    	    $sql = "INSERT INTO {$table}(`$fields`) VALUES($values)";
+    	    $this->query($sql);
+	    }
+	}
 	
 	public function replace_into($table, $data) {
 		$data = array_map(array($this, 'escape'), $data);

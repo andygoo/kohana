@@ -29,13 +29,13 @@ class Kohana_Exception extends Exception {
 		return Kohana_Exception::text($this);
 	}
 
-	public static function handler(Exception $e) {
+	public static function handler($e) {
 		$response = Kohana_Exception::_handler($e);
 		echo $response;
 		exit(1);
 	}
 
-	public static function _handler(Exception $e) {
+	public static function _handler($e) {
 		try {
 			Kohana_Exception::log($e);
 		    if (PHP_SAPI == 'cli') {
@@ -52,7 +52,7 @@ class Kohana_Exception extends Exception {
 		}
 	}
 
-	public static function log(Exception $e, $level = Log::EMERGENCY) {
+	public static function log($e, $level = Log::EMERGENCY) {
 		if (is_object(Kohana::$log)) {
 			$error = Kohana_Exception::text($e);
 			Kohana::$log->add($level, $error);
@@ -61,7 +61,7 @@ class Kohana_Exception extends Exception {
 		}
 	}
 
-	public static function text(Exception $e) {
+	public static function text($e) {
 		$code = $e->getCode();
 		if (isset(Kohana_Exception::$php_errors[$code])) {
 			$code = Kohana_Exception::$php_errors[$code];
@@ -70,7 +70,7 @@ class Kohana_Exception extends Exception {
 			get_class($e), $code, strip_tags($e->getMessage()), Debug::path($e->getFile()), $e->getLine());
 	}
 
-	public static function response(Exception $e) {
+	public static function response($e) {
 		try {
 			$class   = get_class($e);
 			$code    = $e->getCode();

@@ -22,11 +22,15 @@ class CURL {
         return self::_exec($options);
     }
 
-    public static function post($url, $data='', $options=array()) {
+    public static function post($url, $data='', $ext_options=array()) {
+        $header = array(
+                "Host: test.com", // IMPORTANT
+        );
         $content = is_array($data) ? http_build_query($data) : $data;
-        $default_options = array(
+        $options = array(
             CURLOPT_POST => 1,
             CURLOPT_HEADER => 0,
+            CURLOPT_HTTPHEADER => $header,
 
             CURLOPT_URL => $url,
             CURLOPT_POSTFIELDS => $content,
@@ -45,8 +49,8 @@ class CURL {
             CURLOPT_CONNECTTIMEOUT => 5,
             CURLOPT_TIMEOUT => 5,
         );
-        if (!empty($options)) {
-            $options = array_merge($default_options, $options);
+        if (!empty($ext_options)) {
+            $options += $ext_options;
         }
         return self::_exec($options);
     }

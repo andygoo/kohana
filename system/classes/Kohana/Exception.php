@@ -74,11 +74,11 @@ class Kohana_Exception extends Exception {
 			$line    = $e->getLine();
 			$trace   = $e->getTrace();
 
-			//if ($e instanceof ErrorException) {
+			if ($e instanceof ErrorException) {
 				if (isset(Kohana_Exception::$php_errors[$code])) {
 					$code = Kohana_Exception::$php_errors[$code];
 				}
-			//}
+			}
 			
 			$response = View::factory(Kohana_Exception::$error_view, get_defined_vars());
 			return $response;

@@ -78,7 +78,7 @@ class View {
         try {
             return $this->render();
         } catch(Exception $e) {
-            $error_response = Kohana_exception::_handler($e);
+            $error_response = Kohana_exception::handler($e);
             return $error_response;
         }
     }

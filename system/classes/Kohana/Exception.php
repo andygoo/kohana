@@ -30,26 +30,21 @@ class Kohana_Exception extends Exception {
 	}
 
 	public static function handler($e) {
-		$response = Kohana_Exception::_handler($e);
-		echo $response;
-		exit(1);
-	}
-
-	public static function _handler($e) {
-		try {
-			Kohana_Exception::log($e);
-		    if (PHP_SAPI == 'cli') {
-		        $response = Kohana_Exception::text($e);
-		    } else {
-			    $response = Kohana_Exception::response($e);
-		    }
-			return $response;
-		} catch (Exception $e) {
-			ob_get_level() AND ob_clean();
-			header('Content-Type: text/plain; charset=utf-8', TRUE, 500);
-			echo Kohana_Exception::text($e);
-			exit(1);
-		}
+	    try {
+	        Kohana_Exception::log($e);
+	        if (PHP_SAPI == 'cli') {
+	            $response = Kohana_Exception::text($e);
+	        } else {
+	            $response = Kohana_Exception::response($e);
+	        }
+	        echo $response;
+	        exit(1);
+	    } catch (Exception $e) {
+	        ob_get_level() AND ob_clean();
+	        header('Content-Type: text/plain; charset=utf-8', TRUE, 500);
+	        echo Kohana_Exception::text($e);
+	        exit(1);
+	    }
 	}
 
 	public static function log($e, $level = Log::EMERGENCY) {

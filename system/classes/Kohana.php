@@ -2,7 +2,6 @@
 
 class Kohana {
 	
-	public static $environment = 'development';
 	public static $is_windows = FALSE;
 	public static $magic_quotes = FALSE;
 

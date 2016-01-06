@@ -23,14 +23,11 @@ class CURL {
     }
 
     public static function post($url, $data='', $ext_options=array()) {
-        $header = array(
-                "Host: test.com", // IMPORTANT
-        );
         $content = is_array($data) ? http_build_query($data) : $data;
         $options = array(
             CURLOPT_POST => 1,
             CURLOPT_HEADER => 0,
-            CURLOPT_HTTPHEADER => $header,
+            //CURLOPT_HTTPHEADER => $header,
 
             CURLOPT_URL => $url,
             CURLOPT_POSTFIELDS => $content,
@@ -50,7 +47,7 @@ class CURL {
             CURLOPT_TIMEOUT => 5,
         );
         if (!empty($ext_options)) {
-            $options += $ext_options;
+            $options = $ext_options + $options;
         }
         return self::_exec($options);
     }

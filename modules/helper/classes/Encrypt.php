@@ -1,6 +1,7 @@
 <?php
 
 class Encrypt {
+    
     public static $instances = array();
     protected static $_rand;
 

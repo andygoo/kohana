@@ -52,7 +52,8 @@ class Encrypt {
     public function encode($data) {
         // Set the rand type if it has not already been set
         if (Encrypt::$_rand === NULL) {
-            if (Kohana::$is_windows) {
+            $is_windows = (DIRECTORY_SEPARATOR === '\\');
+            if ($is_windows) {
                 // Windows only supports the system random number generator
                 Encrypt::$_rand = MCRYPT_RAND;
             } else {

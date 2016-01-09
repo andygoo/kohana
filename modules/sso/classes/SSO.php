@@ -17,13 +17,11 @@ class SSO {
         $token = md5(uniqid(rand(), true));
         $checksum = self::get_checksum($key, $token);
         
-        $ret = "(function(){\n";
+        $ret = array();
         $sites = self::$sso->_config['sites'];
         foreach ($sites as $url) {
-            $request_url = "{$url}{$method}/{$key}/{$token}/{$checksum}";
-            $ret .= "var script=document.createElement('script');script.src='$request_url';document.body.appendChild(script);\n";
+            $ret[] = "{$url}{$method}/{$key}/{$token}/{$checksum}";
         }
-        $ret .= "})();";
         return $ret;
     }
     

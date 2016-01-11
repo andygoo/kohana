@@ -124,24 +124,17 @@ class Model {
             foreach($where as $key => $value) {
                 if (in_array(strtoupper($key), array('GROUP', 'ORDER', 'LIMIT'))) continue;
                 
-                $column = $key;
-                $op = null;
-                if (strpos($key, '|')) {
-                    list($column, $op) = explode('|', $key, 2);
-                }
-                
-                if ($op != null) {
+                $column_op = explode('|', $key);
+                $column = $column_op[0];
+                $op = isset($column_op[1]) ? $column_op[1] : '';
+                if ($op != '') {
                     $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($value);
                 } else {
-                    if (is_null($value)) {
+                    if (is_array($value)) {
+                        $value = array_map(array($this->db, 'escape'), $value);
+                        $wheres[] = $column . ' IN (' . implode(',', $value) . ')';
+                    } elseif (is_null($value)) {
                         $wheres[] = $column . ' IS null';
-                    } elseif (is_array($value)) {
-                        foreach($value as &$v) {
-                            $v = $this->db->escape($v);
-                        }
-                        //$value = array_map($this->db->escape, $value);
-                        $value = implode(',', $value);
-                        $wheres[] = $column . ' IN (' . $value . ')';
                     } else {
                         $wheres[] = $column . ' = ' . $this->db->escape($value);
                     }

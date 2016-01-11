@@ -101,12 +101,12 @@ class Model {
         return $this->db->query('SELECT SUM(' . $column . ') AS sum FROM ' . $this->_table_name . $this->where_clause($where))->get('sum');
     }
 
-    public function increment($field, $step, $where) {
+    public function incr($field, $step, $where) {
         return $this->db->query('UPDATE ' . $this->_table_name . " SET $field=$field+$step " . $this->where_clause($where));
     }
 
-    public function decrement($field, $step, $where) {
-        return $this->increment($field, -$step, $where);
+    public function decr($field, $step, $where) {
+        return $this->incr($field, -$step, $where);
     }
 
     public function list_tables() {

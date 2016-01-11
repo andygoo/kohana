@@ -70,18 +70,15 @@ class Model {
     }
     
     public function updateById($data, $id) {
-        $where = array($this->_primary_key => $id);
-        return $this->update($where);
+        return $this->update(array($this->_primary_key => $id));
     }
     
     public function deleteById($id) {
-        $where = array($this->_primary_key => $id);
-        return $this->delete($where);
+        return $this->delete(array($this->_primary_key => $id));
     }
     
     public function getRowById($id) {
-        $where = array($this->_primary_key => $id);
-        return $this->getRow($where);
+        return $this->getRow(array($this->_primary_key => $id));
     }
 
     public function has($where) {

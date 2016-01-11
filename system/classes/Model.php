@@ -3,7 +3,7 @@
 class Model {
     protected $db;
     protected $_table_name;
-    protected $_primary_key;
+    protected $_primary_key = 'id';
 
     public static function factory($name, $db = 'default') {
         $_name = implode('_', array_map('ucfirst', explode('_', $name)));
@@ -14,7 +14,6 @@ class Model {
             $config = array();
             $config['db'] = $db;
             $config['tb'] = $name;
-            $config['pk'] = 'id';
             return new Model($config);
         }
     }
@@ -23,7 +22,6 @@ class Model {
         if (is_array($config)) {
             $db = $config['db'];
             $this->_table_name = $config['tb'];
-            $this->_primary_key = $config['pk'];
         } else {
             $db = $config;
         }
@@ -69,6 +67,21 @@ class Model {
 
     public function getRow($where) {
         return $this->db->query('SELECT * FROM ' . $this->_table_name . $this->where_clause($where))->current();
+    }
+    
+    public function updateById($data, $id) {
+        $where = array($this->_primary_key => $id);
+        return $this->update($where);
+    }
+    
+    public function deleteById($id) {
+        $where = array($this->_primary_key => $id);
+        return $this->delete($where);
+    }
+    
+    public function getRowById($id) {
+        $where = array($this->_primary_key => $id);
+        return $this->getRow($where);
     }
 
     public function has($where) {

@@ -11,10 +11,12 @@
 	<div class="form-group">
 		<label class="col-sm-1 control-label">状态</label>
 		<div class="col-sm-3">
-			<select name="status" class="form-control">
-				<option value="normal" <?php if ($info['status'] == 'normal') echo 'selected';?>>open</option>
-				<option value="disable" <?php if ($info['status'] == 'disable') echo 'selected';?>>close</option>
-			</select>
+			<label class="radio-inline">
+                <input type="radio" name="status" value="normal" checked> 正常
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="status" value="disable" <?php if ($info['status'] == 'disable') echo 'checked';?>> 关闭
+            </label>
 		</div>
 	</div>
 	

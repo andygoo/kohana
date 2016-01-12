@@ -70,7 +70,7 @@ class Model {
     }
     
     public function updateById($data, $id) {
-        return $this->update(array($this->_primary_key => $id));
+        return $this->update($data, array($this->_primary_key => $id));
     }
     
     public function deleteById($id) {

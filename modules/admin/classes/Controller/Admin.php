@@ -52,11 +52,11 @@ class Controller_Admin extends Controller_Website {
     public function action_edit() {
         $id = $_GET['id'];
         $m_admin = Model::factory('admin');
-        $userInfo = $m_admin->getRow($id);
+        $userInfo = $m_admin->getRowById($id);
 
         if (!empty($_POST)) {
             $data = $this->_get_data($_POST);
-            $ret = $m_admin->update($data, $id);
+            $ret = $m_admin->updateById($data, $id);
             if ($ret !== false) {
                 $this->redirect('admin/list');
             }
@@ -91,7 +91,7 @@ class Controller_Admin extends Controller_Website {
             'status' => 'disable',
         );
         $m_admin = Model::factory('admin');
-        $ret = $m_admin->update($data, $id);
+        $ret = $m_admin->updateById($data, $id);
         if ($ret !== false) {
             $this->redirect(Request::$referrer);
         }
@@ -103,7 +103,7 @@ class Controller_Admin extends Controller_Website {
             'status' => 'normal',
         );
         $m_admin = Model::factory('admin');
-        $ret = $m_admin->update($data, $id);
+        $ret = $m_admin->updateById($data, $id);
         if ($ret !== false) {
             $this->redirect(Request::$referrer);
         }

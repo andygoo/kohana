@@ -62,7 +62,7 @@ class Model_Auth extends Model {
         $data = array(
             'password' => $password 
         );
-        $ret = $this->update($data, $user[$this->_primary_key]);
+        $ret = $this->updateById($data, $user[$this->_primary_key]);
         return $ret;
     }
 
@@ -79,7 +79,7 @@ class Model_Auth extends Model {
             'client_ip' => Request::$client_ip, 
             'last_login' => strtotime('now'), 
         );
-        $this->update($data, $user[$this->_primary_key]);
+        $this->updateById($data, $user[$this->_primary_key]);
         
         $this->_session->set($this->_session_key, $user);
         return TRUE;

@@ -50,12 +50,12 @@ class Controller_Permit extends Controller_Website {
         
         if (!empty($_POST)) {
             $data = $this->_get_data($_POST);
-            $ret = $m_permit->update($data, $id);
+            $ret = $m_permit->updateById($data, $id);
             if ($ret !== false) {
                 $this->redirect('permit/list');
             }
         }
-        $info = $m_permit->getRow($id);
+        $info = $m_permit->getRowById($id);
 
         $menu = Kohana::config('menu');
         $cats = array_keys($menu);
@@ -68,7 +68,7 @@ class Controller_Permit extends Controller_Website {
     public function action_del() {
         $id = $_GET['id'];
         $model = Model::factory('permit');
-        $ret = $model->delete($id);
+        $ret = $model->deleteById($id);
         if ($ret !== false) {
             $this->redirect(Request::$referrer);
         }

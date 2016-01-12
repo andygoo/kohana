@@ -65,12 +65,12 @@ class Controller_Role extends Controller_Website {
         
         if (!empty($_POST)) {
             $data = $this->_get_data($_POST);
-            $ret = $m_role->update($data, $id);
+            $ret = $m_role->updateById($data, $id);
             if ($ret !== false) {
                 $this->redirect('role/list');
             }
         }
-        $info = $m_role->getRow($id);
+        $info = $m_role->getRowById($id);
         
         $this->content = View::factory('role_edit');
         $this->content->info = $info;
@@ -82,7 +82,7 @@ class Controller_Role extends Controller_Website {
             'status' => 'disable',
         );
         $m_role = Model::factory('role');
-        $ret = $m_role->update($data, $id);
+        $ret = $m_role->updateById($data, $id);
         if ($ret !== false) {
             $this->redirect(Request::$referrer);
         }
@@ -94,7 +94,7 @@ class Controller_Role extends Controller_Website {
             'status' => 'normal',
         );
         $m_role = Model::factory('role');
-        $ret = $m_role->update($data, $id);
+        $ret = $m_role->updateById($data, $id);
         if ($ret !== false) {
             $this->redirect(Request::$referrer);
         }

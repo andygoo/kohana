@@ -50,7 +50,7 @@ class Wechat {
         }
         
         if (!isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
-            exit('缺少数据');
+            //exit('缺少数据');
         }
         
         $this->debug = $debug;
@@ -75,12 +75,13 @@ class Wechat {
     private function savePostData() {
         $xml = '';
         
+        $data = file_get_contents('php://input');
         if ($this->encrypted) {
-            $errCode = $this->msgCryptor->decryptMsg($_GET['msg_signature'], $_GET['timestamp'], $_GET['nonce'], $GLOBALS['HTTP_RAW_POST_DATA'], $xml);
+            $errCode = $this->msgCryptor->decryptMsg($_GET['msg_signature'], $_GET['timestamp'], $_GET['nonce'], $data, $xml);
             
             if ($errCode != 0) exit($errCode);
         } else {
-            $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+            $xml = $data;
         }
         
         $xml = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);

@@ -156,13 +156,8 @@ class Model {
             if (isset($where['GROUP'])) $where_clause .= ' GROUP BY ' . $where['GROUP'];
             if (isset($where['ORDER'])) $where_clause .= ' ORDER BY ' . $where['ORDER'];
             if (isset($where['LIMIT'])) $where_clause .= ' LIMIT ' . $where['LIMIT'];
-        } elseif (!empty($where)) {
-            if (stripos($where, 'where') === false) {
-                $id = $this->db->escape($where);
-                $where_clause = " WHERE $this->_primary_key=$id";
-            } else {
-                $where_clause = $where;
-            }
+        } else {
+            $where_clause = $where;
         }
         return $where_clause;
     }

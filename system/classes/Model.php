@@ -138,13 +138,24 @@ class Model {
                 $column = $column_op[0];
                 $op = isset($column_op[1]) ? $column_op[1] : '';
                 if ($op != '') {
-                    $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($value);
+                    if ($op == '!') {
+                        if (is_array($value)) {
+                            $value = array_map(array($this->db, 'escape'), $value);
+                            $wheres[] = $column . ' NOT IN (' . implode(',', $value) . ')';
+                        } elseif (is_null($value)) {
+                            $wheres[] = $column . ' IS NOT NULL';
+                        } else {
+                            $wheres[] = $column . ' != ' . $this->db->escape($value);
+                        }
+                    } else {
+                        $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($value);
+                    }
                 } else {
                     if (is_array($value)) {
                         $value = array_map(array($this->db, 'escape'), $value);
                         $wheres[] = $column . ' IN (' . implode(',', $value) . ')';
                     } elseif (is_null($value)) {
-                        $wheres[] = $column . ' IS null';
+                        $wheres[] = $column . ' IS NULL';
                     } else {
                         $wheres[] = $column . ' = ' . $this->db->escape($value);
                     }

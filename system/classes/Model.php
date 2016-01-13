@@ -132,7 +132,7 @@ class Model {
         if (is_array($where)) {
             $wheres = array();
             foreach($where as $key => $value) {
-                if (in_array(strtoupper($key), array('GROUP', 'ORDER', 'LIMIT'))) continue;
+                if (in_array(strtoupper($key), array('GROUP', 'ORDER', 'LIMIT', 'OFFSET'))) continue;
                 
                 $column_op = explode('|', $key);
                 $column = $column_op[0];
@@ -150,15 +150,7 @@ class Model {
                     if (is_array($value) && count($value) == 2) {
                         $value = array_map(array($this->db, 'escape'), $value);
                         list($min, $max) = $value;
-                        $wheres[] = $column . ' > ' . $min;
-                        $wheres[] = $column . ' < ' . $max;
-                    }
-                } elseif ($op == '><') {
-                    if (is_array($value) && count($value) == 2) {
-                        $value = array_map(array($this->db, 'escape'), $value);
-                        list($min, $max) = $value;
-                        $wheres[] = $column . ' < ' . $min;
-                        $wheres[] = $column . ' > ' . $max;
+                        $wheres[] = $column . ' > ' . $min . ' AND ' . $column . ' < ' . $max;
                     }
                 } elseif ($op == '!') {
                     if (is_array($value)) {
@@ -179,6 +171,7 @@ class Model {
             if (isset($where['GROUP'])) $where_clause .= ' GROUP BY ' . $where['GROUP'];
             if (isset($where['ORDER'])) $where_clause .= ' ORDER BY ' . $where['ORDER'];
             if (isset($where['LIMIT'])) $where_clause .= ' LIMIT ' . $where['LIMIT'];
+            if (isset($where['OFFSET'])) $where_clause .= ' OFFSET ' . $where['OFFSET'];
         } else {
             $where_clause = $where;
         }

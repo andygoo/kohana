@@ -137,16 +137,7 @@ class Model {
                 $column_op = explode('|', $key);
                 $column = $column_op[0];
                 $op = isset($column_op[1]) ? $column_op[1] : '=';
-                if ($op == '!') {
-                    if (is_array($value)) {
-                        $value = array_map(array($this->db, 'escape'), $value);
-                        $wheres[] = $column . ' NOT IN (' . implode(',', $value) . ')';
-                    } elseif (is_null($value)) {
-                        $wheres[] = $column . ' IS NOT NULL';
-                    } else {
-                        $wheres[] = $column . ' != ' . $this->db->escape($value);
-                    }
-                } elseif ($op == '=') {
+                if ($op == '=') {
                     if (is_array($value)) {
                         $value = array_map(array($this->db, 'escape'), $value);
                         $wheres[] = $column . ' IN (' . implode(',', $value) . ')';
@@ -168,6 +159,15 @@ class Model {
                         list($min, $max) = $value;
                         $wheres[] = $column . ' < ' . $min;
                         $wheres[] = $column . ' > ' . $max;
+                    }
+                } elseif ($op == '!') {
+                    if (is_array($value)) {
+                        $value = array_map(array($this->db, 'escape'), $value);
+                        $wheres[] = $column . ' NOT IN (' . implode(',', $value) . ')';
+                    } elseif (is_null($value)) {
+                        $wheres[] = $column . ' IS NOT NULL';
+                    } else {
+                        $wheres[] = $column . ' != ' . $this->db->escape($value);
                     }
                 } else {
                     $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($value);

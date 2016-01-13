@@ -158,16 +158,16 @@ class Model {
                 } elseif ($op == '<>') {
                     if (is_array($value) && count($value) == 2) {
                         $value = array_map(array($this->db, 'escape'), $value);
-                        list($start, $end) = $value;
-                        $wheres[] = $column . ' > ' . $start;
-                        $wheres[] = $column . ' < ' . $end;
+                        list($min, $max) = $value;
+                        $wheres[] = $column . ' > ' . $min;
+                        $wheres[] = $column . ' < ' . $max;
                     }
                 } elseif ($op == '><') {
                     if (is_array($value) && count($value) == 2) {
                         $value = array_map(array($this->db, 'escape'), $value);
-                        list($start, $end) = $value;
-                        $wheres[] = $column . ' < ' . $start;
-                        $wheres[] = $column . ' > ' . $end;
+                        list($min, $max) = $value;
+                        $wheres[] = $column . ' < ' . $min;
+                        $wheres[] = $column . ' > ' . $max;
                     }
                 } else {
                     $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($value);

@@ -136,21 +136,17 @@ class Model {
                 
                 $column_op = explode('|', $key);
                 $column = $column_op[0];
-                $op = isset($column_op[1]) ? $column_op[1] : '';
-                if ($op != '') {
-                    if ($op == '!') {
-                        if (is_array($value)) {
-                            $value = array_map(array($this->db, 'escape'), $value);
-                            $wheres[] = $column . ' NOT IN (' . implode(',', $value) . ')';
-                        } elseif (is_null($value)) {
-                            $wheres[] = $column . ' IS NOT NULL';
-                        } else {
-                            $wheres[] = $column . ' != ' . $this->db->escape($value);
-                        }
+                $op = isset($column_op[1]) ? $column_op[1] : '=';
+                if ($op == '!') {
+                    if (is_array($value)) {
+                        $value = array_map(array($this->db, 'escape'), $value);
+                        $wheres[] = $column . ' NOT IN (' . implode(',', $value) . ')';
+                    } elseif (is_null($value)) {
+                        $wheres[] = $column . ' IS NOT NULL';
                     } else {
-                        $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($value);
+                        $wheres[] = $column . ' != ' . $this->db->escape($value);
                     }
-                } else {
+                } elseif ($op == '=') {
                     if (is_array($value)) {
                         $value = array_map(array($this->db, 'escape'), $value);
                         $wheres[] = $column . ' IN (' . implode(',', $value) . ')';
@@ -159,6 +155,22 @@ class Model {
                     } else {
                         $wheres[] = $column . ' = ' . $this->db->escape($value);
                     }
+                } elseif ($op == '<>') {
+                    if (is_array($value) && count($value) == 2) {
+                        $value = array_map(array($this->db, 'escape'), $value);
+                        list($start, $end) = $value;
+                        $wheres[] = $column . ' > ' . $start;
+                        $wheres[] = $column . ' < ' . $end;
+                    }
+                } elseif ($op == '><') {
+                    if (is_array($value) && count($value) == 2) {
+                        $value = array_map(array($this->db, 'escape'), $value);
+                        list($start, $end) = $value;
+                        $wheres[] = $column . ' < ' . $start;
+                        $wheres[] = $column . ' > ' . $end;
+                    }
+                } else {
+                    $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($value);
                 }
             }
             if (!empty($wheres)) {

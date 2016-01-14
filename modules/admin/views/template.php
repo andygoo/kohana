@@ -90,6 +90,18 @@
 	</div>
 </div>
 
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
 <script>
 $(function(){
 	$('#accordion').find('.curr').parent('ul').prev().click();
@@ -98,7 +110,7 @@ $(function(){
         title: document.title,
         html: $("#content").html()
     };
-	$(document).on('click', '.ajax-click, .pagination>li>a, .page-header a', function(){
+	$(document).on('click', '.ajax-click, .pagination>li>a', function(){
 		var t = $(this);
 		var url = t.attr('href');
 		if (url.split('#')[0].length) {
@@ -107,7 +119,7 @@ $(function(){
     			var state = {
                     url: url,
                     title: document.title,
-                    html: $("#content").html()
+                    html: res
                 };
                 history.pushState(state,null,url);
     		});
@@ -116,13 +128,48 @@ $(function(){
 	});
     window.addEventListener("popstate",function(event) {
         if(event && event.state) {
+            console.log('111111');
             document.title = event.state.title;
             $("#content").html(event.state.html);
         } else{
+            console.log('222222');
             document.title = currentState.title;
             $("#content").html(currentState.html);
         }
     });
+	$(document).on('click', '.ajax-modal, .ajax-modal-sm, .ajax-modal-lg', function(){
+		var t = $(this);
+	    var m = $('#myModal');
+		if (t.hasClass('ajax-modal-sm')) {
+			m.find('.modal-dialog').attr('class', 'modal-dialog modal-sm');
+		} else if (t.hasClass('ajax-modal-lg')) {
+			m.find('.modal-dialog').attr('class', 'modal-dialog modal-lg');
+		}
+		var url = t.attr('href');
+		if (url.split('#')[0].length) {
+    		$.get(url, function(res) {
+    			m.find('.modal-body').html(res);
+    			m.modal('show');
+    			var state = {
+                    url: url,
+                    title: document.title,
+                    html: res
+                };
+                history.pushState(state,null,url);
+    		});
+		}
+		return false;
+	});
+	$('#myModal').on('show.bs.modal', function (e) {
+		var modal = $(this);
+		var page_title = modal.find('.page-header');
+        modal.find('.modal-title').html(page_title.text());
+        page_title.hide();
+        modal.find('form').attr('class', '');
+	});
+	$('#myModal').on('hidden.bs.modal', function (e) {
+	    history.back();
+	});
 });
 </script>
 

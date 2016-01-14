@@ -49,14 +49,14 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #3c8dbc">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="<?= URL::site()?>"><i class="glyphicon glyphicon-home"></i>&nbsp;好车无忧管理后台</a>
+			<a class="navbar-brand ajax-click" href="<?= URL::site()?>"><i class="glyphicon glyphicon-home"></i>&nbsp;好车无忧管理后台</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 			    <li class="dropdown">
 			        <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>&nbsp;<?= $user['username']?><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-				        <li><a href="<?= URL::site('admin/password')?>">修改密码</a></li>
+				        <li><a href="<?= URL::site('admin/password')?>" class="ajax-modal-sm">修改密码</a></li>
                     </ul>
                 </li>
 				<li><a href="<?= URL::site('admin/logout')?>"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a></li>

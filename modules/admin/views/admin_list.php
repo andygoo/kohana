@@ -32,7 +32,7 @@
         <?php endif;?>
     </td>
     <td>
-        <a href="<?= URL::site('admin/edit?id='.$item['id']);?>" class="btn btn-info btn-xs">修改</a>
+        <a href="<?= URL::site('admin/edit?id='.$item['id']);?>" class="btn btn-info btn-xs ajax-modal-sm">修改</a>
     </td>
 </tr>
 <?php endforeach; ?>

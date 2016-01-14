@@ -1,42 +1,33 @@
 
-<form action="" method="post" class="form-horizontal">
-
+<form action="" method="post">
 	<div class="form-group">
-		<label class="col-sm-1 control-label">名称</label>
-		<div class="col-sm-3">
-			<input type="text" class="form-control" name="name" value="<?= $info['name'] ?>">
-		</div>
+		<input type="text" style="width: 200px;" class="form-control" name="name" value="<?= $info['name'] ?>" placeholder="名称" required>
 	</div>
-
 	<div class="form-group">
-		<label class="col-sm-1 control-label">状态</label>
-		<div class="col-sm-3">
-			<label class="radio-inline">
-                <input type="radio" name="status" value="normal" checked> 正常
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="status" value="disable" <?php if ($info['status'] == 'disable') echo 'checked';?>> 关闭
-            </label>
-		</div>
+		<label class="radio-inline">
+            <input type="radio" name="status" value="normal" checked> 正常
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="status" value="disable" <?php if ($info['status'] == 'disable') echo 'checked';?>> 关闭
+        </label>
 	</div>
-	
 	<div class="form-group">
-		<label class="col-sm-1 control-label">权限</label>
-		<div class="col-sm-10">
-            <?php foreach ($permits as $cat => $items):?>
-                <h4><strong><?= $cat?></strong></h4>
-                <?php foreach ($items as $item):?>
-                <label class="checkbox-inline">
-                    <input type="checkbox" name="permit_ids[]" value="<?= $item['id']?>" data-url="<?= $item['url']?>" <?php if(in_array($item['id'], explode(',', $info['permit_ids']))):?>checked<?php endif;?>> <?= $item['name']?>
-                </label>
-                <?php endforeach;?><hr>
+        <?php foreach ($permits as $cat => $items):?>
+        <div class="panel panel-default">
+        <div class="panel-heading"><?php echo $cat?></div>
+        <ul class="list-group" style="display: noned">
+            <li class="list-group-item">
+            <?php foreach ($items as $item):?>
+            <label class="checkbox-inline" style="margin-left: 0;margin-right: 10px;">
+                <input type="checkbox" name="permit_ids[]" value="<?= $item['id']?>" data-url="<?= $item['url']?>" <?php if(in_array($item['id'], explode(',', $info['permit_ids']))):?>checked<?php endif;?>> <?= $item['name']?>
+            </label>
             <?php endforeach;?>
-		</div>
+            </li>
+        </ul>
+        </div>
+        <?php endforeach;?>
 	</div>
-
 	<div class="form-group">
-		<div class="col-sm-offset-1 col-sm-3">
-			<button type="submit" class="btn btn-primary">提交</button>
-		</div>
+		<button type="submit" class="btn btn-info">提交</button>
 	</div>
 </form>

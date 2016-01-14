@@ -1,6 +1,5 @@
-<h3 class="page-header">用户列表 <small>
-<a href="<?= URL::site('admin/add');?>" class="ajax-modal-sm">
-<i class="glyphicon glyphicon-plus"></i></a></small>
+<h3 class="page-header">用户列表 
+<a href="<?= URL::site('admin/add');?>" class="ajax-modal-sm">+</a>
 </h3>
 
 <div class="table-responsive">

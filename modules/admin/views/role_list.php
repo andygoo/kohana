@@ -1,6 +1,5 @@
-<h3 class="page-header">角色列表 <small>
-<a href="<?= URL::site('role/add');?>">
-<i class="glyphicon glyphicon-plus"></i></a></small>
+<h3 class="page-header">角色列表
+<a href="<?= URL::site('role/add');?>" class="ajax-modal">+</a>
 </h3>
 
 <div class="table-responsive">
@@ -29,7 +28,7 @@
         <?php endif;?>
 	</td>
 	<td>
-	    <a href="<?= URL::site('role/edit?id='.$item['id']);?>" class="btn btn-info btn-xs">修改</a>
+	    <a href="<?= URL::site('role/edit?id='.$item['id']);?>" class="btn btn-info btn-xs ajax-modal">修改</a>
 	</td>
 </tr>
 <?php endforeach; ?>

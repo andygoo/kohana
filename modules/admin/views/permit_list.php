@@ -1,6 +1,5 @@
-<h3 class="page-header">权限列表 <small>
-<a href="<?= URL::site('permit/add');?>">
-<i class="glyphicon glyphicon-plus"></i></a></small>
+<h3 class="page-header">权限列表 
+<a href="<?= URL::site('permit/add');?>" class="ajax-modal">+</a>
 </h3>
 
 <form class="form-inline" method="get">
@@ -35,7 +34,7 @@
 	<td><?= $item['name'] ?></td>
 	<td><?= $item['url'] ?></td>
 	<td>
-        <a href="<?= URL::site('permit/edit?id='.$item['id']);?>" class="btn btn-info btn-xs">修改</a>&nbsp;&nbsp;
+        <a href="<?= URL::site('permit/edit?id='.$item['id']);?>" class="btn btn-info btn-xs ajax-modal">修改</a>&nbsp;&nbsp;
 	    <a href="<?= URL::site('permit/del?id='.$item['id']);?>" class="btn btn-info btn-xs" onclick="return confirm('确定删除这条记录吗？')">删除</a></a>
 	</td>
 </tr>

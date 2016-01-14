@@ -40,6 +40,7 @@
 .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
 	background: #367fa9;color: #f9f9f9;
 }
+.page-header a:hover {text-decoration: none}
 </style>
 <?= HTML::script('media/js/jquery.min.js')?>
 <?= HTML::script('media/bootstrap/js/bootstrap.min.js')?>
@@ -144,6 +145,8 @@ $(function(){
 			m.find('.modal-dialog').attr('class', 'modal-dialog modal-sm');
 		} else if (t.hasClass('ajax-modal-lg')) {
 			m.find('.modal-dialog').attr('class', 'modal-dialog modal-lg');
+		} else {
+			m.find('.modal-dialog').attr('class', 'modal-dialog');
 		}
 		var url = t.attr('href');
 		if (url.split('#')[0].length) {

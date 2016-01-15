@@ -35,7 +35,7 @@
 	<td><?= $item['url'] ?></td>
 	<td>
         <a href="<?= URL::site('permit/edit?id='.$item['id']);?>" class="btn btn-info btn-xs ajax-modal">修改</a>&nbsp;&nbsp;
-	    <a href="<?= URL::site('permit/del?id='.$item['id']);?>" class="btn btn-info btn-xs ajax-del">删除</a></a>
+	    <a href="<?= URL::site('permit/del?id='.$item['id']);?>" onclick="return confirm('确定删除这条记录吗？')" class="btn btn-info btn-xs ajax-del">删除</a></a>
 	</td>
 </tr>
 <?php endforeach; ?>

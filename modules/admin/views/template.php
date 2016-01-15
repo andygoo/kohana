@@ -179,24 +179,7 @@ $(function(){
 	    history.back();
 	});
 
-	$(document).on('click', '.ajax-del', function() {
-		if (!confirm('确定要删除吗？')) {
-			return false;
-		}
-		var t = $(this);
-		var url = t.attr('href');
-		if (url.split('#')[0].length) {
-    		$.get(url, function(res) {
-        		console.log(res);
-    			var res = eval('('+res+')');
-    			if (res.code = '302') {
-        			replaceState(res.url);
-    			}
-    		});
-		}
-		return false;
-	});
-	$(document).on('click', '.ajax-update', function() {
+	$(document).on('click', '.ajax-del, .ajax-update', function() {
 		var t = $(this);
 		var url = t.attr('href');
 		if (url.split('#')[0].length) {

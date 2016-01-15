@@ -31,6 +31,9 @@ abstract class Controller {
     public function redirect($uri = '', $code = 302) {
         if ($this->auto_render === TRUE) {
             $this->request->redirect($uri, $code);
+        } else {
+            echo json_encode(array('code'=>302, 'url'=>$uri));
+            exit;
         }
     }
 }

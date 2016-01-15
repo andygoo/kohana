@@ -22,9 +22,9 @@
 	<td><?= $item['permit'] ?></td>
 	<td>
         <?php if ($item['status']=='normal'):?>
-        <a href="<?= URL::site('role/disable?id='.$item['id']);?>" class="btn btn-info btn-xs">禁用</a>
+        <a href="<?= URL::site('role/disable?id='.$item['id']);?>" class="btn btn-info btn-xs ajax-update">禁用</a>
         <?php else:?>
-        <a href="<?= URL::site('role/enable?id='.$item['id']);?>" class="btn btn-danger btn-xs">启用</a>
+        <a href="<?= URL::site('role/enable?id='.$item['id']);?>" class="btn btn-danger btn-xs ajax-update">启用</a>
         <?php endif;?>
 	</td>
 	<td>

@@ -128,6 +128,11 @@ $(function(){
 		return false;
 	});
     window.addEventListener("popstate",function(event) {
+    	/*console.log(history.state);
+    	var currentState = history.state;
+        document.title = currentState.title;
+        $("#content").html(currentState.html);*/
+        
         if(event && event.state) {
             console.log('111111');
             document.title = event.state.title;
@@ -173,6 +178,60 @@ $(function(){
 	$('#myModal').on('hidden.bs.modal', function (e) {
 	    history.back();
 	});
+
+	$(document).on('click', '.ajax-del', function() {
+		if (!confirm('确定要删除吗？')) {
+			return false;
+		}
+		var t = $(this);
+		var url = t.attr('href');
+		if (url.split('#')[0].length) {
+    		$.get(url, function(res) {
+        		console.log(res);
+    			var res = eval('('+res+')');
+    			if (res.code = '302') {
+        			replaceState(res.url);
+    			}
+    		});
+		}
+		return false;
+	});
+	$(document).on('click', '.ajax-update', function() {
+		var t = $(this);
+		var url = t.attr('href');
+		if (url.split('#')[0].length) {
+    		$.get(url, function(res) {
+        		console.log(res);
+    			var res = eval('('+res+')');
+    			if (res.code = '302') {
+        			replaceState(res.url);
+    			}
+    		});
+		}
+		return false;
+	});
+	function pushState(url){
+		$.get(url, function(res) {
+			$('#content').html(res);
+			var state = {
+                url: url,
+                title: document.title,
+                html: res
+            };
+            history.pushState(state,null,url);
+		});
+	}
+	function replaceState(url){
+		$.get(url, function(res) {
+			$('#content').html(res);
+			var state = {
+                url: url,
+                title: document.title,
+                html: res
+            };
+            history.replaceState(state,null,url);
+		});
+	}
 });
 </script>
 

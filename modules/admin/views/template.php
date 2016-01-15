@@ -91,7 +91,7 @@
 	</div>
 </div>
 
-<div class="modal" id="myModal">
+<div class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -111,28 +111,12 @@ $(function(){
         title: document.title,
         html: $("#content").html()
     };
-	$(document).on('click', '.ajax-click, .pagination>li>a', function(){
-		var t = $(this);
-		var url = t.attr('href');
-		if (url.split('#')[0].length) {
-    		$.get(url, function(res) {
-    			$('#content').html(res);
-    			var state = {
-                    url: url,
-                    title: document.title,
-                    html: res
-                };
-                history.pushState(state,null,url);
-    		});
-		}
-		return false;
-	});
+    var modal_close_history_back = true;
     window.addEventListener("popstate",function(event) {
     	/*console.log(history.state);
     	var currentState = history.state;
         document.title = currentState.title;
         $("#content").html(currentState.html);*/
-        
         if(event && event.state) {
             console.log('111111');
             document.title = event.state.title;
@@ -143,46 +127,72 @@ $(function(){
             $("#content").html(currentState.html);
         }
     });
+    
 	$(document).on('click', '.ajax-modal, .ajax-modal-sm, .ajax-modal-lg', function(){
-		var t = $(this);
-	    var m = $('#myModal');
-		if (t.hasClass('ajax-modal-sm')) {
-			m.find('.modal-dialog').attr('class', 'modal-dialog modal-sm');
-		} else if (t.hasClass('ajax-modal-lg')) {
-			m.find('.modal-dialog').attr('class', 'modal-dialog modal-lg');
-		} else {
-			m.find('.modal-dialog').attr('class', 'modal-dialog');
-		}
+		/*var t = $(this);
 		var url = t.attr('href');
 		if (url.split('#')[0].length) {
-    		$.get(url, function(res) {
-    			m.find('.modal-body').html(res);
-    			m.modal('show');
-    			var state = {
-                    url: url,
-                    title: document.title,
-                    html: res
-                };
-                history.pushState(state,null,url);
-    		});
+			pushState(url);
+		}
+		return false;
+		*/
+		var t = $(this);
+	    var m = $('.modal').eq(0);
+	    var d = m.find('.modal-dialog');
+	    d.removeClass('modal-sm');
+	    d.removeClass('modal-lg');
+		if (t.hasClass('ajax-modal-sm')) {
+			d.addClass('modal-sm');
+    	} else if (t.hasClass('ajax-modal-lg')) {
+			d.addClass('modal-lg');
+    	}
+		//var url = t.attr('href');
+		var url = this.href;
+		if (url != location.href) {
+			$.get(url, function(res) {
+				m.find('.modal-body').html(res);
+				m.modal('show');
+				modal_close_history_back = true;
+				var state = {
+	                url: url,
+	                title: document.title,
+	                html: res
+	            };
+	            history.pushState(state,null,url);
+			});
 		}
 		return false;
 	});
-	$('#myModal').on('show.bs.modal', function (e) {
-		var modal = $(this);
-		var page_title = modal.find('.page-header');
-        modal.find('.modal-title').html(page_title.text());
+	$('.modal').on('show.bs.modal', function (e) {
+		var t = $(this);
+		var page_title = t.find('.page-header');
+        t.find('.modal-title').html(page_title.text());
+        t.find('form').attr('class', 'ajax-submit');
         page_title.hide();
-        modal.find('form').attr('class', '');
 	});
-	$('#myModal').on('hidden.bs.modal', function (e) {
-	    history.back();
+	$('.modal').on('hidden.bs.modal', function (e) {
+		if (modal_close_history_back) {
+		    history.back();
+		} else {
+			return false;
+		}
 	});
 
+	$(document).on('click', '.ajax-click, .pagination>li>a', function(){
+		var t = $(this);
+		//var url = t.attr('href');
+		var url = this.href;
+		if (url != location.href) {
+			pushState(url);
+		}
+		return false;
+	});
+	
 	$(document).on('click', '.ajax-del, .ajax-update', function() {
 		var t = $(this);
-		var url = t.attr('href');
-		if (url.split('#')[0].length) {
+		//var url = t.attr('href');
+		var url = this.href;
+		if (url != location.href) {
     		$.get(url, function(res) {
         		console.log(res);
     			var res = eval('('+res+')');
@@ -193,6 +203,28 @@ $(function(){
 		}
 		return false;
 	});
+	
+	$(document).on('submit', '.ajax-submit', function() {
+		var t = $(this);
+		var url = t.attr('action') || location.href;
+		var type = t.attr('method');
+		$.ajax({
+            type: type,
+            url: url,
+            data: t.serialize(),
+            success: function(res) {
+        		console.log(res);
+    			var res = eval('('+res+')');
+    			if (res.code = '302') {
+    				pushState(res.url);
+    				modal_close_history_back = false;
+    				$('.modal').modal('hide');
+    			}
+            }
+		});
+		return false;
+	});
+	
 	function pushState(url){
 		$.get(url, function(res) {
 			$('#content').html(res);
@@ -204,6 +236,7 @@ $(function(){
             history.pushState(state,null,url);
 		});
 	}
+	
 	function replaceState(url){
 		$.get(url, function(res) {
 			$('#content').html(res);

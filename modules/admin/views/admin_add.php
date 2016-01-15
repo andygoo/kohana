@@ -1,7 +1,7 @@
 
 <h3 class="page-header">添加用户</h3>
 
-<form action="" method="post" autocomplete="off" class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+<form method="post" autocomplete="off" class="col-xs-6 col-sm-5 col-md-4 col-lg-3 ajax-submit">
 	<div class="form-group">
 		<select class="form-control" name="role_id">
 			<option value="0"> - 选择角色 - </option>

@@ -17,7 +17,7 @@ class Controller_Admin extends Controller_Website {
         $m_admin = Model::factory('admin');
 
         $total = $m_admin->count();
-        $pager = new Pager($total, 10);
+        $pager = new Pager($total, 20);
         $list = $m_admin->select($pager->offset, $pager->size)->as_array();
 
         $m_role = Model::factory('role');

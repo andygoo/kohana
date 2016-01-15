@@ -24,7 +24,8 @@ $error_id = uniqid('error');
 		#kohana_error pre.source span.line span.number { color: #666; }
 #kohana_error ol.trace { display: block; margin: 0 0 0 2em; padding: 0; list-style: decimal; }
 	#kohana_error ol.trace li { margin: 0; padding: 0; }
-.js .collapsed { display: none; }
+#kohana_error .js .collapsed { display: none; }
+#kohana_error .collapsed { display: none; }
 </style>
 <script type="text/javascript">
 document.documentElement.className = document.documentElement.className + ' js';

@@ -35,6 +35,7 @@ abstract class Controller {
             if (strpos($uri, '://') === FALSE) {
                 $uri = URL::site($uri);
             }
+            header('Content-Type: application/json; charset=utf-8');
             echo json_encode(array('code'=>302, 'url'=>$uri));
             exit;
         }

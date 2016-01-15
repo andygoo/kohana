@@ -195,8 +195,8 @@ $(function(){
 		if (url != location.href) {
     		$.get(url, function(res) {
         		console.log(res);
-    			var res = eval('('+res+')');
-    			if (res.code = '302') {
+    			//var res = eval('('+res+')');
+    			if (res.code == '302') {
         			replaceState(res.url);
     			}
     		});
@@ -214,11 +214,19 @@ $(function(){
             data: t.serialize(),
             success: function(res) {
         		console.log(res);
-    			var res = eval('('+res+')');
-    			if (res.code = '302') {
+    			//var res = eval('('+res+')');
+    			if (res.code == '302') {
     				pushState(res.url);
     				modal_close_history_back = false;
     				$('.modal').modal('hide');
+    			} else {
+    				$('#content').html(res);
+    				var state = {
+		                url: url,
+		                title: document.title,
+		                html: res
+		            };
+		            history.pushState(state,null,url);
     			}
             }
 		});

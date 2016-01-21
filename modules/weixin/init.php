@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-Route::set('weixin_oauth', '<directory>(/<controller>(/<action>))', array('directory' => 'weixin', 'controller' => '(oauth|reply)'))
+Route::set('weixin_oauth', 'weixin(/<controller>(/<action>))', array('directory' => 'weixin', 'controller' => '(oauth|reply)'))
 ->defaults(array(
-'controller' => 'Oauth',
+'controller' => 'oauth',
 'action'     => 'index',
 ));

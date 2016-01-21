@@ -174,7 +174,9 @@ class Request {
     public function execute() {
         $prefix = 'Controller_';
         if (!empty($this->directory)) {
-            $prefix .= str_replace(array('\\', '/'), '_', trim($this->directory, '/')) . '_';
+            $dirs = explode('/', trim($this->directory, '/'));
+            $dirs = array_map('ucfirst', $dirs);
+            $prefix .= implode('_', $dirs) . '_';
         }
         
         $class = new ReflectionClass($prefix . ucfirst($this->controller));

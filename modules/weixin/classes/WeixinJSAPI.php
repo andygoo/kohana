@@ -20,16 +20,6 @@ class WeixinJSAPI extends Weixin {
         $this->jsapi_ticket = $jsapi_ticket;
     }
 
-    public function get_jsapi_ticket() {
-        $url = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' . $this->access_token . '&type=jsapi';
-        $param = array(
-            'appid' => $this->appid,
-            'secret' => $this->appsecret,
-        );
-        $ret = CURL::get($url, $param);
-        return $ret;
-    }
-    
     public function get_jsapi_config() {
         $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $jsapi_config = array(
@@ -46,8 +36,18 @@ class WeixinJSAPI extends Weixin {
         //$jsapi_config['debug'] = true;
         return json_encode($jsapi_config);
     }
+
+    protected function get_jsapi_ticket() {
+        $url = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' . $this->access_token . '&type=jsapi';
+        $param = array(
+            'appid' => $this->appid,
+            'secret' => $this->appsecret,
+        );
+        $ret = CURL::get($url, $param);
+        return $ret;
+    }
     
-    public function random($length = 8) {
+    protected function random($length = 8) {
         $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $pool = str_split($pool, 1);
         $max = count($pool) - 1;

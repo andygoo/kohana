@@ -111,5 +111,19 @@ class Controller_Weixin extends Controller {
         $this->template->jsapi_config = $ret;
         echo $this->template;
     }
-    
+
+    public function action_sendredpack() {
+        $phone = 13800000000;
+        $params = array(
+                "openid" => 'W34SD#@#DSDSDSDSAAAAAA', //接受红包的用户, 用户在wxappid下的openid，服务商模式下可填入msgappid下的openid。
+                "total_amount" => 100, //付款金额，单位分
+                "total_num" => 1, //红包发放总人数
+                "mch_billno" => sprintf("10125753%s%11d", date('Ymd'), $phone),
+                "act_name" => "卖车红包", //活动名称: 猜灯谜抢红包活动
+                "remark" => "卖车红包", //备注信息: 猜越多得越多，快来抢！
+                "wishing" => "请爷收银子", //红包祝福语: 感谢您参加猜灯谜活动，祝您元宵节快乐！
+        );
+        $ret = WeixinPay::sendredpack($params);
+        var_dump($ret);
+    }
 }

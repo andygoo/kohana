@@ -54,12 +54,8 @@ class Wechat {
         }
         
         $this->debug = $debug;
-        set_error_handler(array(
-            &$this,
-            'errorHandler' 
-        ));
+        set_error_handler(array(&$this, 'errorHandler'));
         // 设置错误处理函数，将错误通过文本消息回复显示
-        
 
         if (isset($_GET['encrypt_type'])) {
             $this->encrypted = $_GET['encrypt_type'] == 'aes';
@@ -114,11 +110,7 @@ class Wechat {
         $timestamp = $_GET['timestamp'];
         $nonce = $_GET['nonce'];
         
-        $signatureArray = array(
-            $token,
-            $timestamp,
-            $nonce 
-        );
+        $signatureArray = array($token, $timestamp, $nonce);
         sort($signatureArray, SORT_STRING);
         
         return sha1(implode($signatureArray)) == $signature;

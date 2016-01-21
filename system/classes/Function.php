@@ -64,10 +64,9 @@ function array2xml($data, $root = 'data', $xml = null) {
     foreach($data as $key => $value) {
         if (is_array($value)) {
             if (is_int($key)) {
-                $node = $xml->addChild('item');
-            } else {
-                $node = $xml->addChild($key);
+                $key = 'item';
             }
+            $node = $xml->addChild($key);
             array2xml($value, $root, $node);
         } else {
             $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');

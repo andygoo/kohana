@@ -6,7 +6,7 @@ class Controller_Weixin_Oauth extends Controller {
         $wx = new WeixinOauth();
         $user_info = $wx->get_user_info();
         if (empty($user_info)) {
-            $callback_url = URL::site('weixin/oauth', true);
+            $callback_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             $this->redirect('weixin/oauth/login?callback_url=' . urlencode($callback_url));
         }
         var_dump($user_info);

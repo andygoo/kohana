@@ -10,14 +10,11 @@ class Weixin {
     
     public function __construct() {
         $this->redis = new Redis();
-        //$this->redis->connect('127.0.0.1', '6379');
         $this->redis->connect('192.168.1.106', '6379');
         
         $access_token = $this->redis->get('wx_access_token');
-        //var_dump($access_token);
         if (empty($access_token)) {
-            $ret_json = $this->get_access_token();
-            $ret_array = json_decode($ret_json, true);
+            $ret_array = $this->get_access_token();
             if (isset($ret_array['access_token'])) {
                 $access_token = $ret_array['access_token'];
                 $this->redis->setex('wx_access_token', $ret_array['expires_in']-60, $access_token);
@@ -32,8 +29,9 @@ class Weixin {
             'appid' => $this->appid,
             'secret' => $this->appsecret,
         );
-        $ret = CURL::get($url, $param);
-        return $ret;
+        $ret_json = CURL::get($url, $param);
+        $ret_array = json_decode($ret_json, true);
+        return $ret_array;
     }
 
     public function create_menu($data) {

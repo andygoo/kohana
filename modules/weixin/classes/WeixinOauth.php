@@ -2,16 +2,13 @@
 
 class WeixinOauth {
 
-    private $appid;
-    private $appsecret;
+    protected $redis;
+    protected $access_token;
     
-    public function __construct() {
-        $config = Kohana::config('weixin');
-        $this->appid = $config['appid'];
-        $this->appsecret = $config['appsecret'];
-    }
+    protected $appid = 'wxc5b1d86df49a2dc4';
+    protected $appsecret = '50200b8e4eb49d9171835e6acea44955';
     
-    public function get_login_url($redirect_uri, $scope='snsapi_base', $state=NULL) {
+    public function get_login_url($redirect_uri, $scope='snsapi_userinfo') {
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
         $param = array(
             'appid' => $this->appid,
@@ -19,12 +16,16 @@ class WeixinOauth {
             'response_type' => 'code',
             'scope' => $scope,
         );
-        if ($state) $param['state'] = $state;
+        if ($scope == 'snsapi_base') {
+            $param['state'] = 'a';
+        } else if ($scope == 'snsapi_userinfo') {
+            $param['state'] = 'b';
+        }
         $url .= '?' . http_build_query($param) . '#wechat_redirect';
         return $url;
     }
 
-    public function get_access_token($code) {
+    protected function get_access_token($code) {
         $url = 'https://api.weixin.qq.com/sns/oauth2/access_token';
         $param = array(
             'appid' => $this->appid,
@@ -33,10 +34,27 @@ class WeixinOauth {
             'grant_type' => 'authorization_code',
         );
         $ret_json = CURL::get($url, $param);
-        return $ret_json;
+        $ret_array = json_decode($ret_json, true);
+        return $ret_array;
     }
 
-    public function get_user_info($access_token, $openid) {
+    public function get_user_info() {
+        if (empty($_GET['code'])) {
+            return array();
+        }
+        
+        $code = $_GET['code'];
+        $ret_array = $this->get_access_token($code);
+        if (isset($ret_array['errcode'])) {
+            return $ret_array;
+        }
+        
+        $openid = $ret_array['openid'];
+        if (isset($_GET['state']) && $_GET['state'] == 'a') {
+            return array('openid' => $openid);
+        }
+        
+        $access_token = $ret_array['access_token'];
         $url = 'https://api.weixin.qq.com/sns/userinfo';
         $param = array(
             'access_token' => $access_token,
@@ -44,7 +62,8 @@ class WeixinOauth {
             'lang' => 'zh_CN',
         );
         $ret_json = CURL::get($url, $param);
-        return $ret_json;
+        $ret_array = json_decode($ret_json, true);
+        return $ret_array;
     }
 
 }

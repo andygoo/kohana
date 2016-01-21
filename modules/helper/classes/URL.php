@@ -52,4 +52,8 @@ class URL {
         
         return '?' . http_build_query($params, '', '&');
     }
+    
+    public static function curr() {
+        return 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    }
 }

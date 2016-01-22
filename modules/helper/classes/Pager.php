@@ -48,7 +48,7 @@ class Pager {
         return $this;
     }
 
-    public function url($page = 1) {
+    public function url($page = 1, $opts = array()) {
         $page = max(1, (int)$page);
         
         if (isset($this->config['source']) && $this->config['source'] == 'route') {
@@ -56,9 +56,13 @@ class Pager {
                 $this->config['current_page_key'] => $page 
             ))) . URL::query();
         } else {
-            return URL::site(Request::instance()->uri()) . URL::query(array(
+            $params = array(
                 $this->config['current_page_key'] => $page 
-            ));
+            );
+            if (!empty($opts)) {
+                $params = $opts + $params;
+            }
+            return URL::site(Request::instance()->uri()) . URL::query($params);
         }
     }
 

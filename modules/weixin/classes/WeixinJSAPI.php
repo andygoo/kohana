@@ -31,7 +31,7 @@ class WeixinJSAPI extends Weixin {
         $signature = sha1(urldecode(http_build_query(array_change_key_case($jsapi_config))));
         unset($jsapi_config['jsapi_ticket'], $jsapi_config['url']);
         $jsapi_config['appId'] = $this->appid;
-        $jsapi_config['jsApiList'] = array('onMenuShareTimeline', 'onMenuShareAppMessage');
+        $jsapi_config['jsApiList'] = array();
         $jsapi_config['signature'] = $signature;
         //$jsapi_config['debug'] = true;
         return json_encode($jsapi_config);

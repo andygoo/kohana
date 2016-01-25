@@ -48,7 +48,7 @@ class Database_PDO extends Database {
 		
 		$this->last_query = $sql;
 
-		if (preg_match('/^SELECT/i', $sql) || preg_match('/^SHOW/i', $sql)) {
+		if (preg_match('/^(SELECT|SHOW)/i', $sql)) {
 			if ($as_object === FALSE) {
 				$result->setFetchMode(PDO::FETCH_ASSOC);
 			} elseif (is_string($as_object)) {

@@ -38,6 +38,16 @@ class WeixinOauth {
         return $ret_array;
     }
 
+    public function get_user_openid() {
+        if (empty($_GET['code'])) {
+            return array();
+        }
+    
+        $code = $_GET['code'];
+        $ret_array = $this->get_access_token($code);
+        return $ret_array;
+    }
+    
     public function get_user_info() {
         if (empty($_GET['code'])) {
             return array();
@@ -50,10 +60,6 @@ class WeixinOauth {
         }
         
         $openid = $ret_array['openid'];
-        if (isset($_GET['state']) && $_GET['state'] == 'a') {
-            return array('openid' => $openid);
-        }
-        
         $access_token = $ret_array['access_token'];
         $url = 'https://api.weixin.qq.com/sns/userinfo';
         $param = array(

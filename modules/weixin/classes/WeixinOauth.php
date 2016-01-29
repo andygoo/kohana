@@ -49,6 +49,11 @@ class WeixinOauth {
     }
     
     public function get_user_info() {
+        $wx_user_info = Cookie::get('wx_user_info');
+        if (!empty($wx_user_info)) {
+            return json_decode($wx_user_info, true);
+        }
+        
         if (empty($_GET['code'])) {
             return array();
         }
@@ -69,6 +74,7 @@ class WeixinOauth {
         );
         $ret_json = CURL::get($url, $param);
         $ret_array = json_decode($ret_json, true);
+        Cookie::set('wx_user_info', $ret_json, 86400);
         return $ret_array;
     }
 

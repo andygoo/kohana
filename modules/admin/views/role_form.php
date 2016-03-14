@@ -14,8 +14,8 @@
 	<div class="form-group">
         <?php foreach ($permits as $cat => $items):?>
         <div class="panel panel-default">
-        <div class="panel-heading"><?php echo $cat?></div>
-        <ul class="list-group" style="display: noned">
+        <div class="panel-heading"><input type="checkbox" class="check_all" style="vertical-align:-2px;"> <?php echo $cat?></div>
+        <ul class="list-group">
             <li class="list-group-item">
             <?php foreach ($items as $item):?>
             <label class="checkbox-inline" style="margin-left: 0;margin-right: 10px;">
@@ -31,3 +31,11 @@
 		<button type="submit" class="btn btn-info">提交</button>
 	</div>
 </form>
+
+<script>
+$(function() {
+    $('.check_all').click(function() {
+        $(this).parent('.panel-heading').next('ul').find("input[name='permit_ids[]']").prop('checked', $(this).prop('checked'));
+    });
+});
+</script>

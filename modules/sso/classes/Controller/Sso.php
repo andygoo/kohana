@@ -17,6 +17,7 @@ class Controller_Sso extends Controller {
     }
 
     public function action_login() {
+        var_dump('sdsd');
         Cookie::set('sso', '1');
     }
     

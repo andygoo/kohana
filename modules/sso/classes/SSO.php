@@ -25,20 +25,21 @@ class SSO {
         return $ret;
     }
     
-    private static function get_checksum($broker, $token, $clientip = null) {
-        if ($clientip === null) {
-            $clientip = Arr::get($_SERVER, 'REMOTE_ADDR');
-        }
-        $password = self::$sso->_config['password'];
-        
-        return sha1("{$token}{$clientip}{$password}");
-    }
-
-    private static function check($broker, $token, $checksum) {
+    public static function check($broker, $token, $checksum) {
         $_checksum = SSO::get_checksum($broker, $token);
         if ($_checksum != $checksum) {
             return false;
         }
         return true;
     }
+
+    private static function get_checksum($broker, $token, $clientip = null) {
+        if ($clientip === null) {
+            $clientip = Arr::get($_SERVER, 'REMOTE_ADDR');
+        }
+        $password = self::$sso->_config['password'];
+    
+        return sha1("{$token}{$clientip}{$password}");
+    }
+    
 }

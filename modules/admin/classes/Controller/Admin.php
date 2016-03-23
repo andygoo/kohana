@@ -120,13 +120,13 @@ class Controller_Admin extends Controller_Website {
     protected function _get_data($post) {
         $data = array();
 
+        $data['username'] = Arr::get($_POST, 'username');
         $data['role_id'] = Arr::get($_POST, 'role_id');
         if($data['role_id'] == 1) {
             $data['role_id'] = 0;
         }
-        $data['username'] = Arr::get($_POST, 'username');
-        $password = Arr::get($_POST, 'password');
         
+        $password = Arr::get($_POST, 'password');
         if (!empty($password)) {
             $auth = Model::factory('auth');
             $password = $auth->hash($password);

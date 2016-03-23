@@ -27,21 +27,21 @@ abstract class Controller_Website extends Controller {
             $this->user_permission = $this->permission;
             /*/
             $m_permit = Model::factory('permit');
-            $permission= $m_permit->getAll()->as_array(null,'url');
+            $permission = $m_permit->getAll()->as_array(null, 'url');
             $permission = array_merge($permission, array_values($allmenu));
             $this->permission = array_unique($permission);
             
-            $role_id = $this->user['role_id'];
             $m_role = Model::factory('role');
-            $role_list = $m_role->getAll(array('status'=>'normal'))->as_array('id');
-            if (isset($role_list[$role_id])) {
-                $permit_ids = $role_list[$role_id]['permit_ids'];
+            $role_ids = explode(',', $this->user['role_id']);
+            $permit_ids = $m_role->getAll(array('status'=>'normal', 'id'=>$role_ids))->as_array(null, 'permit_ids');
+            
+            if (!empty($permit_ids)) {
+                $permit_ids = implode(',', $permit_ids);
                 if ($permit_ids == '*') {
                     $this->user_permission = $this->permission;
                 } else {
-                    $permit_ids = explode(',', $permit_ids);
-                    $permit_ids = array_filter($permit_ids);
-                    $this->user_permission = $m_permit->getAll(array('id'=>$permit_ids))->as_array(null,'url');
+                    $permit_ids = array_unique(array_filter(explode(',', $permit_ids)));
+                    $this->user_permission = $m_permit->getAll(array('id'=>$permit_ids))->as_array(null, 'url');
                 }
             }
             //*/
@@ -53,7 +53,7 @@ abstract class Controller_Website extends Controller {
                     }
                 }
             }
-            $this->user_menu = array_filter($menu);
+            $this->user_menu = $menu;
         }
     }
 

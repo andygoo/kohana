@@ -75,12 +75,7 @@ class Controller_Permit extends Controller_Website {
     }
     
     protected function _get_data($post) {
-        $data = array();
-
-        $data['cat'] = Arr::get($post, 'cat');
-        $data['name'] = Arr::get($post, 'name');
-        $data['url'] = Arr::get($post, 'url');
-        
+        $data = array_intersect_key($post, array_flip(array('cat','name','url')));
         $data = array_map('trim', $data);
         $data = array_filter($data, 'strlen');
         return $data;

@@ -45,12 +45,11 @@ class URL {
         } else {
             $params = array_merge($_GET, $params);
         }
-        
+        $params = array_filter($params, 'strlen');
         if (empty($params)) {
             return '';
         }
-        
-        return '?' . http_build_query($params, '', '&');
+        return '?' . http_build_query($params, '', '&amp;');
     }
     
     public static function curr() {

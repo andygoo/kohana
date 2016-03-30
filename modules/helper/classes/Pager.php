@@ -51,14 +51,12 @@ class Pager {
     public function url($page = 1, $opts = array()) {
         $page = max(1, (int)$page);
         
+        $params = array(
+            $this->config['current_page_key'] => $page 
+        );
         if (isset($this->config['source']) && $this->config['source'] == 'route') {
-            return URL::site(Request::instance()->uri(array(
-                $this->config['current_page_key'] => $page 
-            ))) . URL::query();
+            return URL::site(Request::instance()->uri($params)) . URL::query();
         } else {
-            $params = array(
-                $this->config['current_page_key'] => $page 
-            );
             if (!empty($opts)) {
                 $params = $opts + $params;
             }

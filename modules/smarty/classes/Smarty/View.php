@@ -314,8 +314,8 @@ class Smarty_View extends View {
             }
             
             // and register useful plugins
+            $smarty->registerFilter('pre', 'pre_filter_remove_space');
             
-
             // add to registered template engines
             View::$_smarty_is_loaded = TRUE;
             
@@ -418,5 +418,32 @@ class Smarty_View extends View {
             'total_clone_time' => self::$_total_clone_time  // total time spent cloning the Smarty object
         );
     }
-} 
+}
 
+function pre_filter_remove_space($tpl_source, Smarty_Internal_Template $template) {
+    $tpl_source = preg_replace('/[\t ]*[\r\n]+[\t ]*/', "\n", $tpl_source);
+    $tpl_source = preg_replace_callback('/\n<style (data-attr="style")?>\n([\s\S]*?)\n<\/style>\n/', function ($matches) {
+        $style = preg_replace('/\s*\/\*[\s\S]*?\*\/\s*/', '', $matches[2]);
+        $style = preg_replace('/\n/', '', $style);
+        if ($matches[1]) {
+            return "\n<style>" . $style . "</style>\n";
+        }
+        return $style;
+    }, $tpl_source);
+    $tpl_source = preg_replace_callback('/\n<script (data-attr="script")?>\n([\s\S]*?)\n<\/script>\n/', function ($matches) {
+        $lines = explode("\n", $matches[2]);
+        foreach($lines as $index => $line) {
+            $line = preg_replace('/\s*\/\/[^\'"]*$/', '', $line);
+            $lines[$index] = $line;
+            if (strpos($line, '//') !== false) {
+                $lines[$index] = $line . "\n";
+            }
+        }
+        if ($matches[1]) {
+            $lines[0] = "\n<script>" . $lines[0];
+            $lines[] = "</script>\n";
+        }
+        return implode('', $lines);
+    }, $tpl_source);
+    return preg_replace('/([>}])\n+([{<])/', '${1}${2}', $tpl_source);
+}

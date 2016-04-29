@@ -306,3 +306,19 @@ function base64url_encode($data, $pad = null) {
 function base64url_decode($data) {
     return base64_decode(str_replace(array('-', '_'), array('+', '/'), $data));
 }
+
+function array_orderby() {
+    $args = func_get_args();
+    $data = array_shift($args);
+    foreach ($args as $n => $field) {
+        if (is_string($field)) {
+            $tmp = array();
+            foreach ($data as $key => $row)
+                $tmp[$key] = $row[$field];
+            $args[$n] = $tmp;
+        }
+    }
+    $args[] = &$data;
+    call_user_func_array('array_multisort', $args);
+    return array_pop($args);
+}

@@ -234,7 +234,23 @@ class Arr {
         
         return $new_array;
     }
-
+    
+    public static function multisort() {
+        $args = func_get_args();
+        $data = array_shift($args);
+        foreach ($args as $n => $field) {
+            if (is_string($field)) {
+                $tmp = array();
+                foreach ($data as $key => $row)
+                    $tmp[$key] = $row[$field];
+                $args[$n] = $tmp;
+            }
+        }
+        $args[] = &$data;
+        call_user_func_array('array_multisort', $args);
+        return array_pop($args);
+    }
+    
     public static function toxml($data, $root='data', $xml=null) {
         if ($xml == null) {
             $xml = simplexml_load_string("<?xml version='1.0' encoding='utf-8'?><$root/>");

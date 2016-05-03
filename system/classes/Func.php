@@ -313,6 +313,7 @@ function base64url_decode($data) {
     return base64_decode(str_replace(array('-', '_'), array('+', '/'), $data));
 }
 
+//array_orderby($data, 'volume', SORT_DESC, 'edition', SORT_ASC);
 function array_orderby() {
     $args = func_get_args();
     $data = array_shift($args);
@@ -328,6 +329,3 @@ function array_orderby() {
     call_user_func_array('array_multisort', $args);
     return array_pop($args);
 }
-
-
-

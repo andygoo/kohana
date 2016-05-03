@@ -1,5 +1,11 @@
 ﻿<?php
 
+class Func {
+    public static function __callStatic($func, $args) {
+        return call_user_func_array($func, $args);
+    }
+}
+
 function parse_query($url) {
     $url = parse_url($url, PHP_URL_QUERY);
     $url = html_entity_decode($url);
@@ -322,3 +328,6 @@ function array_orderby() {
     call_user_func_array('array_multisort', $args);
     return array_pop($args);
 }
+
+
+

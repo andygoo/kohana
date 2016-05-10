@@ -41,8 +41,8 @@ class Model {
     }
     
     public function select($offset, $size, $where = null, $columns = '*') {
-        $where['LIMIT'] = " $offset, $size ";
-        return $this->db->select($this->_table_name, $columns, $this->where_clause($where));
+        //$where['LIMIT'] = " $offset, $size ";
+        return $this->db->select($this->_table_name, $columns, $this->where_clause($where) . " LIMIT $offset, $size");
     }
 
     public function getAll($where = null, $columns = '*') {

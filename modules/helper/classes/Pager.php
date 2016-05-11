@@ -15,7 +15,7 @@ class Pager {
     protected $last_page;
     protected $offset;
 
-    public function __construct($total, $size, $page_key = 'page', $source = '') {
+    public function __construct($total, $size, $source = '', $page_key = 'page') {
         $this->config = array(
             'source' => $source,
             'total_items' => $total,

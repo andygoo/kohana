@@ -145,6 +145,7 @@ class Request {
         }
         
         $params += $this->_params;
+        $params = array_filter($params, 'strlen');
         return $this->route->uri($params);
     }
 

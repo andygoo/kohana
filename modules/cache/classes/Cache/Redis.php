@@ -39,4 +39,22 @@ class Cache_Redis extends Cache {
 	public function delete_all() {
 		return $this->_redis->flushdb();
 	}
+	
+	public function incr($id, $step = 1) {
+		$id = $this->_sanitize_id($id);
+	    if ($step == 1) {
+	        return $this->_redis->incr($id);
+	    } else {
+	        return $this->_redis->incrby($id, $step);
+	    }
+	}
+	
+	public function decr($id, $step = 1) {
+		$id = $this->_sanitize_id($id);
+	    if ($step == 1) {
+	        return $this->_redis->decr($id);
+	    } else {
+	        return $this->_redis->decrby($id, $step);
+	    }
+	}
 }

@@ -81,4 +81,13 @@ class Cache_Memcache extends Cache {
         return $result;
     }
     
+    public function incr($id, $step = 1) {
+		$id = $this->_sanitize_id($id);
+        return $this->_memcache->increment($id, $step);
+    }
+    
+    public function decr($id, $step = 1) {
+		$id = $this->_sanitize_id($id);
+        return $this->_memcache->decrement($id, $step);
+    }
 }

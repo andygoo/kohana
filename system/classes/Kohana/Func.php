@@ -4,7 +4,29 @@ class Kohana_Func {
         return call_user_func_array($func, $args);
     }
 }
+/*
+function getLines($file) {
+    $f = fopen($file, 'r');
+    try {
+        while ($line = fgets($f)) {
+            yield $line;
+        }
+    } finally {
+        fclose($f);
+    }
+}
+*/
+function processLinesFromFile($fileName, callable $callback) {
+    if (!$fileHandle = fopen($fileName, 'r')) {
+        return;
+    }
 
+    while (false !== $line = fgets($fileHandle)) {
+        $callback($line);
+    }
+
+    fclose($fileHandle);
+}
 function parse_query($url) {
     $url = parse_url($url, PHP_URL_QUERY);
     $url = html_entity_decode($url);

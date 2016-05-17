@@ -49,7 +49,7 @@ class URL {
         if (empty($params)) {
             return '';
         }
-        return '?' . http_build_query($params, '', '&amp;');
+        return '?' . http_build_query($params, '', '&');
     }
     
     public static function curr() {

@@ -44,6 +44,7 @@
 </style>
 <?= HTML::script('media/js/jquery.min.js')?>
 <?= HTML::script('media/bootstrap/js/bootstrap.min.js')?>
+<?= HTML::script('media/js/highcharts.js')?>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #3c8dbc">

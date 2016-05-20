@@ -13,14 +13,14 @@ class Controller_Api extends Controller {
         $controller = $this->request->controller;
         $action = $this->request->action;
         
-        $path = $this->request->param('path');
-        $pathinfo = pathinfo($path);
-        if (!empty($pathinfo['extension'])) {
-            $this->format = $pathinfo['extension'];
-        }
-        
         if (!method_exists('Controller_' . ucfirst($controller), 'action_' . $action)) {
             $this->request->action = 'error';
+            
+            $path = $this->request->param('path');
+            $pathinfo = pathinfo($path);
+            if (!empty($pathinfo['extension'])) {
+                $this->format = $pathinfo['extension'];
+            }
         }
     }
 

@@ -48,6 +48,6 @@
 
 <script>
 var pannel = document.getElementById("pannel");
-Sortable.create(pannel, {handle: ".panel-title",});
+Sortable.create(pannel, {handle: ".panel-title",animation: 150});
 </script>
 

@@ -53,12 +53,12 @@ Sortable.create(pannel, {
 	animation: 150,
 	store: {
     	get: function (sortable) {
-    		var order = localStorage.getItem(sortable.options.group);
+    		var order = localStorage.getItem('home_pannel');
     		return order ? order.split('|') : [];
     	},
     	set: function (sortable) {
     		var order = sortable.toArray();
-    		localStorage.setItem(sortable.options.group, order.join('|'));
+    		localStorage.setItem('home_pannel', order.join('|'));
     	}
     }
 });

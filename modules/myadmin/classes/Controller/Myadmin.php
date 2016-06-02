@@ -66,10 +66,9 @@ class Controller_Myadmin extends Controller {
 	    $field_name = Arr::get($_GET, 'field_name');
 	    $field_value = Arr::get($_GET, 'field_value');
 	    $op = Arr::get($_GET, 'op', '=');
-	    if(!empty($field_name)) {
+	    if(!empty($field_value)) {
 	        $where[$field_name] = array($op, $field_value);
 	    }
-	    $where = array_filter($where, 'strlen');
 	    
 	    if (isset($_GET['sort'])) {
 	        list($field, $order) = explode('|', $_GET['sort']);

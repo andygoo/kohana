@@ -70,7 +70,7 @@ class Controller_Admin extends Controller_Website {
             $old_password = $_POST['old_password'];
             $new_password = $_POST['new_password'];
             
-            $auth = Model::factory('auth');
+            $auth = Auth::instance();
             $ret = $auth->check_password($old_password);
             if ($ret) {
                 $ret = $auth->change_password($new_password);
@@ -110,7 +110,7 @@ class Controller_Admin extends Controller_Website {
     }
     
     public function action_logout() {
-        $auth = Model::factory('auth');
+        $auth = Auth::instance();
         $ret = $auth->logout();
         if ($ret !== false) {
             $this->redirect('auth/login');
@@ -128,7 +128,7 @@ class Controller_Admin extends Controller_Website {
         
         $password = Arr::get($_POST, 'password');
         if (!empty($password)) {
-            $auth = Model::factory('auth');
+            $auth = Auth::instance();
             $password = $auth->hash($password);
             $data['password'] = $password;
         }

@@ -13,8 +13,9 @@ class Controller_Auth extends Controller {
             
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $m_auth = Model::factory('auth');
-            if ($m_auth->login($username, $password)) {
+            
+            $auth = Auth::instance();
+            if ($auth->login($username, $password)) {
                 $this->redirect('/');
             } else {
                 Security::token(true);

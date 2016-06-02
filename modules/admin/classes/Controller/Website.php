@@ -13,7 +13,7 @@ abstract class Controller_Website extends Controller {
     public function __construct(Request $req) {
         parent::__construct($req);
 
-        $auth = Model::factory('auth');
+        $auth = Auth::instance();
         if (!$auth->logged_in()) {
             $this->redirect('auth/login');
         } else {

@@ -31,7 +31,7 @@ class Controller_Sms extends Controller_Ajax {
         
         $start_time = strtotime('now')-3600;
         $end_time = strtotime('now');
-        $where = array('phone'=>$phone, 'add_time|>'=>$start_time, 'add_time|<='=>$end_time);
+        $where = array('phone'=>$phone, 'add_time'=>array('>', $start_time), 'add_time'=>array('<=', $end_time));
         $sms_num = $m_sms->count($where);
         if($sms_num > 4) {//每小时最多发5条
             $this->response = array('status'=>'n', 'info'=>'您发送短信频率太高！请稍后再发');
@@ -40,7 +40,7 @@ class Controller_Sms extends Controller_Ajax {
         
         $start_time = strtotime('now');
         $end_time = strtotime('+1 day');
-        $where = array('phone'=>$phone, 'add_time|>'=>$start_time, 'add_time|<='=>$end_time);
+        $where = array('phone'=>$phone, 'add_time'=>array('>', $start_time), 'add_time'=>array('<=', $end_time));
         $sms_num = $m_sms->count($where);
         if($sms_num > 9) {//每天最多发10条
             $this->response = array('status'=>'n', 'info'=>'您今天已超过发送短信限制！请明天再发');

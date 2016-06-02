@@ -67,7 +67,7 @@ class Controller_Myadmin extends Controller {
 	    $field_value = Arr::get($_GET, 'field_value');
 	    $op = Arr::get($_GET, 'op', '=');
 	    if(!empty($field_name)) {
-	        $where[$field_name.'|'.$op] = $field_value;
+	        $where[$field_name] = array($op, $field_value);
 	    }
 	    $where = array_filter($where, 'strlen');
 	    

@@ -98,7 +98,7 @@ class Controller_Myadmin extends Controller {
 	    $curr_table = $this->curr_table;
         $model = Model::factory($curr_table, $this->curr_db);
 	    
-	    $table_desc = $model->desc_table($curr_table)->as_array("Table", "Create Table");
+	    $table_desc = $model->query('SHOW CREATE TABLE ' . $curr_table)->as_array("Table", "Create Table");
 	    $table_desc = $table_desc[$curr_table];
 	    
     	$columns = $model->list_columns($curr_table);

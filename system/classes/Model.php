@@ -119,13 +119,6 @@ class Model {
         return $this->db->query('SHOW FULL COLUMNS FROM ' . $table_name);
     }
 
-    public function desc_table($table_name = NULL) {
-        if (empty($table_name)) {
-            $table_name = $this->_table_name;
-        }
-        return $this->db->query('SHOW CREATE TABLE ' . $table_name);
-    }
-            
     protected function where_clause($where) {
         $where_clause = '';
         if (is_array($where)) {

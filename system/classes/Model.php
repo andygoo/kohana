@@ -135,8 +135,9 @@ class Model {
                 if (in_array(strtoupper($column), array('GROUP', 'ORDER', 'LIMIT', 'OFFSET'))) continue;
 
                 if (is_array($value)) {
-                    $ops = array('>'=>1, '<'=>1, '>='=>1, '<='=>1, '!='=>1, 'in'=>1, 'not in'=>1, 'like'=>1);
+                    $ops = array('>'=>1, '<'=>1, '>='=>1, '<='=>1, '!='=>1, 'IN'=>1, 'NOT IN'=>1, 'LIKE'=>1);
                     foreach ($value as $op => $val) {
+                        $op = strtoupper($op);
                         if (isset($ops[$op])) {
                             if (is_array($val)) {
                                 $val = array_map(array($this->db, 'escape'), $val);

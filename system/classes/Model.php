@@ -1,6 +1,7 @@
 <?php
 
 class Model {
+    
     protected $db;
     protected $_table_name;
     protected $_primary_key = 'id';
@@ -11,19 +12,13 @@ class Model {
         if (class_exists($class)) {
             return new $class($db);
         } else {
-            $config = array();
-            $config['db'] = $db;
-            $config['tb'] = $name;
-            return new Model($config);
+            return new Model($db, $name);
         }
     }
 
-    public function __construct($config = 'default') {
-        if (is_array($config)) {
-            $db = $config['db'];
-            $this->_table_name = $config['tb'];
-        } else {
-            $db = $config;
+    public function __construct($db = 'default', $tb = null) {
+        if ($tb) {
+            $this->_table_name = $tb;
         }
         $this->db = Database::instance($db);
     }

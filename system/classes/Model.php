@@ -32,20 +32,20 @@ class Model {
 		return call_user_func_array(array($this->db, $method), $args);
 	}
 
-    public function count($where = null) {
+    public function count($where = '') {
         return $this->db->query('SELECT COUNT(1) AS total FROM ' . $this->_table_name . $this->where_clause($where))->get('total');
     }
 
-    public function count_distinct($column, $where = null) {
+    public function count_distinct($column, $where = '') {
         return $this->db->query('SELECT COUNT(distinct ' . $column . ') AS total FROM ' . $this->_table_name . $this->where_clause($where))->get('total');
     }
     
-    public function select($offset, $size, $where = null, $columns = '*') {
+    public function select($offset, $size, $where = '', $columns = '*') {
         //$where['LIMIT'] = " $offset, $size ";
         return $this->db->select($this->_table_name, $columns, $this->where_clause($where) . " LIMIT $offset, $size");
     }
 
-    public function getAll($where = null, $columns = '*') {
+    public function getAll($where = '', $columns = '*') {
         return $this->db->select($this->_table_name, $columns, $this->where_clause($where));
     }
 
@@ -85,19 +85,19 @@ class Model {
         return $this->db->query('SELECT EXISTS(SELECT 1 FROM ' . $this->_table_name . $this->where_clause($where) . ') AS has')->get('has') === '1';
     }
 
-    public function max($column, $where = null) {
+    public function max($column, $where = '') {
         return $this->db->query('SELECT MAX(' . $column . ') AS max FROM ' . $this->_table_name . $this->where_clause($where))->get('max');
     }
 
-    public function min($column, $where = null) {
+    public function min($column, $where = '') {
         return $this->db->query('SELECT MIN(' . $column . ') AS min FROM ' . $this->_table_name . $this->where_clause($where))->get('min');
     }
 
-    public function avg($column, $where = null) {
+    public function avg($column, $where = '') {
         return $this->db->query('SELECT AVG(' . $column . ') AS avg FROM ' . $this->_table_name . $this->where_clause($where))->get('avg');
     }
 
-    public function sum($column, $where = null) {
+    public function sum($column, $where = '') {
         return $this->db->query('SELECT SUM(' . $column . ') AS sum FROM ' . $this->_table_name . $this->where_clause($where))->get('sum');
     }
 
@@ -131,40 +131,26 @@ class Model {
         $where_clause = '';
         if (is_array($where)) {
             $wheres = array();
-            foreach($where as $key => $value) {
-                if (in_array(strtoupper($key), array('GROUP', 'ORDER', 'LIMIT', 'OFFSET'))) continue;
-                
-                $column_op = explode('|', $key);
-                $column = $column_op[0];
-                $op = isset($column_op[1]) ? $column_op[1] : '=';
-                if ($op == '=') {
-                    if (is_array($value)) {
-                        $value = array_map(array($this->db, 'escape'), $value);
-                        $wheres[] = $column . ' IN (' . implode(',', $value) . ')';
-                    } elseif (is_null($value)) {
-                        $wheres[] = $column . ' IS NULL';
-                    } else {
-                        $wheres[] = $column . ' = ' . $this->db->escape($value);
-                    }
-                } elseif ($op == '<>') {
-                    if (is_array($value) && count($value) == 2) {
-                        $value = array_map(array($this->db, 'escape'), $value);
-                        list($min, $max) = $value;
-                        $wheres[] = $column . ' > ' . $min . ' AND ' . $column . ' < ' . $max;
-                    }
-                } elseif ($op == '!') {
-                    if (is_array($value)) {
-                        $value = array_map(array($this->db, 'escape'), $value);
-                        $wheres[] = $column . ' NOT IN (' . implode(',', $value) . ')';
-                    } elseif (is_null($value)) {
-                        $wheres[] = $column . ' IS NOT NULL';
-                    } else {
-                        $wheres[] = $column . ' != ' . $this->db->escape($value);
+            foreach($where as $column => $value) {
+                if (in_array(strtoupper($column), array('GROUP', 'ORDER', 'LIMIT', 'OFFSET'))) continue;
+
+                if (is_array($value)) {
+                    $ops = array('>'=>1, '<'=>1, '>='=>1, '<='=>1, '!='=>1, 'in'=>1, 'not in'=>1, 'like'=>1);
+                    foreach ($value as $op => $val) {
+                        if (isset($ops[$op])) {
+                            if (is_array($val)) {
+                                $val = array_map(array($this->db, 'escape'), $val);
+                                $wheres[] = $column . ' ' . $op . ' (' . implode(',', $val) . ')';
+                            } else {
+                                $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($val);
+                            }
+                        }
                     }
                 } else {
-                    $wheres[] = $column . ' ' . $op . ' ' . $this->db->escape($value);
+                    $wheres[] = $column . ' = ' . $this->db->escape($value);
                 }
             }
+            
             if (!empty($wheres)) {
                 $where_clause .= ' WHERE ' . implode(' AND ', $wheres);
             }

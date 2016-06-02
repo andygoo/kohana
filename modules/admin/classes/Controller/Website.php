@@ -33,7 +33,7 @@ abstract class Controller_Website extends Controller {
             
             $m_role = Model::factory('role');
             $role_ids = explode(',', $this->user['role_id']);
-            $permit_ids = $m_role->getAll(array('status'=>'normal', 'id'=>$role_ids))->as_array(null, 'permit_ids');
+            $permit_ids = $m_role->getAll(array('status'=>'normal', 'id'=>array('in'=>$role_ids)))->as_array(null, 'permit_ids');
             
             if (!empty($permit_ids)) {
                 $permit_ids = implode(',', $permit_ids);
@@ -41,11 +41,11 @@ abstract class Controller_Website extends Controller {
                     $this->user_permission = $this->permission;
                 } else {
                     $permit_ids = array_unique(array_filter(explode(',', $permit_ids)));
-                    $this->user_permission = $m_permit->getAll(array('id'=>$permit_ids))->as_array(null, 'url');
+                    $this->user_permission = $m_permit->getAll(array('id'=>array('in'=>$permit_ids)))->as_array(null, 'url');
                 }
             }
             //*/
-            
+
             foreach ($menu as $name=>$items) {
                 foreach ($items as $sub_name=>$url) {
                     if(!in_array($url, $this->user_permission)) {

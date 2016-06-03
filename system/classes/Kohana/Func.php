@@ -173,7 +173,7 @@ function write_csv($file, $data) {
 }
 //导出数组
 function write_array($file, $data) {
-    $str = 'return ' . var_export($data, true);
+    $str = "<?php \nreturn " . var_export($data, true) . ";\n";
     file_put_contents($file, $str, FILE_APPEND);
 }
 
@@ -267,11 +267,11 @@ function gen_tree($items) {
     return isset($items[0]['children']) ? $items[0]['children'] : array();
 }
 
-function get_children($arr, $pid=0) {
+function get_children_tree($arr, $pid=0) {
     $ret = array();
     foreach ($arr as &$item) {
         if ($item['parent_id'] == $pid) {
-            $item['children'] = get_children($arr, $item['id']);
+            $item['children'] = get_children_tree($arr, $item['id']);
             $ret[] = $item;
         }
     }
@@ -290,13 +290,13 @@ function get_children_ids($arr, $pid=0) {
     return $ret;
 }
 
-function get_parents($arr, $id) {
+function get_parents_list($arr, $id) {
     $ret = array();
     foreach($arr as $item) {
         if ($item['id'] == $id) {
             $ret[] = $item;
-            $parent = get_parents($arr, $item['parent_id']);
-            $ret = array_merge($parent, $ret);
+            $parent_list = get_parents_list($arr, $item['parent_id']);
+            $ret = array_merge($parent_list, $ret);
         }
     }
     return $ret;
@@ -307,8 +307,8 @@ function get_parents_ids($arr, $id) {
     foreach($arr as $item) {
         if ($item['id'] == $id) {
             $ret[] = $item['id'];
-            $parent = get_parents($arr, $item['parent_id']);
-            $ret = array_merge($parent, $ret);
+            $parent_ids = get_parents_list($arr, $item['parent_id']);
+            $ret = array_merge($parent_ids, $ret);
         }
     }
     return $ret;

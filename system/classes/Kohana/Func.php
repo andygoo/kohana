@@ -4,6 +4,7 @@ class Kohana_Func {
         return call_user_func_array($func, $args);
     }
 }
+
 /*
 function getLines($file) {
     $f = fopen($file, 'r');
@@ -16,17 +17,7 @@ function getLines($file) {
     }
 }
 */
-function processLinesFromFile($fileName, callable $callback) {
-    if (!$fileHandle = fopen($fileName, 'r')) {
-        return;
-    }
 
-    while (false !== $line = fgets($fileHandle)) {
-        $callback($line);
-    }
-
-    fclose($fileHandle);
-}
 function parse_query($url) {
     $url = parse_url($url, PHP_URL_QUERY);
     $url = html_entity_decode($url);
@@ -54,6 +45,15 @@ function array_filter_recursive($input) {
         }
     }
     return array_filter($input);
+}
+
+//过滤标签
+function fliter_content($content) {
+    $content = strip_tags($content);
+    $content = str_replace(array('　', '&nbsp;'), '', $content);
+    $content = preg_replace('/[\s+]/', '', $content);
+    $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
+    return $content;
 }
 
 function create_uuid() {
@@ -102,6 +102,7 @@ function array2xml($data, $root = 'data', $xml = null) {
     }
     return $xml->asXML();
 }
+
 //获取客户端ip地址
 function get_ip() {
     if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -151,6 +152,7 @@ function rand_ip() {
     $ip = long2ip(mt_rand($ip_long[$rand_key][0], $ip_long[$rand_key][1]));
     return $ip;
 }
+
 //读取csv文件数据
 function read_csv($file) {
     $ret = array();
@@ -174,16 +176,9 @@ function write_array($file, $data) {
     $str = 'return ' . var_export($data, true);
     file_put_contents($file, $str, FILE_APPEND);
 }
-//过滤标签
-function fliter_content($content) {
-    $content = strip_tags($content);
-    $content = str_replace(array('　', '&nbsp;'), '', $content);
-    $content = preg_replace('/[\s+]/', '', $content);
-    $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
-    return $content;
-}
+
 //排序算法
-function hot($Qviews, $Qanswers, $Qscore, $Ascores, $date_ask, $date_active) {
+function sort_byhot($Qviews, $Qanswers, $Qscore, $Ascores, $date_ask, $date_active) {
     $Qage = (time() - strtotime(gmdate("Y-m-d H:i:s",strtotime($date_ask)))) / 3600;
     $Qage = round($Qage, 1);
     $Qupdated = (time() - strtotime(gmdate("Y-m-d H:i:s",strtotime($date_active)))) / 3600;
@@ -191,12 +186,7 @@ function hot($Qviews, $Qanswers, $Qscore, $Ascores, $date_ask, $date_active) {
 
     $dividend = (log10($Qviews)*4) + (($Qanswers * $Qscore)/5) + $Ascores;
     $divisor = pow((($Qage + 1) - ($Qage - $Qupdated)/2), 1.5);
-    echo $dividend/$divisor . "\n";
-}
-function _array_unshift($result, $item) {
-    array_unshift($result, $item);
-    $result = array_unique($result);
-    return $result;
+    return $dividend/$divisor . "\n";
 }
 
 /*
@@ -247,6 +237,7 @@ function getParentStackComplete($child, $stack) {
     }
     return empty($return) ? false: $return;
 }
+
 //生成身份证最后一位数
 function calc_suffix_d($base) {
     $factor = array(7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2);

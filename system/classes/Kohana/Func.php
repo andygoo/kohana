@@ -189,55 +189,6 @@ function sort_byhot($Qviews, $Qanswers, $Qscore, $Ascores, $date_ask, $date_acti
     return $dividend/$divisor . "\n";
 }
 
-/*
- $array = array(
-         'balloon' => array(
-                 'red' => array(1 => 'Love', 'Valentine', 'Heart',),
-                 'green' => array(1 => 'Summertime', 'Hope',),
-         ),
-         'ribbon' => array(
-                 'yellow' => array(2 => 'Welcome',),
-                 'red' => array(3 => 'Love', 'Love',),
-         ),
- );
-
-$s = getParentStack('Love', $array);
-$c = getParentStackComplete('Love', $array);
-var_dump($s, $c);
-*/
-function getParentStack($child, $stack) {
-    foreach ($stack as $k => $v) {
-        if (is_array($v)) {
-            $return = getParentStack($child, $v);
-            if (is_array($return)) {
-                return array($k => $return);
-            }
-        } else {
-            if ($v == $child) {
-                return array($k => $child);
-            }
-        }
-    }
-    return false;
-}
-
-function getParentStackComplete($child, $stack) {
-    $return = array();
-    foreach ($stack as $k => $v) {
-        if (is_array($v)) {
-            $stack = getParentStackComplete($child, $v);
-            if (is_array($stack) && !empty($stack)) {
-                $return[$k] = $stack;
-            }
-        } else {
-            if ($v == $child) {
-                $return[$k] = $child;
-            }
-        }
-    }
-    return empty($return) ? false: $return;
-}
-
 //生成身份证最后一位数
 function calc_suffix_d($base) {
     $factor = array(7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2);
@@ -314,6 +265,75 @@ function get_parents_ids($arr, $id) {
     return $ret;
 }
 
+/*
+$array = array(
+     'balloon' => array(
+         'red' => array(1 => 'Love', 'Valentine', 'Heart',),
+         'green' => array(1 => 'Summertime', 'Hope',),
+     ),
+     'ribbon' => array(
+         'yellow' => array(2 => 'Welcome',),
+         'red' => array(3 => 'Love', 'Love',),
+     ),
+ );
+
+$s = getParentStack('Love', $array);
+$c = getParentStackComplete('Love', $array);
+var_dump($s, $c);
+array(2) {
+  ["balloon"]=>
+  array(1) {
+    ["red"]=>
+    array(1) {
+      [1]=>
+      string(4) "Love"
+    }
+  }
+  ["ribbon"]=>
+  array(1) {
+    ["red"]=>
+    array(2) {
+      [3]=>
+      string(4) "Love"
+      [4]=>
+      string(4) "Love"
+    }
+  }
+}
+*/
+function getParentStack($child, $stack) {
+    foreach ($stack as $k => $v) {
+        if (is_array($v)) {
+            $return = getParentStack($child, $v);
+            if (is_array($return)) {
+                return array($k => $return);
+            }
+        } else {
+            if ($v == $child) {
+                return array($k => $child);
+            }
+        }
+    }
+    return false;
+}
+
+function getParentStackComplete($child, $stack) {
+    $return = array();
+    foreach ($stack as $k => $v) {
+        if (is_array($v)) {
+            $stack = getParentStackComplete($child, $v);
+            if (is_array($stack) && !empty($stack)) {
+                $return[$k] = $stack;
+            }
+        } else {
+            if ($v == $child) {
+                $return[$k] = $child;
+            }
+        }
+    }
+    return empty($return) ? false: $return;
+}
+
 function base64url_encode($data, $pad = null) {
     $data = str_replace(array('+', '/'), array('-', '_'), base64_encode($data));
     if (!$pad) {
@@ -325,7 +345,15 @@ function base64url_decode($data) {
     return base64_decode(str_replace(array('-', '_'), array('+', '/'), $data));
 }
 
-//array_orderby($data, 'volume', SORT_DESC, 'edition', SORT_ASC);
+/*
+$data[] = array('volume' => 67, 'edition' => 2);
+$data[] = array('volume' => 86, 'edition' => 1);
+$data[] = array('volume' => 85, 'edition' => 6);
+$data[] = array('volume' => 98, 'edition' => 2);
+$data[] = array('volume' => 86, 'edition' => 6);
+$data[] = array('volume' => 67, 'edition' => 7);
+array_orderby($data, 'volume', SORT_DESC, 'edition', SORT_ASC);
+*/
 function array_orderby() {
     $args = func_get_args();
     $data = array_shift($args);

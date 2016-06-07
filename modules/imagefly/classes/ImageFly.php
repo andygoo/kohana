@@ -151,9 +151,23 @@ class ImageFly
         $params = Request::instance()->param('params');
         $filepath = Request::instance()->param('imagepath');
         
+        /*
+        foreach ($_GET as $key=>$item) {
+            if (strpos($key, 'imageView2/') !== false) {
+                $pra = explode('/', $key);
+                break;
+            }
+        }
+        if (!empty($pra) && count($pra)==6) {
+            $params = $pra[2] . $pra[3] . '-' . $pra[4] . $pra[5];
+            if ($pra[1] == 1) {
+                $params .= '-c';
+            }
+        }*/
+        
         // If enforcing params, ensure it's a match
         if ($this->config['enforce_presets'] AND ! in_array($params, $this->config['presets']))
-            throw new HTTP_Exception_404('The requested URL :uri was not found on this server.',
+            throw new Kohana_Exception('The requested URL :uri was not found on this server.',
                                                     array(':uri' => Request::$current->uri()));
         
         $this->image = Image::factory($this->source_dir.$filepath);
@@ -204,7 +218,7 @@ class ImageFly
         // Must have at least a width or height
         if(empty($this->url_params['w']) AND empty($this->url_params['h']))
         {
-            throw new HTTP_Exception_404('The requested URL :uri was not found on this server.',
+            throw new Kohana_Exception('The requested URL :uri was not found on this server.',
                                                     array(':uri' => Request::$current->uri()));
         }
   

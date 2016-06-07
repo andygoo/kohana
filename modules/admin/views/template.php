@@ -147,7 +147,7 @@ $(function(){
     	} else if (t.hasClass('ajax-modal-lg')) {
 			d.addClass('modal-lg');
     	}
-		//var url = t.attr('href');
+    	
 		var url = this.href;
 		if (url != location.href) {
 			$.get(url, function(res) {
@@ -181,7 +181,6 @@ $(function(){
 
 	$(document).on('click', '.ajax-click, .pagination>li>a', function(){
 		var t = $(this);
-		//var url = t.attr('href');
 		var url = this.href;
 		if (url != location.href) {
 			pushState(url);
@@ -191,12 +190,9 @@ $(function(){
 	
 	$(document).on('click', '.ajax-del, .ajax-update', function() {
 		var t = $(this);
-		//var url = t.attr('href');
 		var url = this.href;
 		if (url != location.href) {
     		$.get(url, function(res) {
-        		console.log(res);
-    			//var res = eval('('+res+')');
     			if (res.code == '302') {
         			replaceState(res.url);
     			}

@@ -27,7 +27,7 @@ class HTML {
             $file = URL::base($index) . $file;
         }
         $attributes['href'] = $file;
-        $attributes['rel'] = 'stylesheet';
+        $attributes['rel'] = isset($attributes['rel']) ? $attributes['rel'] : 'stylesheet';
         return '<link' . HTML::attributes($attributes) . ' />';
     }
 

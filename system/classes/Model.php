@@ -59,8 +59,8 @@ class Model {
         return $this->db->query('DELETE FROM ' . $this->_table_name . $this->where_clause($where));
     }
 
-    public function getRow($where) {
-        return $this->db->query('SELECT * FROM ' . $this->_table_name . $this->where_clause($where))->current();
+    public function getRow($where, $columns = '*') {
+        return $this->db->query('SELECT ' . $columns . ' FROM ' . $this->_table_name . $this->where_clause($where))->current();
     }
     
     public function updateById($data, $id) {
@@ -71,8 +71,8 @@ class Model {
         return $this->delete(array($this->_primary_key => $id));
     }
     
-    public function getRowById($id) {
-        return $this->getRow(array($this->_primary_key => $id));
+    public function getRowById($id, $columns = '*') {
+        return $this->getRow(array($this->_primary_key => $id), $columns);
     }
 
     public function has($where) {

@@ -5,12 +5,17 @@ class Weixin {
     protected $redis;
     protected $access_token;
     
-    protected $appid = 'wxc5b1d86df49a2dc4';
-    protected $appsecret = '50200b8e4eb49d9171835e6acea44955';
+    protected $appid;
+    protected $appsecret;
     
-    public function __construct() {
+    public function __construct($name = 'default') {
+        $weixin_config = Kohana::config('weixin.' . $name);
+        $this->appid = $weixin_config['appid'];
+        $this->appsecret = $weixin_config['appsecret'];
+        
+        $redis_config = Kohana::config('redis.default');
         $this->redis = new Redis();
-        $this->redis->connect('192.168.1.106', '6379');
+        $this->redis->connect($redis_config['host'], $redis_config['port']);
         
         $access_token = $this->redis->get('wx_access_token');
         if (empty($access_token)) {

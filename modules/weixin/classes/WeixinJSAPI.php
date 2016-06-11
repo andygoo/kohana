@@ -4,8 +4,8 @@ class WeixinJSAPI extends Weixin {
 
     private $jsapi_ticket;
     
-    public function __construct() {
-        parent::__construct();
+    public function __construct($name = 'default') {
+        parent::__construct($name);
         
         $jsapi_ticket = $this->redis->get('jsapi_ticket');
         //var_dump($jsapi_ticket);

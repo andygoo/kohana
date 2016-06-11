@@ -2,11 +2,14 @@
 
 class WeixinOauth {
 
-    protected $redis;
-    protected $access_token;
-    
-    protected $appid = 'wxc5b1d86df49a2dc4';
-    protected $appsecret = '50200b8e4eb49d9171835e6acea44955';
+    protected $appid;
+    protected $appsecret;
+
+    public function __construct($name = 'default') {
+        $weixin_config = Kohana::config('weixin.' . $name);
+        $this->appid = $weixin_config['appid'];
+        $this->appsecret = $weixin_config['appsecret'];
+    }
     
     public function get_login_url($redirect_uri, $scope='snsapi_userinfo') {
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize';

@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>好车无忧管理后台</title>
 <?= HTML::style('media/bootstrap/css/bootstrap.min.css')?>
+<?= HTML::style('media/icono/icono.min.css')?>
 <?= HTML::style('media/css/dashboard.css')?>
 <style>
 .sidebar{padding-top:0px}
@@ -41,6 +42,17 @@
 	background: #367fa9;color: #f9f9f9;
 }
 .page-header a:hover {text-decoration: none}
+
+.navbar-toggle {border: none;}
+.navbar-inverse .navbar-toggle:focus, 
+.navbar-inverse .navbar-toggle:hover{background: none;}
+.navbar-inverse .navbar-collapse, 
+.navbar-inverse .navbar-form{border-color: #ccc;}
+@media (max-width: 767px){
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+    color: #fff;
+}
+}
 </style>
 <?= HTML::script('media/js/jquery.min.js')?>
 <?= HTML::script('media/bootstrap/js/bootstrap.min.js')?>
@@ -50,17 +62,23 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #3c8dbc">
 	<div class="container-fluid">
 		<div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 			<a class="navbar-brand ajax-click" href="<?= URL::site()?>"><i class="glyphicon glyphicon-home"></i>&nbsp;好车无忧管理后台</a>
 		</div>
-		<div id="navbar" class="navbar-collapse collapse">
+	    <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 			    <li class="dropdown">
 			        <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>&nbsp;<?= $user['username']?><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-				        <li><a href="<?= URL::site('admin/password')?>" class="ajax-modal-sm">修改密码</a></li>
+				        <li><a href="<?= URL::site('admin/password')?>" class="ajax-modal-sm">&nbsp;修改密码</a></li>
+				        <li><a href="<?= URL::site('admin/logout')?>">&nbsp;退出</a></li>
                     </ul>
                 </li>
-				<li><a href="<?= URL::site('admin/logout')?>"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a></li>
 			</ul>
 		</div>
 	</div>
@@ -68,7 +86,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-3 col-md-2 sidebar">
+		<div class="col-sm-3 col-md-2 sidebar" id="sidebar">
 			<ul class="nav nav-sidebar" id="accordion">
 			    <?php $id = 0;?>
 			    <?php foreach ($menu as $name=>$items):?>

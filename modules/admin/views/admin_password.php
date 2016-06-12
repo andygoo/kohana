@@ -1,7 +1,7 @@
 
 <h3 class="page-header">修改密码</h3>
 
-<form action="" method="post" autocomplete="off" class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+<form action="" method="post" autocomplete="off" class="col-sm-6 col-md-4">
 	<div class="form-group">
 		<input class="form-control" type="password" placeholder="原密码" name="old_password" required>
 	</div>

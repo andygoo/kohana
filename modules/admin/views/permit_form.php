@@ -1,5 +1,5 @@
 
-<form action="" method="post" class="col-xs-7 col-sm-6 col-md-5 col-lg-4">
+<form action="" method="post" class="col-sm-6 col-md-4">
 	<div class="form-group">
 		<input type="text" class="form-control" list="cats" name="cat" value="<?= $info['cat'] ?>" placeholder="类别">
 		<datalist id="cats">

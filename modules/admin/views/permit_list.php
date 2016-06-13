@@ -4,13 +4,17 @@
 
 <form class="form-inline" method="get">
     <div class="form-group">
-        <select class="form-control" name="cat">
-			<option value="">选择分类</option>
-			<?php foreach ($cats as $item):?>
-			<option value="<?= $item?>" <?php if($item==Arr::get($_GET, 'cat')):?>selected<?php endif;?>><?= $item?></option>
-			<?php endforeach;?>
-        </select>
-        <button class="btn btn-info" type="submit">查找</button>
+        <div class="input-group">
+            <select class="form-control" name="cat">
+    			<option value="">选择分类</option>
+    			<?php foreach ($cats as $item):?>
+    			<option value="<?= $item?>" <?php if($item==Arr::get($_GET, 'cat')):?>selected<?php endif;?>><?= $item?></option>
+    			<?php endforeach;?>
+            </select>
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="submit">查找</button>
+            </span>
+        </div>
     </div>
 </form>
 <br>

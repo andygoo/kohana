@@ -2,7 +2,7 @@
 <a href="<?= URL::site('permit/add');?>" class="ajax-modal">+</a>
 </h3>
 
-<form class="form-inline" method="get">
+<form class="form-inline ajax-submit" method="get">
     <div class="form-group">
         <div class="input-group">
             <select class="form-control" name="cat">

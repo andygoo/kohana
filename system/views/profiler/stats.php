@@ -9,7 +9,7 @@
 .kohana-waper .kohana {
     height: 320px; overflow-x: hidden; overflow-y: auto;display: none;
 }
-<?php include Kohana::find_file('views', 'profiler/style', 'css') ?>
+<?php include __DIR__ . '/profiler/style.css'; ?>
 </style>
 
 <?php

@@ -1,23 +1,31 @@
 <?php
 
 class WeixinPay {
+    
+    protected static $config = array(
+        'mch_id' => '10000098',
+        'wxappid' => 'wx8888888888888888',
+        'send_name' => '好车无忧',
+    );
+    
     /*
-    $params = array(
+        $params = array(
             "openid" => $follow['openid'], //接受红包的用户, 用户在wxappid下的openid，服务商模式下可填入msgappid下的openid。
             "total_amount" => $amount, //付款金额，单位分
             "total_num" => 1, //红包发放总人数
             "mch_billno" => sprintf("10125753%s%11d", date('Ymd'), $phone),
-            "act_name" => "卖车红包", //活动名称: 猜灯谜抢红包活动
-            "remark" => "卖车红包", //备注信息: 猜越多得越多，快来抢！
-            "wishing" => "请爷收银子", //红包祝福语: 感谢您参加猜灯谜活动，祝您元宵节快乐！
-    );*/
+            "act_name" => "猜灯谜抢红包活动", //活动名称: 猜灯谜抢红包活动
+            "remark" => "猜越多得越多，快来抢！", //备注信息: 猜越多得越多，快来抢！
+            "wishing" => "感谢您参加猜灯谜活动，祝您元宵节快乐！", //红包祝福语: 感谢您参加猜灯谜活动，祝您元宵节快乐！
+        );
+    */
     public static function sendredpack($params) {
         $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack';
-        $params['mch_id'] = '10000098'; //微信支付分配的商户号 10000098
-        $params['wxappid'] = 'wx8888888888888888'; //微信分配的公众账号ID（企业号corpid即为此appId）wx8888888888888888
-        $params['nick_name'] = '天虹百货'; //提供方名称 天虹百货
-        $params['send_name'] = '天虹百货'; //红包发送者名称 天虹百货
-        $params['client_ip'] = '127.0.0.1'; //调用接口的机器Ip地址
+        $params['mch_id'] = self::$config['mch_id']; //微信支付分配的商户号 10000098
+        $params['wxappid'] = self::$config['wxappid']; //微信分配的公众账号ID（企业号corpid即为此appId）wx8888888888888888
+        $params['nick_name'] = self::$config['send_name']; //提供方名称 天虹百货
+        $params['send_name'] = self::$config['send_name']; //红包发送者名称 天虹百货
+        $params['client_ip'] = self::get_client_ip(); //调用接口的机器Ip地址
         $params['re_openid'] = $params['openid'];
         unset($params['openid']);
         $params['nonce_str'] = self::random(16);
@@ -45,9 +53,9 @@ class WeixinPay {
      */
     public static function transfers($params) {
         $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
-        $params['mchid'] = WX_MCH_ID;  //微信支付分配的商户号 1900000109
-        $params['mch_appid'] = WX_APP_ID; //微信分配的公众账号ID（企业号corpid即为此appId） wx8888888888888888
-        $params['spbill_create_ip'] = WX_CLIENT_IP; //调用接口的机器Ip地址
+        $params['mchid'] = self::$config['mch_id'];  //微信支付分配的商户号 1900000109
+        $params['mch_appid'] = self::$config['wxappid']; //微信分配的公众账号ID（企业号corpid即为此appId） wx8888888888888888
+        $params['spbill_create_ip'] = self::get_client_ip(); //调用接口的机器Ip地址
         $params['check_name'] = 'NO_CHECK';
         $params['nonce_str'] = self::random(16);
         $params['sign'] = self::sign($params);
@@ -96,5 +104,15 @@ class WeixinPay {
         $xmlstr .= "</xml>";
         return $xmlstr;
     }
-
+    
+    protected static function get_client_ip() {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (isset($_SERVER['REMOTE_ADDR'])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
 }

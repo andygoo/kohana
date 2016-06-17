@@ -111,10 +111,20 @@ class Kohana {
 	}
 	
 	public static function auto_load($class) {
+	    /*
+	    $class     = ltrim($class, '\\');
+	    $file      = '';
+	    $last_namespace_position = strripos($class, '\\');
+	    if ($last_namespace_position) {
+	        $namespace = substr($class, 0, $last_namespace_position);
+	        $class     = substr($class, $last_namespace_position + 1);
+	        $file      = str_replace('\\', DIRECTORY_SEPARATOR, $namespace).DIRECTORY_SEPARATOR;
+	    }
+	    */
 		$file = str_replace('_', DIRECTORY_SEPARATOR, $class);
 		$path = Kohana::find_file('classes', $file);
 		if ($path) {
-			require $path;
+			require_once $path;
 			return TRUE;
 		}
 		return FALSE;

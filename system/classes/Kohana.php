@@ -110,9 +110,9 @@ class Kohana {
 		return $value;
 	}
 	
-	public static function auto_load($class) {
-	    /*
+	public static function auto_load($class, $dir = 'classes') {
 	    $class     = ltrim($class, '\\');
+	    /*
 	    $file      = '';
 	    $last_namespace_position = strripos($class, '\\');
 	    if ($last_namespace_position) {
@@ -122,7 +122,7 @@ class Kohana {
 	    }
 	    */
 		$file = str_replace('_', DIRECTORY_SEPARATOR, $class);
-		$path = Kohana::find_file('classes', $file);
+		$path = Kohana::find_file($dir, $file);
 		if ($path) {
 			require_once $path;
 			return TRUE;

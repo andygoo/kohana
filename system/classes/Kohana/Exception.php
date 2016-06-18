@@ -31,7 +31,7 @@ class Kohana_Exception extends Exception {
 
 	public static function handler($e) {
 	    try {
-	        Kohana_Exception::log($e);
+	        //Kohana_Exception::log($e);
 	        if (PHP_SAPI == 'cli') {
 	            $response = Kohana_Exception::text($e);
 	        } else {

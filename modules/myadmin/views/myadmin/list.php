@@ -50,9 +50,13 @@
         </select>
     </div>
     <div class="form-group">
-        <input type="text" name="field_value" class="form-control" value="<?php echo $field_value?>" placeholder="">
+        <div class="input-group">
+            <input type="text" name="field_value" class="form-control" value="<?php echo $field_value?>" placeholder="">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-info">查找</button>
+            </span>
+        </div>
     </div>
-    <button type="submit" class="btn btn-info">查找</button>
 </form>
 <br>
 
@@ -90,4 +94,6 @@
 </tbody>
 </table>
 </div>
+
 <?= $pager ?>
+

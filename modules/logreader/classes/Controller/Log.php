@@ -17,13 +17,13 @@ class Controller_Log extends Controller {
     }
     
     public function action_show() {
-        /*
+        /*/
         Kohana::$log->add(Log::ERROR, 'coverable error; nonrecoverable ble error');
         Kohana::$log->add(Log::DEBUG, 'coveraoverable eror; nonrecoverable eror');
         Kohana::$log->add(Log::INFO, 'coverabverable erable errror');
         Kohana::$log->add(Log::NOTICE, 'coverable error; nonrecole ble error');
         Kohana::$log->add(Log::WARNING, 'coverrrerror; nonreerror; nonrecoveracor');
-        */
+        //*/
         //$rr .= 'fddf';
         
         $logreader = new LogReader();

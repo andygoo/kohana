@@ -13,6 +13,7 @@
 
 </h3>
 
+<div class="table-responsive">
 <table class="table table-hover">
 <thead>
 <tr>
@@ -37,6 +38,6 @@ if ($message['elevel'] == '-') {
 	<td><?php echo $message['body'] ?></td>
 </tr>
 <?php endforeach; ?>
-
 </tbody>
 </table>
+</div>

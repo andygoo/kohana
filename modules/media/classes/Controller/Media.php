@@ -23,9 +23,12 @@ class Controller_Media extends Controller{
 		    case 'xap':
 		        header('Content-Type: application/x-silverlight-app');break;
 	    }
-	    $file = MODPATH.'media/static/'.$filename.'.'.$format;
-	    if (file_exists($file)) {
-		    include $file;
+	    $file1 = APPPATH.'media/'.$filename.'.'.$format;
+	    $file2 = MODPATH.'media/static/'.$filename.'.'.$format;
+	    if (file_exists($file1)) {
+		    include $file1;
+	    } elseif (file_exists($file2)) {
+		    include $file2;
 	    }
 		exit;
 	}

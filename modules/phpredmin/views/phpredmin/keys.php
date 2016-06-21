@@ -4,13 +4,14 @@
 <form class="form-inline" method="get">
     <div class="form-group">
         <div class="input-group">
-			<input type="text" name="key" class="form-control" style="width:350px;" value="<?= Arr::get($_GET, 'key')?>" placeholder="" required>
+			<input type="text" name="key" class="form-control" value="<?= Arr::get($_GET, 'key')?>" placeholder="" required>
             <span class="input-group-btn">
                 <button type="submit" class="btn btn-info">查找</button>
             </span>
         </div>
     </div>
-</form><br>
+</form>
+<br>
 
 <?php if (empty($keys)):?>
 <div class="alert alert-success">

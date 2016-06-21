@@ -12,7 +12,7 @@
 <?php foreach ($values as $row=>$value):?>
 <tr>
     <td><?= $row?></td>
-    <td><?= $value?></td>
+    <td><?= htmlspecialchars($value)?></td>
 </tr>
 <?php endforeach;?>
 </tbody>

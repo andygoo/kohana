@@ -2,7 +2,7 @@
 
 class CURL {
 
-    public static function get($url, $data='') {
+    public static function get($url, $data='', $ext_options=array()) {
         if(!empty($data)) {
             $content = is_array($data) ? http_build_query($data) : $data;
             $url .= ((strpos($url, '?') === false) ? '?' : '&') . $content;
@@ -19,6 +19,9 @@ class CURL {
             CURLOPT_CONNECTTIMEOUT => 5,
             CURLOPT_TIMEOUT => 5,
         );
+        if (!empty($ext_options)) {
+            $options = $ext_options + $options;
+        }
         return self::_exec($options);
     }
 

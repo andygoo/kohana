@@ -76,8 +76,10 @@ class WeixinOauth {
             'lang' => 'zh_CN',
         );
         $ret_json = CURL::get($url, $param);
+        
         $ret_array = json_decode($ret_json, true);
         Cookie::set('wx_user_info', $ret_json, 86400);
+        
         return $ret_array;
     }
 

@@ -50,7 +50,7 @@ abstract class OAuth2_Client {
     protected $_required_params = array(
         'authorization_code' => array(
             'code',
-            //'redirect_uri' 
+            'redirect_uri' 
         ),
         'password' => array(
             'username',
@@ -65,7 +65,7 @@ abstract class OAuth2_Client {
     abstract function get_authorization_endpoint();
     abstract function get_access_token_endpoint();
     abstract function get_user_profile_service_url();
-    abstract function get_user_data();
+    abstract function get_user_data($redirect_uri);
 
     public function __construct($config, $client_auth_type = self::AUTH_TYPE_URI, $certificate_file = NULL) {
         $this->_client_id = $config['client_id'];
@@ -79,7 +79,7 @@ abstract class OAuth2_Client {
     }
 
     public static function factory($provider, $client_auth_type = self::AUTH_TYPE_URI, $certificate_file = NULL) {
-        $config = Kohana::config('oauth.' . $provider);
+        $config = Kohana::config('oauth.' . strtolower($provider));
         $client_id = $config['client_id'];
         $client_secret = $config['client_secret'];
         
@@ -134,12 +134,13 @@ abstract class OAuth2_Client {
                 break;
         }
         
-        $result = CURL::post($this->get_access_token_endpoint(), $parameters);
+        $result = CURL::get($this->get_access_token_endpoint(), $parameters);
         
         if (!is_array($result)) {
             // Make sure `$result` is an array
             parse_str($result, $result);
         }
+        //var_dump($result);
         
         if (!isset($result[$this->_access_token_param_name])) {
             throw new Kohana_Exception('Unable to get the access token.');

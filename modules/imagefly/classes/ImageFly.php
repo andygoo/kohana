@@ -168,7 +168,7 @@ class ImageFly
         // If enforcing params, ensure it's a match
         if ($this->config['enforce_presets'] AND ! in_array($params, $this->config['presets']))
             throw new Kohana_Exception('The requested URL :uri was not found on this server.',
-                                                    array(':uri' => Request::$current->uri()));
+                                                    array(':uri' => Request::detect_uri()));
         
         $this->image = Image::factory($this->source_dir.$filepath);
         
@@ -219,7 +219,7 @@ class ImageFly
         if(empty($this->url_params['w']) AND empty($this->url_params['h']))
         {
             throw new Kohana_Exception('The requested URL :uri was not found on this server.',
-                                                    array(':uri' => Request::$current->uri()));
+                                                    array(':uri' => Request::detect_uri()));
         }
   
         // Set the url filepath

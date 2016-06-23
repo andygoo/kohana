@@ -15,7 +15,7 @@ class Controller_Alipay extends Controller {
         $payment->set_order_info($order_info);
         $request_url = $payment->get_request_url();
         
-        echo '<a href="' . $request_url . '" target="_blank">支付宝即时到账支付</a>';
+        $this->redirect($request_url);
     }
 
     public function action_notify() {

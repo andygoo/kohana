@@ -2,6 +2,13 @@
 
 class Payment_Tenpay extends Payment {
 
+    public function get_request_url() {
+        $this->set_params();
+        $sign = $this->create_sign($this->params);
+        $this->params['sign'] = $sign;
+        return 'http://service.tenpay.com/cgi-bin/v3.0/payservice.cgi?' . http_build_query($this->params);
+    }
+    
     protected function set_params() {
         $this->params = array(
             "cmdno" => "1", //任务代码
@@ -43,7 +50,7 @@ class Payment_Tenpay extends Payment {
         return strtolower(md5($sign));
     }
 
-    public function is_tenpay_sign($params) {
+    public function check_sign($params) {
         $cmdno = $params["cmdno"];
         $pay_result = $params["pay_result"];
         $date = $params["date"];
@@ -61,11 +68,5 @@ class Payment_Tenpay extends Payment {
         return $sign == $tenpay_sign;
     }
 
-    public function get_request_url() {
-        $this->set_params();
-        $sign = $this->create_sign($this->params);
-        $this->params['sign'] = $sign;
-        return 'http://service.tenpay.com/cgi-bin/v3.0/payservice.cgi?' . http_build_query($this->params);
-    }
 }
 	

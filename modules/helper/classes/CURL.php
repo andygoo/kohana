@@ -19,6 +19,12 @@ class CURL {
             CURLOPT_CONNECTTIMEOUT => 5,
             CURLOPT_TIMEOUT => 5,
         );
+
+        if (isset($ext_options[CURLOPT_CAINFO])) {
+            $options[CURLOPT_SSL_VERIFYPEER] = 1;
+            $options[CURLOPT_SSL_VERIFYHOST] = 2;
+        }
+        
         if (!empty($ext_options)) {
             $options = $ext_options + $options;
         }
@@ -39,8 +45,8 @@ class CURL {
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FORBID_REUSE => 1,
 
-            CURLOPT_SSL_VERIFYPEER => false, //不 进行SSL证书认证
-            CURLOPT_SSL_VERIFYHOST => false, //不 1.检查证书中是否设置域名 2.是否与提供的主机名匹配
+            CURLOPT_SSL_VERIFYPEER => false, //不进行SSL证书认证
+            CURLOPT_SSL_VERIFYHOST => false, //1.检查证书中是否设置域名 2.是否与提供的主机名匹配
             //CURLOPT_SSLCERT => 'apiclient_cert.pem',
             //CURLOPT_SSLKEY => 'apiclient_key.pem',
             //CURLOPT_CAINFO => 'rootca.pem',//CA根证书（用来验证的网站证书是否是CA颁布）  
@@ -49,6 +55,12 @@ class CURL {
             CURLOPT_CONNECTTIMEOUT => 5,
             CURLOPT_TIMEOUT => 5,
         );
+        
+        if (isset($ext_options[CURLOPT_CAINFO])) {
+            $options[CURLOPT_SSL_VERIFYPEER] = 1;
+            $options[CURLOPT_SSL_VERIFYHOST] = 2;
+        }
+        
         if (!empty($ext_options)) {
             $options = $ext_options + $options;
         }

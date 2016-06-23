@@ -34,5 +34,6 @@ abstract class Payment {
 
     abstract public function get_request_url();
     abstract protected function create_sign($params);
+    abstract protected function check_sign($params);
     abstract protected function set_params();
 }

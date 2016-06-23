@@ -2,12 +2,20 @@
 
 class Payment_Alipay extends Payment {
 
+    public function get_request_url() {
+        $this->set_params();
+        $sign = $this->create_sign($this->params);
+        $this->params['sign'] = $sign;
+        $this->params['sign_type'] = $this->_config['sign_type'];
+        return 'https://mapi.alipay.com/gateway.do?' . http_build_query($this->params);
+    }
+    
     protected function set_params() {
         $this->params = array(
             "service" => "create_direct_pay_by_user",
             "payment_type" => "1",
             "partner" => $this->_config['partner'],
-            "_input_charset" => strtolower($this->_config['input_charset']),
+            "_input_charset" => strtolower($this->_config['charset']),
             "seller_email" => $this->_config['seller_email'],
             "return_url" => $this->_config['return_url'],
             "notify_url" => $this->_config['notify_url'],
@@ -32,7 +40,7 @@ class Payment_Alipay extends Payment {
         return md5($arg . $this->_config['key']);
     }
 
-    public function is_alipay_sign($params) {
+    public function check_sign($params) {
         if (empty($params)) {
             return false;
         }
@@ -50,7 +58,7 @@ class Payment_Alipay extends Payment {
                 $veryfy_url = 'http://notify.alipay.com/trade/notify_query.do?';
             }
             $veryfy_url .= 'partner=' . $partner . '&notify_id=' . $notify_id;
-            $responseTxt = $this->curl($veryfy_url);
+            $responseTxt = CURL::get($veryfy_url, '', array(CURLOPT_CAINFO => ''));
         }
         
         if (preg_match("/true$/i", $responseTxt) && $mysign == $params["sign"]) {
@@ -61,30 +69,5 @@ class Payment_Alipay extends Payment {
         }
     }
 
-    public function get_request_url() {
-        $this->set_params();
-        $sign = $this->create_sign($this->params);
-        $this->params['sign'] = $sign;
-        $this->params['sign_type'] = $this->_config['sign_type'];
-        return 'https://mapi.alipay.com/gateway.do?' . http_build_query($this->params);
-    }
-
-    protected function curl($url) {
-        $cacert_url = Kohana::find_file('config', 'cacert', 'pem');
-        $options = array(
-            CURLOPT_URL => $url,
-            CURLOPT_HEADER => 0,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2,
-            CURLOPT_CAINFO => $cacert_url,
-            CURLOPT_TIMEOUT => 4 
-        );
-        $ch = curl_init();
-        curl_setopt_array($ch, $options);
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return $result;
-    }
 }
 	

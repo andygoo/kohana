@@ -1,14 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 return array(
-	// 财付通中介担保支付
-	'tenpaymed' => array(
-		'mem_id'		=> 'xx',
-		'key'			=> 'xx',
-		'gateway_url'	=> 'http://service.tenpay.com/cgi-bin/v3.0/payservice.cgi',
-		'notify_url'	=> 'http://test/payment/tenpaymed/notify_url.php',
-		'return_url'	=> 'http://test/payment/tenpaymed/return_url.php',
-	),
 	// 财付通即时到账支付
 	'tenpay' => array(
 		'mem_id'		=> 'xx',

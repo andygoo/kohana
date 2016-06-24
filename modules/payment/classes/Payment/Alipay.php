@@ -2,31 +2,28 @@
 
 class Payment_Alipay extends Payment {
 
-    public function get_request_url() {
-        $this->set_params();
+    public function get_pay_url($order_info) {
+        $this->params = array(
+            "service" => "create_direct_pay_by_user",
+            "payment_type" => "1",
+            "partner" => $this->_config['partner'],
+            "seller_id" => $this->_config['partner'],
+            "return_url" => $this->_config['return_url'],
+            "notify_url" => $this->_config['notify_url'],
+            "_input_charset" => isset($this->_config['charset']) ? strtolower($this->_config['charset']) : 'utf-8',
+            
+            "out_trade_no" => $order_info['order_id'],
+            "subject" => '交易编号 - ' . $order_info['order_id'],
+            "total_fee" => $order_info['order_amount'],
+            "body" => '',
+        );
         $sign = $this->create_sign($this->params);
         $this->params['sign'] = $sign;
         $this->params['sign_type'] = $this->_config['sign_type'];
         return 'https://mapi.alipay.com/gateway.do?' . http_build_query($this->params);
     }
     
-    protected function set_params() {
-        $this->params = array(
-            "service" => "create_direct_pay_by_user",
-            "payment_type" => "1",
-            "partner" => $this->_config['partner'],
-            "_input_charset" => strtolower($this->_config['charset']),
-            "seller_email" => $this->_config['seller_email'],
-            "return_url" => $this->_config['return_url'],
-            "notify_url" => $this->_config['notify_url'],
-            "out_trade_no" => $this->_config['order_id'],
-            "subject" => '交易编号 - ' . $this->_config['order_id'],
-            "body" => '',
-            "total_fee" => $this->_config['order_amount'] 
-        );
-    }
-
-    protected function create_sign($params) {
+    public function create_sign($params) {
         ksort($params);
         $arg = '';
         foreach($params as $key => $val) {
@@ -40,7 +37,7 @@ class Payment_Alipay extends Payment {
         return md5($arg . $this->_config['key']);
     }
 
-    public function check_sign($params) {
+    public function verify_sign($params) {
         if (empty($params)) {
             return false;
         }
@@ -64,7 +61,7 @@ class Payment_Alipay extends Payment {
         if (preg_match("/true$/i", $responseTxt) && $mysign == $params["sign"]) {
             return true;
         } else {
-            //Kohana::$log->add(Log::ERROR, 'alipay 即时到帐支付  验证错误：'.$mysign.'--'.$params["sign"]);
+            throw new Kohana_Exception('alipay 即时到帐支付  验证错误：' . $mysign.'--'.$params["sign"]);
             return false;
         }
     }

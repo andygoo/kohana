@@ -28,12 +28,7 @@ abstract class Payment {
         $this->_config = $config;
     }
 
-    public function set_order_info(array $order_info) {
-        $this->_config = array_merge($this->_config, $order_info);
-    }
-
-    abstract public function get_request_url();
-    abstract protected function create_sign($params);
-    abstract protected function check_sign($params);
-    abstract protected function set_params();
+    abstract public function get_pay_url($order_info);
+    abstract public function create_sign($params);
+    abstract public function verify_sign($params);
 }

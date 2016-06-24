@@ -8,21 +8,17 @@ class Controller_Alipay extends Controller {
         
         $order_info = array(
             'order_id' => $order_id,
-            'order_amount' => $total 
+            'order_amount' => $total,
         );
         
         $payment = Payment::instance('alipay');
-        $payment->set_order_info($order_info);
-        $request_url = $payment->get_request_url();
-        
-        $this->redirect($request_url);
+        $pay_url = $payment->get_pay_url($order_info);
+        $this->redirect($pay_url);
     }
 
     public function action_notify() {
         $payment = Payment::instance('alipay');
-        
-        var_dump($_POST);
-        if ($payment->is_alipay_sign($_POST)) {
+        if ($payment->verify_sign($_POST)) {
             //请在这里加上商户的业务逻辑程序代
             
 
@@ -96,7 +92,7 @@ class Controller_Alipay extends Controller {
         sign_type=MD5
         */
         
-        if ($payment->is_alipay_sign($_GET)) {
+        if ($payment->verify_sign($_GET)) {
             //请在这里加上商户的业务逻辑程序代码
             
 

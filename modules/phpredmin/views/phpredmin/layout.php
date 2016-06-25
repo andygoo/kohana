@@ -31,7 +31,6 @@
 </style>
 <?= HTML::script('media/js/jquery.min.js');?>
 <?= HTML::script('media/bootstrap/js/bootstrap.min.js');?>
-<?= HTML::script('media/xeditable/js/bootstrap-editable.min.js')?>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">

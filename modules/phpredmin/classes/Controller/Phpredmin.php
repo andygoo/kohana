@@ -76,7 +76,7 @@ class Controller_Phpredmin extends Controller {
 	    } elseif ($type == 'ZSet') {
 	        $total = $this->_redis->zCard($key);
 	    }
-	    $pager = new Pager($total, 2);
+	    $pager = new Pager($total, 8);
 	    $values = $this->getValue($key, $pager->offset, $pager->size);
 	    
 	    $content = View::factory('phpredmin/view');
@@ -95,28 +95,6 @@ class Controller_Phpredmin extends Controller {
 	    }
 	}
 
-	public function action_expire() {
-	    $updated = null;
-	    if (!empty($_POST)) {
-    	    $ttl = Arr::get($_POST, 'value');
-    	    $ttl = intval($ttl);
-    	    $key = Arr::get($_POST, 'pk');
-	        $oldttl  = $this->_redis->ttl($key);
-	    
-	        if ($ttl > 0) {
-	            $updated = $this->_redis->expire($key, $ttl);
-	        } elseif ($oldttl > 0) {
-	            $updated = $this->_redis->persist($key);
-	        } else {
-	            $updated = true;
-	        }
-		    header('Content-Type: application/json; charset=utf-8');
-	        $ret = $updated ? array('success'=>true) : array('success'=>false, 'msg'=>'error');
-	        echo json_encode($ret);
-	    }
-	    exit;
-	}
-	
 	public function after() {
 	    parent::after();
 	

@@ -43,7 +43,7 @@
 <tr>
     <td style="max-width:350px; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><?= $item['key']?></td>
     <td><?= $item['type']?></td>
-    <td><a href="#" class="ttl" data-type="text" data-value="<?= $item['ttl2']?>" data-pk="<?= $item['key']?>" data-url="<?= URL::site('phpredmin/expire/'.$curr_db)?>" data-title="Key Expiration"><?= $item['ttl']?></a></td>
+    <td><?= $item['ttl']?></td>
     <td><?= $item['encode']?></td>
     <td><?= Text::bytes($item['size'])?></td>
     <td>
@@ -61,14 +61,4 @@
 <?php endif;?>
 
 <?php include Kohana::find_file('views/phpredmin', 'modals');?>
-
-<script>
-$(function() {
-    $('.ttl').editable({
-    	success: function(response, newValue) {
-    	    if(!response.success) return response.msg;
-    	}
-    });
-});
-</script>
 

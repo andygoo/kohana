@@ -35,7 +35,7 @@
 }
 @media (max-width: 767px) {
     .navbar-offcanvas {
-        z-index: 9999;top: 50px;height: 300px;
+        z-index: 9999;top: 50px;
     }
     .navbar-offcanvas.offcanvas-transform.in {
     	background-color: #f5f5f5;
@@ -45,6 +45,7 @@
 <?= HTML::script('media/js/jquery.min.js')?>
 <?= HTML::script('media/bootstrap/js/bootstrap.min.js')?>
 <?= HTML::script('media/offcanvas/js/bootstrap.offcanvas.js')?>
+<?= HTML::script('media/js/bootstrap-notify.min.js')?>
 </head>
 <body>
 

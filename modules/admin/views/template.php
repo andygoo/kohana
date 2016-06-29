@@ -8,6 +8,7 @@
 <?= HTML::style('media/bootstrap/css/bootstrap.min.css')?>
 <?= HTML::style('media/icono/icono.min.css')?>
 <?= HTML::style('media/css/dashboard.css')?>
+<?= HTML::style('media/offcanvas/css/bootstrap.offcanvas.css')?>
 <style>
 .sidebar{padding-top:0px}
 .navbar-inverse .navbar-brand{color:#eee}
@@ -43,9 +44,10 @@
 }
 .page-header a:hover {text-decoration: none}
 
-.navbar-toggle {border: none;}
-.navbar-inverse .navbar-toggle:focus, 
-.navbar-inverse .navbar-toggle:hover{background: none;}
+.navbar-toggle {border :none}
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+	background-color:transparent;
+}
 .navbar-inverse .navbar-collapse, 
 .navbar-inverse .navbar-form{border-color: #ccc;}
 @media (max-width: 767px){
@@ -53,24 +55,36 @@
     color: #fff;
 }
 }
+
+@media (max-width: 767px) {
+    .navbar-offcanvas {
+        z-index: 9999;top: 50px;
+    }
+    .navbar-offcanvas.offcanvas-transform.in {
+    	background-color: #f5f5f5;
+    }
+}
 </style>
 <?= HTML::script('media/js/jquery.min.js')?>
 <?= HTML::script('media/bootstrap/js/bootstrap.min.js')?>
 <?= HTML::script('media/js/highcharts.js')?>
+<?= HTML::script('media/offcanvas/js/bootstrap.offcanvas.js')?>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #3c8dbc">
 	<div class="container-fluid">
 		<div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
 			<a class="navbar-brand ajax-click" href="<?= URL::site()?>"><i class="glyphicon glyphicon-home"></i>&nbsp;好车无忧管理后台</a>
+			<button type="button" class="navbar-toggle offcanvas-toggle pull-right" data-toggle="offcanvas" data-target="#js-bootstrap-offcanvas" style="float:left;">
+                <span class="sr-only">Toggle navigation</span>
+                <span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </span>
+            </button>
 		</div>
-	    <div id="navbar" class="navbar-collapse collapse">
+		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 			    <li class="dropdown">
 			        <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>&nbsp;<?= $user['username']?><span class="caret"></span></a>
@@ -87,7 +101,8 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar" id="sidebar">
-			<ul class="nav nav-sidebar" id="accordion">
+			<div class="navbar-offcanvas navbar-offcanvas-touch" id="js-bootstrap-offcanvas">
+			<ul class="nav nav-sidebar sidebar-nav" id="accordion">
 			    <?php $id = 0;?>
 			    <?php foreach ($menu as $name=>$items):?>
 			    <?php $id++;?>
@@ -103,6 +118,7 @@
 				</li>
 			    <?php endforeach;?>
 			</ul>
+			</div>
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="content">
 		    <?= $content?>

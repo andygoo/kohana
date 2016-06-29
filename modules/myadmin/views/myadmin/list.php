@@ -78,14 +78,9 @@
 <tr>
     <?php $k=0;?>
     <?php foreach($row as $column=>$val): ?>
-    <?php $pk = $row['id']?>
     <?php $display = $columns[$column]?>
 	<td class="<?= $column?>" width="<?= intval(100/count($row))?>%" style="<?php if (!$display):?>display: none;<?php endif;?>max-width:150px; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-	    <?php if ($column=='id'):?>
 	    <?= $val ?>
-	    <?php else:?>
-	    <span class="editable" data-name="<?= $column?>" data-pk="<?= $pk?>"><?= strip_tags($val) ?></span>
-	    <?php endif;?>
 	</td>
     <?php $k++;?>
     <?php endforeach; ?>

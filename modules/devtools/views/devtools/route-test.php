@@ -4,7 +4,7 @@
 <form class="form-inline" method="get">
     <div class="form-group">
         <div class="input-group">
-			<input type="text" name="url" class="form-control" style="width:350px;" value="<?= Arr::get($_GET, 'url')?>" placeholder="Test the url" required>
+			<input type="text" name="url" class="form-control" value="<?= Arr::get($_GET, 'url')?>" placeholder="Test the url" required>
             <span class="input-group-btn">
                 <button type="submit" class="btn btn-info">Test</button>
             </span>

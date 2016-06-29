@@ -7,6 +7,7 @@
 <title>LogReader</title>
 <?= HTML::style('media/bootstrap/css/bootstrap.min.css')?>
 <?= HTML::style('media/css/dashboard.css')?>
+<?= HTML::style('media/offcanvas/css/bootstrap.offcanvas.css')?>
 <style>
 .sidebar{padding-top:0px}
 .navbar-inverse{background: #3c8dbc;}
@@ -27,9 +28,23 @@
 .nav-sidebar>.active>a, .nav-sidebar>.active>a:hover, .nav-sidebar>.active>a:focus{
 	color: #337ab7; background-color: #fff;border-color: #ddd;
 }
+
+.navbar-toggle {border :none}
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+	background-color:transparent;
+}
+@media (max-width: 767px) {
+    .navbar-offcanvas {
+        z-index: 9999;top: 50px;height: 300px;
+    }
+    .navbar-offcanvas.offcanvas-transform.in {
+    	background-color: #f5f5f5;
+    }
+}
 </style>
 <?= HTML::script('media/js/jquery.min.js')?>
 <?= HTML::script('media/bootstrap/js/bootstrap.min.js')?>
+<?= HTML::script('media/offcanvas/js/bootstrap.offcanvas.js')?>
 </head>
 <body>
 
@@ -37,6 +52,14 @@
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#"><i class="glyphicon glyphicon-home"></i>&nbsp;Log Reader</a>
+		    <button type="button" class="navbar-toggle offcanvas-toggle pull-right" data-toggle="offcanvas" data-target="#js-bootstrap-offcanvas" style="float:left;">
+                <span class="sr-only">Toggle navigation</span>
+                <span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </span>
+            </button>
 		</div>
 	</div>
 </nav>
@@ -44,6 +67,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
+			<div class="navbar-offcanvas navbar-offcanvas-touch" id="js-bootstrap-offcanvas">
 			<ul class="nav nav-sidebar">
                 <?php $now = strtotime('now');?>
 			    <?php for ($i=0; $i<14; $i++):?>
@@ -56,6 +80,7 @@
         		<?php $now = strtotime('-1 day', $now);?>
 			    <?php endfor;?>
 			</ul>
+            </div>
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="content">
 		    <?= $content; ?>

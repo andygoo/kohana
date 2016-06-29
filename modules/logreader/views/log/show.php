@@ -1,6 +1,6 @@
-<h3 class="page-header"><?= implode('-', $params) ?>
+<h3 class="page-header"><?= implode('-', $params) ?></h3>
 
-<form action="" class="form-inline pull-right" method='get'>
+<form action="" class="form-inline" method='get'>
     <div class="form-group">
         <div class="input-group">
             <?php echo Form::select('level', Arr::merge(array('' => 'ALL'), array_combine($levels, $levels)), $level, array('class'=>'form-control')); ?>
@@ -9,9 +9,7 @@
             </span>
         </div>
     </div>
-</form>
-
-</h3>
+</form><br>
 
 <div class="table-responsive">
 <table class="table table-hover">

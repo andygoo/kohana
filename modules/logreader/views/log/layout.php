@@ -110,6 +110,7 @@ $(function(){
                 history.pushState(state,null,url);
     		});
 		}
+		$("#js-bootstrap-offcanvas").trigger("offcanvas.close");
 		return false;
 	});
     window.addEventListener("popstate",function(event) {

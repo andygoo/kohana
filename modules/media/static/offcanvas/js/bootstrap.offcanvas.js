@@ -82,6 +82,9 @@
         if ($(e.target).parents('.navbar-offcanvas').length > 0) {
           return true;
         }
+        if ($(e.target).hasClass('navbar-offcanvas')) {
+	      return true;
+	    }
         x = e.originalEvent.changedTouches[0].pageX;
         end = this.element.hasClass('navbar-offcanvas-right') ? Math.abs(x) > (this.endThreshold + 50) : x < (this.endThreshold + 50);
         if (this.element.hasClass('in') && end) {

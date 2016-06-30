@@ -14,22 +14,21 @@
     background-color: #f5f5f5
 }
 </style>
-<h3 class="page-header"><?= $curr_table?> <small>
-<a href="<?= URL::site('myadmin/desc/'.$curr_db.'/'.$curr_table)?>">表结构</a>
-</small></h3>
-
-<div class="dropdown pull-right">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">显示字段 <span class="caret"></span></button>
-    <ul class="dropdown-menu" id="columns">
-        <?php foreach ($columns as $column=>$display):?>
-        <li>
-        <label style="width: 100%;">
-        <input style="vertical-align: top;" type="checkbox" column="<?= $column?>" value="<?= URL::site('myadmin/display/'.$curr_db.'/'.$curr_table.'?field='.$column); ?>" <?php if ($display):?>checked<?php endif;?>> 
-        <?= $column?>
-        </label>
-        </li>
-	    <?php endforeach;?>
-    </ul>
+<div class="page-header">
+    <h3 style="display: inline;"><?= $curr_table?> <small><a href="<?= URL::site('myadmin/desc/'.$curr_db.'/'.$curr_table)?>">表结构</a></small></h3>
+    <div class="dropdown pull-right">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">显示字段 <span class="caret"></span></button>
+        <ul class="dropdown-menu" id="columns">
+            <?php foreach ($columns as $column=>$display):?>
+            <li>
+            <label style="width: 100%;">
+            <input style="vertical-align: top;" type="checkbox" column="<?= $column?>" value="<?= URL::site('myadmin/display/'.$curr_db.'/'.$curr_table.'?field='.$column); ?>" <?php if ($display):?>checked<?php endif;?>> 
+            <?= $column?>
+            </label>
+            </li>
+    	    <?php endforeach;?>
+        </ul>
+    </div>
 </div>
 
 <form class="form-inline" method="get">

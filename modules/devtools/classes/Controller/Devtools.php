@@ -1,7 +1,8 @@
 <?php
 
 class Controller_Devtools extends Controller {
-    public $template = 'devtools/template';
+    
+    public $template = 'devtools/layout';
 
     public function before() {
         parent::before();

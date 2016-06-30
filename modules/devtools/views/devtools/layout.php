@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DevTools</title>
 <?= HTML::style('media/bootstrap/css/bootstrap.min.css')?>
-<?= HTML::style('media/css/dashboard.css')?>
 <?= HTML::style('media/offcanvas/css/bootstrap.offcanvas.css')?>
+<?= HTML::style('media/css/dashboard.css')?>
 <style>
 .sidebar{padding-top:0px}
 .navbar-inverse{background: #3c8dbc;}
@@ -50,7 +50,7 @@
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="<?= URL::site('devtools')?>"><i class="glyphicon glyphicon-home"></i>&nbsp;DevTools</a>
-		    <button type="button" class="navbar-toggle offcanvas-toggle pull-right" data-toggle="offcanvas" data-target="#js-bootstrap-offcanvas" style="float:left;">
+		    <button type="button" class="navbar-toggle offcanvas-toggle" data-toggle="offcanvas" data-target="#js-bootstrap-offcanvas">
                 <span class="sr-only">Toggle navigation</span>
                 <span>
                   <span class="icon-bar"></span>

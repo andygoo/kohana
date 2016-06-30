@@ -26,16 +26,16 @@
       .navbar-offcanvas.navbar-offcanvas-fade.in {
         opacity: 1; }
     .navbar-offcanvas.offcanvas-transform.in {
-      -webkit-transform: translateX(250px);
-              transform: translateX(250px); }
+      -webkit-transform: translateX(256px);
+              transform: translateX(256px); }
     .navbar-offcanvas.offcanvas-position.in {
       left: 0; }
     .navbar-offcanvas.navbar-offcanvas-right {
       left: auto;
       right: -256px; }
       .navbar-offcanvas.navbar-offcanvas-right.offcanvas-transform.in {
-        -webkit-transform: translateX(-250px);
-                transform: translateX(-250px); }
+        -webkit-transform: translateX(-256px);
+                transform: translateX(-256px); }
       .navbar-offcanvas.navbar-offcanvas-right.offcanvas-position.in {
         left: auto;
         right: 0; }

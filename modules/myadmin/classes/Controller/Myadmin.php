@@ -14,6 +14,7 @@ class Controller_Myadmin extends Controller {
 	    $this->curr_db = $this->request->param('database', 'default');
 	    
 	    $model = new Model($this->curr_db);
+	    //$db = Database::instance($this->curr_db);
 	    $tables = $model->list_tables()->as_array();
 	    $tables = array_map('array_pop', $tables);
 

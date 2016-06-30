@@ -67,7 +67,9 @@
 </style>
 <?= HTML::script('media/js/jquery.min.js')?>
 <?= HTML::script('media/bootstrap/js/bootstrap.min.js')?>
-<?= HTML::script('media/js/highcharts.js')?>
+<?= HTML::script('media/highcharts/highcharts.js')?>
+<?= HTML::script('media/highcharts/exporting.js')?>
+<?= HTML::script('media/highcharts/export-csv.js')?>
 <?= HTML::script('media/offcanvas/js/bootstrap.offcanvas.js')?>
 </head>
 <body>
@@ -110,7 +112,7 @@
 				    <a href="#menu<?= $id?>" class="collapsed" data-toggle="collapse" data-parent="#accordion"><?= $name?><i class="glyphicon glyphicon-menu-down pull-right"></i></a>
     			    <ul id="menu<?= $id?>" class="list-group collapse">
         			    <?php foreach ($items as $sub_name=>$url):?>
-        				<li class="list-group-item<?php if($uri==$url):?> __active curr<?php endif;?>">
+        				<li class="list-group-item<?php if($uri==$url):?> _active curr<?php endif;?>">
         				    <a class="ajax-click" href="<?= URL::site($url)?>"><?= $sub_name?></a>
         				</li>
         			    <?php endforeach;?>

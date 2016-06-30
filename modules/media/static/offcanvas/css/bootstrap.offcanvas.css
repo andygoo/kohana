@@ -9,8 +9,8 @@
   .navbar-offcanvas {
     position: fixed;
     width: 100%;
-    max-width: 250px;
-    left: -250px;
+    max-width: 256px;
+    left: -256px;
     top: 0;
     padding-left: 15px;
     padding-right: 15px;
@@ -32,7 +32,7 @@
       left: 0; }
     .navbar-offcanvas.navbar-offcanvas-right {
       left: auto;
-      right: -250px; }
+      right: -256px; }
       .navbar-offcanvas.navbar-offcanvas-right.offcanvas-transform.in {
         -webkit-transform: translateX(-250px);
                 transform: translateX(-250px); }

@@ -7,20 +7,21 @@ $application_cols = array('min', 'max', 'average', 'current');
 ?>
 
 <style>
-<?php include __DIR__ . '/bootstrap.min.css'; ?>
+<?php include __DIR__ . '/bootstrap.css'; ?>
 <?php include __DIR__ . '/style.css'; ?>
 </style>
 
 <a id="profiler_btn" style="position:fixed;bottom:30px;right:30px" type="button" class="btn btn-info btn-fab">P</a>
 
-<div class="modal" id="profiler_modal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-            <h4 class="modal-title">Profiler</h4>
+<div>
+<div class="kohana_profiler_modal" id="profiler_kohana_profiler_modal">
+  <div class="kohana_profiler_modal-dialog kohana_profiler_modal-lg">
+    <div class="kohana_profiler_modal-content">
+        <div class="kohana_profiler_modal-header">
+            <button type="button" class="close" data-dismiss="kohana_profiler_modal"><span>&times;</span></button>
+            <h4 class="kohana_profiler_modal-title">Profiler</h4>
         </div>
-        <div class="modal-body">
+        <div class="kohana_profiler_modal-body">
             <?php foreach (Profiler::groups() as $group => $benchmarks): ?>
             <table class="table table-bordered">
             	<tr>
@@ -71,18 +72,19 @@ $application_cols = array('min', 'max', 'average', 'current');
     </div>
   </div>
 </div>
+</div>
 
 <script>
 if (typeof jQuery !== 'undefined') {
 $(function() {
 	$('#profiler_btn').click(function() {
-		var modal_backdrop = $('<div class="modal-backdrop in"></div>');
-		$('#profiler_modal').show();
-	    $('body').append(modal_backdrop);
-	    $('#profiler_modal').click(function(e) {
-		    if ($(e.target).closest('.modal-content').length==0 || $(e.target).closest('.close').length!=0) {
-		        $('#profiler_modal').hide();
-		        modal_backdrop.remove();
+		var kohana_profiler_modal_backdrop = $('<div class="kohana_profiler_modal-backdrop in"></div>');
+		$('#profiler_kohana_profiler_modal').show();
+	    $('body').append(kohana_profiler_modal_backdrop);
+	    $('#profiler_kohana_profiler_modal').click(function(e) {
+		    if ($(e.target).closest('.kohana_profiler_modal-content').length==0 || $(e.target).closest('.close').length!=0) {
+		        $('#profiler_kohana_profiler_modal').hide();
+		        kohana_profiler_modal_backdrop.remove();
 		    }
 		});
 	});

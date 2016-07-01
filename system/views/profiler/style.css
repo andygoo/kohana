@@ -1,49 +1,45 @@
 
-#profiler_modal .modal-content {
+.kohana_profiler_modal-content {
   -webkit-box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
           box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
   border-radius: 2px;
   border: none;
 }
-#profiler_modal .modal-content .modal-header {
+.kohana_profiler_modal-content .kohana_profiler_modal-header {
   border-bottom: none;
   padding-top: 24px;
   padding-right: 24px;
   padding-bottom: 0;
   padding-left: 24px;
 }
-#profiler_modal .modal-content .modal-body {
+.kohana_profiler_modal-content .kohana_profiler_modal-body {
   padding-top: 24px;
   padding-right: 24px;
   padding-bottom: 16px;
   padding-left: 24px;
 }
-#profiler_modal .modal-content .modal-footer {
+.kohana_profiler_modal-content .kohana_profiler_modal-footer {
   border-top: none;
   padding: 7px;
 }
-#profiler_modal .modal-content .modal-footer button {
+.kohana_profiler_modal-content .kohana_profiler_modal-footer button {
   margin: 0;
   padding-left: 16px;
   padding-right: 16px;
   width: auto;
 }
-#profiler_modal .modal-content .modal-footer button.pull-left {
+.kohana_profiler_modal-content .kohana_profiler_modal-footer button.pull-left {
   padding-left: 5px;
   padding-right: 5px;
   position: relative;
   left: -5px;
 }
-#profiler_modal .modal-content .modal-footer button + button {
+.kohana_profiler_modal-content .kohana_profiler_modal-footer button + button {
   margin-bottom: 16px;
 }
-#profiler_modal .modal-content .modal-body + .modal-footer {
+.kohana_profiler_modal-content .kohana_profiler_modal-body + .kohana_profiler_modal-footer {
   padding-top: 0;
 }
-#profiler_modal .modal-backdrop {
-  background: rgba(0, 0, 0, 0.3);
-}
-
 #profiler_btn.btn.btn-fab {
   border-radius: 50%;
   font-size: 24px;

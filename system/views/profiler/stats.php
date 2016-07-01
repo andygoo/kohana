@@ -1,15 +1,15 @@
 <?php defined('SYSPATH') OR die('No direct script access.') ?>
 
-<style>
-<?php include __DIR__ . '/bootstrap.min.css'; ?>
-<?php include __DIR__ . '/style.css'; ?>
-</style>
-
 <?php
 $group_stats      = Profiler::group_stats();
 $group_cols       = array('min', 'max', 'average', 'total');
 $application_cols = array('min', 'max', 'average', 'current');
 ?>
+
+<style>
+<?php include __DIR__ . '/bootstrap.min.css'; ?>
+<?php include __DIR__ . '/style.css'; ?>
+</style>
 
 <a id="profiler_btn" style="position:fixed;bottom:30px;right:30px" type="button" class="btn btn-info btn-fab">P</a>
 

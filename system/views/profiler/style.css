@@ -1,28 +1,60 @@
-.kohana table.profiler { width: 100%; margin: 0 auto 6px; border-collapse: collapse; }
-.kohana table.profiler:last-child { margin-bottom: 0;}
-.kohana table.profiler th,
-.kohana table.profiler td { padding: 0em 0.4em; background: #fff; border: solid 1px #999; border-width: 1px 0; text-align: left; font-weight: normal; font-size: 12px; color: #111; text-align: right; }
-.kohana table.profiler th.name { text-align: left; }
-.kohana table.profiler tr.group th { font-size: 16px; background: #222; color: #eee; border-color: #222; }
-.kohana table.profiler tr.group td { background: #222; color: #777; border-color: #222; }
-.kohana table.profiler tr.group td.time { padding-bottom: 0; }
-.kohana table.profiler tr.headers th { text-transform: lowercase; font-variant: small-caps; background: #ddd; color: #777; }
-.kohana table.profiler tr.mark th.name { width: 55%; font-size: 14px; background: #fff; vertical-align: middle; }
-.kohana table.profiler tr.mark td { padding: 0; }
-.kohana table.profiler tr.mark.final td { padding: 0em 0.4em; }
-.kohana table.profiler tr.mark td > div { position: relative; padding: 0em 0.4em; }
-.kohana table.profiler tr.mark td div.value { position: relative; z-index: 2; }
-.kohana table.profiler tr.mark td div.graph { position: absolute; top: 0; bottom: 0; right: 0; left: 100%; background: #71bdf0; z-index: 1; }
-.kohana table.profiler tr.mark.memory td div.graph { background: #acd4f0; }
-.kohana table.profiler tr.mark td.current { background: #eddecc; }
-.kohana table.profiler tr.mark td.min { background: #d2f1cb; }
-.kohana table.profiler tr.mark td.max { background: #ead3cb; }
-.kohana table.profiler tr.mark td.average { background: #ddd; }
-.kohana table.profiler tr.mark td.total { background: #d0e3f0; }
-.kohana table.profiler tr.time td { border-bottom: 0; font-weight: bold; }
-.kohana table.profiler tr.memory td { border-top: 0; }
-.kohana table.profiler tr.final th.name { background: #222; color: #fff; }
-.kohana table.profiler abbr { border: 0; color: #777; font-weight: normal; }
-.kohana table.profiler:hover tr.group td { color: #ccc; }
-.kohana table.profiler:hover tr.mark td div.graph { background: #1197f0; }
-.kohana table.profiler:hover tr.mark.memory td div.graph { background: #7cc1f0; }
+
+#profiler_modal .modal-content {
+  -webkit-box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+          box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+  border-radius: 2px;
+  border: none;
+}
+#profiler_modal .modal-content .modal-header {
+  border-bottom: none;
+  padding-top: 24px;
+  padding-right: 24px;
+  padding-bottom: 0;
+  padding-left: 24px;
+}
+#profiler_modal .modal-content .modal-body {
+  padding-top: 24px;
+  padding-right: 24px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+}
+#profiler_modal .modal-content .modal-footer {
+  border-top: none;
+  padding: 7px;
+}
+#profiler_modal .modal-content .modal-footer button {
+  margin: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: auto;
+}
+#profiler_modal .modal-content .modal-footer button.pull-left {
+  padding-left: 5px;
+  padding-right: 5px;
+  position: relative;
+  left: -5px;
+}
+#profiler_modal .modal-content .modal-footer button + button {
+  margin-bottom: 16px;
+}
+#profiler_modal .modal-content .modal-body + .modal-footer {
+  padding-top: 0;
+}
+#profiler_modal .modal-backdrop {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#profiler_btn.btn.btn-fab {
+  border-radius: 50%;
+  font-size: 24px;
+  height: 56px;
+  margin: auto;
+  min-width: 56px;
+  width: 56px;
+  padding: 0;
+  overflow: hidden;
+  -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+  position: relative;
+  line-height: 55px;
+}

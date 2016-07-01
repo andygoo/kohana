@@ -6,9 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>好车无忧管理后台</title>
 <?= HTML::style('media/bootstrap/css/bootstrap.min.css')?>
+<?= HTML::style('media/offcanvas/css/bootstrap.offcanvas.css')?>
 <?= HTML::style('media/icono/icono.min.css')?>
 <?= HTML::style('media/css/dashboard.css')?>
-<?= HTML::style('media/offcanvas/css/bootstrap.offcanvas.css')?>
 <style>
 .sidebar{padding-top:0px}
 .navbar-inverse .navbar-brand{color:#eee}

@@ -273,5 +273,4 @@ class Valid {
     public static function color($str) {
         return (bool)preg_match('/^#?+[0-9a-f]{3}(?:[0-9a-f]{3})?$/iD', $str);
     }
-
 }

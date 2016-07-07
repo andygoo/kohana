@@ -50,9 +50,7 @@ class Cookie {
     }
 
     public static function salt($name, $value) {
-        //$agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : 'unknown';
-        $agent = 'unknown';
-        
+        $agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : 'unknown';
         return sha1($agent . $name . $value . Cookie::$salt);
     }
 }

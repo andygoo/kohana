@@ -19,9 +19,9 @@ abstract class Controller_Ajax extends Controller {
     }
 
     public function after() {
-        if (!empty($this->response)) {
+        //if (!empty($this->response)) {
             echo json_encode($this->response, JSON_UNESCAPED_UNICODE);
-        }
+        //}
         exit;
     }
 } 

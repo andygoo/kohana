@@ -11,7 +11,7 @@ $application_cols = array('min', 'max', 'average', 'current');
 <?php include __DIR__ . '/style.css'; ?>
 </style>
 
-<a id="profiler_btn" style="position:fixed;bottom:30px;right:30px" type="button" class="btn btn-info btn-fab">P</a>
+<a id="profiler_btn" style="position:fixed;bottom:30px;right:30px" class="btn btn-info btn-fab">P</a>
 
 <div>
 <div class="kohana_profiler_modal" id="profiler_kohana_profiler_modal">

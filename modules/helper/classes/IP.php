@@ -8,8 +8,8 @@ class IP {
 	public $total; //索引总数
 
 	//构造函数
-	public function __construct() {
-		$this->fh = fopen('C:/Program Files (x86)/cz88.net/ip/qqwry.dat', 'rb'); //qqwry.dat文件
+	public function __construct($qqwry_file) {
+		$this->fh = fopen($qqwry_file, 'rb'); //qqwry.dat文件
 		$this->first = $this->getLong4();
 		$this->last = $this->getLong4();
 		$this->total = ($this->last - $this->first) / 7; //每条索引7字节

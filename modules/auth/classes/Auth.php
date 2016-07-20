@@ -15,10 +15,13 @@ abstract class Auth {
             // Load the configuration for this type
             $config = Kohana::config('auth');
             
-            $type = Arr::get($config, 'driver', 'file');
-            
-            // Set the session class name
-            $class = 'Auth_' . ucfirst($type);
+            $type = Arr::get($config, 'driver', 'File');
+            if ($type == 'File') {
+                $class = 'Auth_File';
+            } else {
+                $class = 'Auth_DB';
+                $config['db'] = ($type == 'db') ? 'default' : $type;
+            }
             
             // Create a new session instance
             Auth::$_instance = new $class($config);

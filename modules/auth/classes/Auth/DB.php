@@ -7,7 +7,7 @@ class Auth_DB extends Auth {
             'username' => $username,
             'status' => 'normal' 
         );
-        $m_admin = Model::factory('admin');
+        $m_admin = Model::factory('admin', $this->_config['db']);
         $user = $m_admin->getRow($where);
 
         $password = $this->hash($password);
@@ -37,7 +37,7 @@ class Auth_DB extends Auth {
         $data = array(
             'password' => $password
         );
-        $m_admin = Model::factory('admin');
+        $m_admin = Model::factory('admin', $this->_config['db']);
         $ret = $m_admin->updateById($data, $user['id']);
         return $ret;
     }
@@ -47,7 +47,7 @@ class Auth_DB extends Auth {
             'client_ip' => Request::$client_ip,
             'last_login' => strtotime('now'),
         );
-        $m_admin = Model::factory('admin');
+        $m_admin = Model::factory('admin', $this->_config['db']);
         $m_admin->updateById($data, $user['id']);
     
         return parent::complete_login($user);

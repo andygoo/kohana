@@ -18,6 +18,10 @@ class Auth_DB extends Auth {
         return FALSE;
     }
 
+    public function force_login($user) {
+        return $this->force_complete_login($user);
+    }
+    
     public function check_password($password) {
         $user = $this->get_user();
         if (empty($user)) {
@@ -44,13 +48,20 @@ class Auth_DB extends Auth {
     }
 
     protected function complete_login($user) {
-        $data = array(
-            'client_ip' => Request::$client_ip,
-            'last_login' => strtotime('now'),
-        );
-        $m_admin = Model::factory($this->_config['tb'], $this->_config['db']);
-        $m_admin->updateById($data, $user['id']);
+        if (!empty($user['id'])) {
+            $data = array(
+                'client_ip' => Request::$client_ip,
+                'last_login' => strtotime('now'),
+            );
+            $m_admin = Model::factory($this->_config['tb'], $this->_config['db']);
+            $m_admin->updateById($data, $user['id']);
+        }
     
+        unset($user['password']);
+        return parent::complete_login($user);
+    }
+    
+    protected function force_complete_login($user) {
         return parent::complete_login($user);
     }
 } 

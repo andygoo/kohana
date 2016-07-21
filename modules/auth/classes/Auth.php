@@ -10,7 +10,7 @@ abstract class Auth {
 	 *
 	 * @return Auth
 	 */
-    public static function instance() {
+    public static function instance($name = 'admin') {
         if (!isset(Auth::$_instance)) {
             // Load the configuration for this type
             $config = Kohana::config('auth');
@@ -21,6 +21,7 @@ abstract class Auth {
             } else {
                 $class = 'Auth_DB';
                 $config['db'] = ($type == 'db') ? 'default' : $type;
+                $config['tb'] = $name;
             }
             
             // Create a new session instance

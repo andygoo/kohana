@@ -13,7 +13,7 @@ class Payment_Alipay extends Payment {
             "_input_charset" => isset($this->_config['charset']) ? strtolower($this->_config['charset']) : 'utf-8',
             
             "out_trade_no" => $order_info['order_id'],
-            "subject" => '交易编号 - ' . $order_info['order_id'],
+            "subject" => '交易编号-' . $order_info['order_id'],
             "total_fee" => $order_info['order_amount'],
             "body" => '',
         );

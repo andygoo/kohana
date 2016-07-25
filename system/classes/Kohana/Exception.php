@@ -50,6 +50,14 @@ class Kohana_Exception extends Exception {
 	public static function log($e, $level = Log::EMERGENCY) {
 		if (is_object(Kohana::$log)) {
 			$error = Kohana_Exception::text($e);
+			
+		    $code = $e->getCode();
+		    if ($code == E_WARNING || $code == E_USER_WARNING) {
+			    $level = Log::WARNING;
+		    } elseif ($code == E_NOTICE) {
+			    $level = Log::NOTICE;
+		    }
+			
 			Kohana::$log->add($level, $error);
 			// Make sure the logs are written
 			Kohana::$log->write();

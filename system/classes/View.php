@@ -89,7 +89,7 @@ class View {
         } else if (($path = Kohana::find_file('views', $file)) === FALSE) {
             throw new Kohana_Exception('The requested view :file could not be found', array(
                 ':file' => $file 
-            ));
+            ), E_WARNING);
         }
         
         $this->_file = $path;

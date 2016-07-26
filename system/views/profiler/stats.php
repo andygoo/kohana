@@ -23,6 +23,7 @@ $application_cols = array('min', 'max', 'average', 'current');
         </div>
         <div class="kohana_profiler_modal-body">
             <?php foreach (Profiler::groups() as $group => $benchmarks): ?>
+            <div class="table-responsive">
             <table class="table table-bordered">
             	<tr>
             		<th rowspan="2"><?= ucfirst($group) ?></th>
@@ -52,8 +53,10 @@ $application_cols = array('min', 'max', 'average', 'current');
             	</tr>
             	<?php endforeach ?>
             </table>
+            </div>
             <?php endforeach ?>
             
+            <div class="table-responsive">
             <table class="table table-bordered">
             	<?php $stats = Profiler::application() ?>
             	<tr>
@@ -68,6 +71,7 @@ $application_cols = array('min', 'max', 'average', 'current');
             		<?php endforeach ?>
             	</tr>
             </table>
+            </div>
         </div>
     </div>
   </div>

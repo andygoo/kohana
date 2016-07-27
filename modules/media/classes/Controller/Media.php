@@ -32,4 +32,32 @@ class Controller_Media extends Controller{
 	    }
 		exit;
 	}
+
+	public function action_minicss() {
+	    $filename = $this->request->param('file');
+	    $config = Kohana::config('media.css');
+	    if (isset($config[$filename])) {
+	        foreach ($config[$filename] as $file) {
+	            $file = APPPATH . $file;
+	            if (file_exists($file)) {
+	                include $file;
+	            }
+	        }
+	    }
+	    exit;
+	}
+	
+	public function action_minijs() {
+	    $filename = $this->request->param('file');
+	    $config = Kohana::config('media.js');
+	    if (isset($config[$filename])) {
+	        foreach ($config[$filename] as $file) {
+	            $file = APPPATH . $file;
+	            if (file_exists($file)) {
+	                include $file;
+	            }
+	        }
+	    }
+	    exit;
+	}
 }

@@ -2,6 +2,14 @@
 
 class Controller_Media extends Controller{
 
+    public function before() {
+        parent::before();
+
+        header ("Last-Modified: " . gmdate('D, d M Y H:i:s T', time()));
+        header ("Expires: " . gmdate('D, d M Y H:i:s T', time()+315360000));
+        header ("Cache-Control: max-age=315360000");
+    }
+    
 	public function action_index() {
 	    $filename = $this->request->param('file');
 	    $format = $this->request->param('format');

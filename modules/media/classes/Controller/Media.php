@@ -34,6 +34,7 @@ class Controller_Media extends Controller{
 	}
 
 	public function action_minicss() {
+		header('Content-Type: text/css; charset=utf-8');
 	    $filename = $this->request->param('file');
 	    $config = Kohana::config('media.css');
 	    if (isset($config[$filename])) {
@@ -48,6 +49,7 @@ class Controller_Media extends Controller{
 	}
 	
 	public function action_minijs() {
+	    header('Content-Type: text/javascript; charset=utf-8');
 	    $filename = $this->request->param('file');
 	    $config = Kohana::config('media.js');
 	    if (isset($config[$filename])) {

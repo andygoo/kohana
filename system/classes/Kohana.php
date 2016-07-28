@@ -1,7 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Kohana {
-	
+    
+    const PRODUCTION  = 10;
+    const STAGING     = 20;
+    const TESTING     = 30;
+    const DEVELOPMENT = 40;
+    
+    public static $environment = Kohana::DEVELOPMENT;
 	public static $is_windows = FALSE;
 	public static $magic_quotes = FALSE;
 

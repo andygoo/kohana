@@ -82,6 +82,7 @@ $application_cols = array('min', 'max', 'average', 'current');
 if (typeof jQuery !== 'undefined') {
 $(function() {
 	$('#profiler_btn').click(function() {
+		$('body').attr('style', 'overflow:hidden; padding-right: 17px;');
 		var kohana_profiler_modal_backdrop = $('<div class="kohana_profiler_modal-backdrop in"></div>');
 		$('#profiler_kohana_profiler_modal').show();
 	    $('body').append(kohana_profiler_modal_backdrop);
@@ -89,6 +90,7 @@ $(function() {
 		    if ($(e.target).closest('.kohana_profiler_modal-content').length==0 || $(e.target).closest('.close').length!=0) {
 		        $('#profiler_kohana_profiler_modal').hide();
 		        kohana_profiler_modal_backdrop.remove();
+				$('body').attr('style', 'overflow: auto;');
 		    }
 		});
 	});

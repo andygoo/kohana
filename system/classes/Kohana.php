@@ -160,7 +160,11 @@ class Kohana {
 	public static function find_file($dir, $file, $ext = NULL) {
 		$ext = ($ext === NULL) ? '.php' : '.'.$ext;
 		$path = $dir.DIRECTORY_SEPARATOR.$file.$ext;
-
+		
+		if (Kohana::$profiling === TRUE AND class_exists('Profiler', FALSE)) {
+		    $benchmark = Profiler::start('Kohana', __FUNCTION__);
+		}
+		
 		$found = FALSE;
 		foreach (Kohana::$_paths as $dir) {
 			if (is_file($dir.$path)) {
@@ -168,6 +172,11 @@ class Kohana {
 				break;
 			}
 		}
+		
+		if (isset($benchmark)) {
+		    Profiler::stop($benchmark);
+		}
+		
 		return $found;
 	}
 	

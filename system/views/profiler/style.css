@@ -1,4 +1,5 @@
 
+.kohana_profiler_modal {overflow-y: auto; overflow-x:hidden}
 .kohana_profiler_modal-title {
   font-size: 18px;  font-weight: 500;
 }

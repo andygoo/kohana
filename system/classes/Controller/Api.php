@@ -10,18 +10,6 @@ class Controller_Api extends Controller {
         parent::__construct($request);
 
         $this->format = $this->request->param('format');
-        $controller = $this->request->controller;
-        $action = $this->request->action;
-        
-        if (!method_exists('Controller_' . ucfirst($controller), 'action_' . $action)) {
-            $this->request->action = 'error';
-            
-            $path = $this->request->param('path');
-            $pathinfo = pathinfo($path);
-            if (!empty($pathinfo['extension'])) {
-                $this->format = $pathinfo['extension'];
-            }
-        }
     }
 
     public function before() {
@@ -38,9 +26,5 @@ class Controller_Api extends Controller {
         } else {
             echo json_encode($this->response, JSON_UNESCAPED_UNICODE);
         }
-    }
-
-    public function action_error() {
-        $this->response = array('errno'=>-1, 'errmsg'=>'The method does not exist!');
     }
 } 

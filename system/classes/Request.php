@@ -182,21 +182,29 @@ class Request {
         
         $class_name = $prefix . ucfirst($this->controller);
         if (!class_exists($class_name)) {
+            /*
             throw new Kohana_Exception('Class :class_name does not exist.', array(
                 ':class_name' => $class_name 
             ), E_WARNING);
+            */
+            $class_name = 'Controller_Error';
+            $action = 'action_404';
+        } else {
+            $action = empty($this->action) ? 'action_index' : 'action_' . $this->action;
+            if (!method_exists($class_name, $action)) {
+                /*
+                throw new Kohana_Exception('The requested URL :uri was not found on this server.', array(
+                    ':uri' => $this->uri 
+                ), E_WARNING);
+                */
+                $class_name = 'Controller_Error';
+                $action = 'action_404';
+            }
         }
         
         $class = new ReflectionClass($class_name);
         $controller = $class->newInstance($this);
         $class->getMethod('before')->invoke($controller);
-        
-        $action = empty($this->action) ? 'action_index' : 'action_' . $this->action;
-        if (!method_exists($controller, $action)) {
-            throw new Kohana_Exception('The requested URL :uri was not found on this server.', array(
-                ':uri' => $this->uri 
-            ), E_WARNING);
-        }
         $class->getMethod($action)->invokeArgs($controller, $this->_params);
         $class->getMethod('after')->invoke($controller);
         

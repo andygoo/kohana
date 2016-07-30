@@ -3,7 +3,7 @@
 class Controller_Api extends Controller {
     
     public $auto_render = false;
-    public $response = array('errno'=>0, 'data'=>array());
+    public $response = array('errno'=>0, 'errmsg'=>'', 'data'=>array());
     public $format = 'json';
 
     public function __construct(Request $request) {

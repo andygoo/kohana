@@ -43,10 +43,30 @@ class Controller_Media extends Controller{
 
 	public function action_minicss() {
 		header('Content-Type: text/css; charset=utf-8');
-	    $filename = $this->request->param('file');
+	    $filegroup = $this->request->param('file');
 	    $config = Kohana::config('media.css');
-	    if (isset($config[$filename])) {
-	        foreach ($config[$filename] as $file) {
+	    $content = '';
+	    if (isset($config[$filegroup])) {
+            ob_start();
+	        foreach ($config[$filegroup] as $file) {
+	            $file = APPPATH . $file;
+	            if (file_exists($file)) {
+	                include $file;
+	            }
+	        }
+	        $buffer = ob_get_clean();
+	        $content = $this->_compress($buffer);
+	    }
+	    echo $content;
+	    exit;
+	}
+	
+	public function action_minijs() {
+	    header('Content-Type: text/javascript; charset=utf-8');
+	    $filegroup = $this->request->param('file');
+	    $config = Kohana::config('media.js');
+	    if (isset($config[$filegroup])) {
+	        foreach ($config[$filegroup] as $file) {
 	            $file = APPPATH . $file;
 	            if (file_exists($file)) {
 	                include $file;
@@ -56,18 +76,11 @@ class Controller_Media extends Controller{
 	    exit;
 	}
 	
-	public function action_minijs() {
-	    header('Content-Type: text/javascript; charset=utf-8');
-	    $filename = $this->request->param('file');
-	    $config = Kohana::config('media.js');
-	    if (isset($config[$filename])) {
-	        foreach ($config[$filename] as $file) {
-	            $file = APPPATH . $file;
-	            if (file_exists($file)) {
-	                include $file;
-	            }
-	        }
-	    }
-	    exit;
+	protected function _compress($buffer) {
+	    /* remove comments */
+	    $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+	    /* remove tabs, spaces, newlines, etc. */
+	    $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+	    return $buffer;
 	}
 }

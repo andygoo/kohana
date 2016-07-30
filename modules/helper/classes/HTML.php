@@ -25,15 +25,39 @@ class HTML {
     public static function style($file, array $attributes = NULL, $index = FALSE) {
         if (strpos($file, '://') === FALSE) {
             $file = URL::base($index) . $file;
+            if (isset($attributes['random']) && file_exists(APPPATH . $file)) {
+                $file .= '?' . filemtime(APPPATH . $file);
+            }
         }
         $attributes['href'] = $file;
         $attributes['rel'] = isset($attributes['rel']) ? $attributes['rel'] : 'stylesheet';
         return '<link' . HTML::attributes($attributes) . ' />';
     }
 
+    public static function groupstyle($filegroup, array $attributes = NULL, $index = FALSE) {
+        $last_modified = 0;
+        $config = Kohana::config('media.css');
+        if (isset($config[$filegroup])) {
+            foreach ($config[$filegroup] as $file) {
+                $file = APPPATH . $file;
+                if (file_exists($file)) {
+                    if (filemtime($file) > $last_modified) {
+                        $last_modified = filemtime($file);
+                    }
+                }
+            }
+        }
+        $attributes['href'] = URL::base($index) . 'media/minicss/' . $filegroup . '.css?' . $last_modified;
+        $attributes['rel'] = 'stylesheet';
+        return '<link' . HTML::attributes($attributes) . ' />';
+    }
+    
     public static function script($file, array $attributes = NULL, $index = FALSE) {
         if (strpos($file, '://') === FALSE) {
             $file = URL::base($index) . $file;
+            if (isset($attributes['random']) && file_exists(APPPATH . $file)) {
+                $file .= '?' . filemtime(APPPATH . $file);
+            }
         }
         $attributes['src'] = $file;
         return '<script' . HTML::attributes($attributes) . '></script>';

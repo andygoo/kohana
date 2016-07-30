@@ -59,7 +59,7 @@ class Controller_Media extends Controller{
 	    }
 	    echo $content;
 	    exit;
-	}
+	} 
 	
 	public function action_minijs() {
 	    header('Content-Type: text/javascript; charset=utf-8');

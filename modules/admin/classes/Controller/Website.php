@@ -15,7 +15,8 @@ abstract class Controller_Website extends Controller {
 
         $auth = Auth::instance();
         if (!$auth->logged_in()) {
-            $this->redirect('auth/login');
+            $curr_url = URL::curr();
+            $this->redirect('auth/login?return_url=' . urlencode($curr_url));
         } else {
             $this->user = $auth->get_user();
             

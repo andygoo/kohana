@@ -13,10 +13,11 @@ class Controller_Auth extends Controller {
             
             $username = $_POST['username'];
             $password = $_POST['password'];
+            $return_url = !empty($_GET['return_url']) ? $_GET['return_url'] : '/';
             
             $auth = Auth::instance();
             if ($auth->login($username, $password)) {
-                $this->redirect('/');
+                $this->redirect($return_url);
             } else {
                 Security::token(true);
                 exit('登录失败');

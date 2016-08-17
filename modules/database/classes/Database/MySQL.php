@@ -3,77 +3,77 @@
 class Database_MySQL extends Database {
 
     public function connect() {
-        if ($this->_connection) return $this->_connection;
+        if ($this->_conn) return $this->_conn;
         
         extract($this->_config['connection']);
         unset($this->_config['connection']);
         
         try {
             if ($persistent) {
-                $this->_connection = mysql_pconnect($hostname, $username, $password);
+                $this->_conn = mysql_pconnect($hostname, $username, $password);
             } else {
-                $this->_connection = mysql_connect($hostname, $username, $password, TRUE);
+                $this->_conn = mysql_connect($hostname, $username, $password, TRUE);
             }
         } catch(Exception $e) {
-            $this->_connection = NULL;
+            $this->_conn = NULL;
             
             throw new Kohana_Exception(':error', array(
                 ':error' => $e->getMessage() 
             ), $e->getCode());
         }
         
-        if (!mysql_select_db($database, $this->_connection)) {
+        if (!mysql_select_db($database, $this->_conn)) {
             throw new Kohana_Exception(':error', array(
-                ':error' => mysql_error($this->_connection) 
-            ), mysql_errno($this->_connection));
+                ':error' => mysql_error($this->_conn) 
+            ), mysql_errno($this->_conn));
         }
         
         if (!empty($this->_config['charset'])) {
             $this->set_charset($this->_config['charset']);
         }
-		return $this->_connection;
+		return $this->_conn;
     }
 
     public function disconnect() {
         try {
             $status = TRUE;
-            if (is_resource($this->_connection)) {
-                if ($status = mysql_close($this->_connection)) {
-                    $this->_connection = NULL;
+            if (is_resource($this->_conn)) {
+                if ($status = mysql_close($this->_conn)) {
+                    $this->_conn = NULL;
                     parent::disconnect();
                 }
             }
         } catch(Exception $e) {
-            $status = !is_resource($this->_connection);
+            $status = !is_resource($this->_conn);
         }
         
         return $status;
     }
 
     public function set_charset($charset) {
-        $this->_connection or $this->connect();
+        $this->_conn or $this->connect();
         
         if (!function_exists('mysql_set_charset')) {
-            $status = (bool)mysql_query('SET NAMES ' . $this->escape($charset), $this->_connection);
+            $status = (bool)mysql_query('SET NAMES ' . $this->escape($charset), $this->_conn);
         } else {
-            $status = mysql_set_charset($charset, $this->_connection);
+            $status = mysql_set_charset($charset, $this->_conn);
         }
         
         if ($status === FALSE) {
             throw new Kohana_Exception(':error', array(
-                ':error' => mysql_error($this->_connection) 
-            ), mysql_errno($this->_connection));
+                ':error' => mysql_error($this->_conn) 
+            ), mysql_errno($this->_conn));
         }
     }
 
     public function query($sql, $as_object = FALSE) {
-        $this->_connection or $this->connect();
+        $this->_conn or $this->connect();
         
-        if (($result = mysql_query($sql, $this->_connection)) === FALSE) {
+        if (($result = mysql_query($sql, $this->_conn)) === FALSE) {
             throw new Kohana_Exception(':error [ :query ]', array(
-                ':error' => mysql_error($this->_connection),
+                ':error' => mysql_error($this->_conn),
                 ':query' => $sql 
-            ), mysql_errno($this->_connection));
+            ), mysql_errno($this->_conn));
         }
         
         $this->last_query = $sql;
@@ -82,43 +82,43 @@ class Database_MySQL extends Database {
             return new Database_MySQL_Result($result, $sql, $as_object);
         } elseif (preg_match('/^INSERT/i', $sql)) {
             return array(
-                mysql_insert_id($this->_connection),
-                mysql_affected_rows($this->_connection) 
+                mysql_insert_id($this->_conn),
+                mysql_affected_rows($this->_conn) 
             );
         } else {
-            return mysql_affected_rows($this->_connection);
+            return mysql_affected_rows($this->_conn);
         }
     }
 
     public function begin($mode = NULL) {
-        $this->_connection or $this->connect();
+        $this->_conn or $this->connect();
         
-        if ($mode and !mysql_query("SET TRANSACTION ISOLATION LEVEL $mode", $this->_connection)) {
+        if ($mode and !mysql_query("SET TRANSACTION ISOLATION LEVEL $mode", $this->_conn)) {
             throw new Kohana_Exception(':error', array(
-                ':error' => mysql_error($this->_connection) 
-            ), mysql_errno($this->_connection));
+                ':error' => mysql_error($this->_conn) 
+            ), mysql_errno($this->_conn));
         }
         
-        return (bool)mysql_query('START TRANSACTION', $this->_connection);
+        return (bool)mysql_query('START TRANSACTION', $this->_conn);
     }
 
     public function commit() {
-        $this->_connection or $this->connect();
-        return (bool)mysql_query('COMMIT', $this->_connection);
+        $this->_conn or $this->connect();
+        return (bool)mysql_query('COMMIT', $this->_conn);
     }
 
     public function rollback() {
-        $this->_connection or $this->connect();
-        return (bool)mysql_query('ROLLBACK', $this->_connection);
+        $this->_conn or $this->connect();
+        return (bool)mysql_query('ROLLBACK', $this->_conn);
     }
 
     public function escape($value) {
-        $this->_connection or $this->connect();
+        $this->_conn or $this->connect();
         
-        if (($value = mysql_real_escape_string((string)$value, $this->_connection)) === FALSE) {
+        if (($value = mysql_real_escape_string((string)$value, $this->_conn)) === FALSE) {
             throw new Kohana_Exception(':error', array(
-                ':error' => mysql_error($this->_connection) 
-            ), mysql_errno($this->_connection));
+                ':error' => mysql_error($this->_conn) 
+            ), mysql_errno($this->_conn));
         }
         
         return "'$value'";

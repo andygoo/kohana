@@ -1,5 +1,4 @@
 <?php
-defined('SYSPATH') or die('No direct access allowed.');
 
 return array(
     'default' => array(
@@ -11,7 +10,16 @@ return array(
             'persistent' => TRUE 
         ) 
     ),
-    'default_' => array(
+    'mysqli' => array(
+        'type' => 'MySQLi',
+        'connection' => array(
+            'hostname' => 'localhost',
+            'database' => 'kohana',
+            'username' => 'root',
+            'password' => 'root',
+        ) 
+    ),
+    'mysql' => array(
         'type' => 'MySQL',
         'connection' => array(
             'hostname' => 'localhost',
@@ -21,7 +29,16 @@ return array(
             'persistent' => FALSE 
         ) 
     ),
-    'alternate' => array(
+    'mssql' => array(
+        'type' => 'MsSQL',
+        'connection' => array(
+            'dsn' => 'dblib:host=hostname;dbname=database',
+            'username' => 'root',
+            'password' => 'root',
+            'persistent' => TRUE 
+        ) 
+    ), 
+    'master_slave' => array(
         'type' => 'PDO',
         'master' => array(
             'connection' => array(
@@ -40,13 +57,4 @@ return array(
             ) 
         ) 
     ),
-    'mssql' => array(
-        'type' => 'MsSQL',
-        'connection' => array(
-            'dsn' => 'dblib:host=hostname;dbname=database',
-            'username' => 'root',
-            'password' => 'root',
-            'persistent' => TRUE 
-        ) 
-    ) 
 );

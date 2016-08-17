@@ -8,6 +8,14 @@
  * @copyright  (c) 2007-2011 Kohana Team
  * @license    http://kohanaphp.com/license.html
  */
+/**
+ * 
+$email = Email::factory('Hello, World', 'This is my body, it is nice.')
+->to('xiaowenjie@haoche51.com')
+->from('test@jiesc.net', 'My Name')
+->send();
+ *
+ */
 class Email {
 
 	// Current module version
@@ -448,7 +456,8 @@ class Email {
 // Load Swiftmailer
 if (!class_exists('Swift'))
 {
-	require Kohana::find_file('vendor/swiftmailer', 'lib/swift_required');
+	//require Kohana::find_file('vendor/swiftmailer', 'lib/swift_required');
+	require MODPATH . 'email/vendor/autoload.php';
 }
 
 function swiftmailer_configurator() {

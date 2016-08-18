@@ -27,10 +27,9 @@ class Database_MySQL extends Database {
                 ':error' => mysql_error($this->_conn) 
             ), mysql_errno($this->_conn));
         }
+
+        $this->set_charset('utf8');
         
-        if (!empty($this->_config['charset'])) {
-            $this->set_charset($this->_config['charset']);
-        }
 		return $this->_conn;
     }
 

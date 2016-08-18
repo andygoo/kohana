@@ -9,7 +9,7 @@ class Database_MySQLi extends Database {
         unset($this->_config['connection']);
         
         try {
-            $this->_conn = mysqli_connect($hostname, $username, $password, $database);
+            $this->_conn = new mysqli($hostname, $username, $password, $database);
         } catch(Exception $e) {
             $this->_conn = NULL;
             
@@ -18,9 +18,8 @@ class Database_MySQLi extends Database {
             ), $e->getCode());
         }
 
-        if (!empty($this->_config['charset'])) {
-            $this->set_charset($this->_config['charset']);
-        }
+        $this->set_charset('utf8');
+        
 		return $this->_conn;
     }
 
@@ -72,12 +71,32 @@ class Database_MySQLi extends Database {
             return new Database_MySQLi_Result($result, $sql, $as_object);
         } elseif (preg_match('/^INSERT/i', $sql)) {
             return array(
-                mysqli_insert_id($this->_conn),
-                mysqli_affected_rows($this->_conn) 
+				$this->_conn->insert_id,
+				$this->_conn->affected_rows,
             );
         } else {
-            return mysqli_affected_rows($this->_conn);
+			return $this->_conn->affected_rows;
         }
+    }
+    
+    public function begin($mode = NULL) {
+        $this->_conn or $this->connect();
+        if ($mode AND ! $this->_conn->query("SET TRANSACTION ISOLATION LEVEL $mode")) {
+            throw new Kohana_Exception(':error', array(
+                    ':error' => $this->_conn->error
+            ), $this->_conn->errno);
+        }
+        return (bool) $this->_conn->query('START TRANSACTION');
+    }
+
+    public function commit() {
+        $this->_conn or $this->connect();
+        return (bool) $this->_conn->query('COMMIT');
+    }
+
+    public function rollback() {
+        $this->_conn or $this->connect();
+        return (bool) $this->_conn->query('ROLLBACK');
     }
     
     public function escape($value) {

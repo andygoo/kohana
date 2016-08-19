@@ -68,7 +68,22 @@ class Database_PDO extends Database {
 			return $result->rowCount();
 		}
 	}
-
+	
+	public function begin($mode = NULL) {
+	    $this->_conn or $this->connect();
+	    return $this->_conn->beginTransaction();
+	}
+	
+	public function commit() {
+	    $this->_conn or $this->connect();
+	    return $this->_conn->commit();
+	}
+	
+	public function rollback() {
+	    $this->_conn or $this->connect();
+	    return $this->_conn->rollBack();
+	}
+	
 	public function escape($value) {
 		$this->_conn OR $this->connect();
 		return $this->_conn->quote($value);

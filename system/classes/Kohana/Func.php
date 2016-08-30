@@ -5,6 +5,28 @@ class Kohana_Func {
     }
 }
 
+function xxxxxxxx($count, $page_num, $page_size) {
+    $total_page = ceil($count / $page_size);
+    $_page = max($page_num - $total_page, 1);
+    $mod = $count % $page_size;
+    if($mod == 0) {
+        $_offset = 0;
+        $_size = $page_size;
+    } else {
+        if ($page_num < $total_page) {
+            $_offset = 0;
+            $_size = 1;
+        } elseif ($page_num == $total_page) {
+            $_offset = 0;
+            $_size = $page_size - $mod;
+        } else {
+            $_offset = $page_size - $mod;
+            $_size = $page_size;
+        }
+    }
+}
+
+
 /*
 function getLines($file) {
     $f = fopen($file, 'r');

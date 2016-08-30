@@ -5,6 +5,15 @@ class Kohana_Func {
     }
 }
 
+function array_intersect_range($range1, $range2) {
+    $min = max($range1[0], $range2[0]);
+    $max = min($range1[1], $range2[1]);
+    if ($min > $max) {
+        return array();
+    }
+    return array($min, $max);
+}
+
 function xxxxxxxx($count, $page_num, $page_size) {
     $total_page = ceil($count / $page_size);
     $_page = max($page_num - $total_page, 1);

@@ -101,6 +101,15 @@ class Controller_Weixin extends Controller {
         //$url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ret['ticket'];
         //echo $url;
     }
+    
+    public function action_down_image() {
+        $media_id = isset($_GET['media_id']) ? $_GET['media_id'] : '';
+        if (!empty($media_id)) {
+            $wx = new Weixin();
+            $ret = $wx->down_media($media_id);
+            echo $ret;
+        }
+    }
 
     public function action_get_jsapi_config() {
         $wx = new WeixinJSAPI();

@@ -71,6 +71,34 @@ class Weixin {
         return $ret_array;
     }
 
+    public function down_media($media_id) {
+        $file_type = 'jpg';
+        $filename = strtotime('now').str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT) . '.' . $file_type;
+        $directory = realpath(APPPATH . '../data/upload');
+        $sub_directory = date('Y/m/d');
+        $sub_directory = str_replace('/', DIRECTORY_SEPARATOR, $sub_directory);
+        $upload_dir = $directory.DIRECTORY_SEPARATOR.$sub_directory;
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0755, TRUE);
+        }
+        if (!is_writable($upload_dir)) {
+            chmod($upload_dir, 0755);
+        }
+        
+        $url = 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=' . $this->access_token . '&media_id=' . $media_id;
+        //error_log($url . "\n", 3, '/tmp/wx_upload.log');
+        $data = CURL::get($url);
+        $file_path = $upload_dir . DIRECTORY_SEPARATOR . $filename;
+        file_put_contents($file_path, $data);
+    
+        list($width, $height) = getimagesize($file_path);
+        $file_src = str_replace($directory, '', $file_path);
+        $file_src = str_replace('\\', '/', $file_src);
+        $file_src = trim($file_src, '/');
+    
+        return $file_src . '?' . $width . 'x' . $height;
+    }
+
     public function __call($method, $args) {
         $method = explode('_', $method);
         $method = array_reverse($method);

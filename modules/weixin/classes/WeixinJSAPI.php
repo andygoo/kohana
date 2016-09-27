@@ -20,8 +20,8 @@ class WeixinJSAPI extends Weixin {
         $this->jsapi_ticket = $jsapi_ticket;
     }
 
-    public function get_jsapi_config() {
-        $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    public function get_jsapi_config($url = '') {
+        $url = !empty($url) ? $url : 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $jsapi_config = array(
             'jsapi_ticket' => $this->jsapi_ticket,
             'nonceStr' => $this->random(16),

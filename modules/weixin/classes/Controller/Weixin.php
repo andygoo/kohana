@@ -112,6 +112,24 @@ class Controller_Weixin extends Controller {
         echo $this->template;
     }
 
+    public function action_share() {
+		header('Content-Type: text/javascript; charset=utf-8');
+        $wx = new WeixinJSAPI();
+        $url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+        $jsapi_config = $wx->get_jsapi_config($url);
+        
+        $this->template = View::factory('sharejs');
+        $this->template->jsapi_config = $jsapi_config;
+        echo $this->template;
+        exit;
+    }
+
+    public function action_sharedemo() {
+        $this->template = View::factory('share_demo');
+        echo $this->template;
+        exit;
+    }
+    
     public function action_sendredpack() {
         $phone = 13800000000;
         $params = array(

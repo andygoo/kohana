@@ -132,7 +132,7 @@ class Controller_Weixin extends Controller {
         echo $this->template;
         exit;
     }
-
+ 
     public function action_sharedemo() {
         $this->template = View::factory('share_demo');
         echo $this->template;

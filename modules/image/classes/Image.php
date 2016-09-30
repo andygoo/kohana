@@ -94,7 +94,7 @@ abstract class Image {
 		if (empty($file) OR empty($info))
 		{
 			throw new Kohana_Exception('Not an image or invalid image: :file',
-				array(':file' => Debug::path($file)));
+				array(':file' => Debug::path($file)), E_WARNING);
 		}
 
 		// Store the image information

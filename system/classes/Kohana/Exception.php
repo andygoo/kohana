@@ -59,7 +59,7 @@ class Kohana_Exception extends Exception {
 		    }
 			
 			Kohana::$log->add($level, $error);
-			// Make sure the logs are written
+			// Make sure the logs are written 
 			Kohana::$log->write();
 		}
 	}
